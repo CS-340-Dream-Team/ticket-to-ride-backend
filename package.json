@@ -1,0 +1,8 @@
+{
+  "name": "ticket-to-ride-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:CS-340-Dream-Team/ticket-to-ride-backend.git",
+  "author": "CS340 Dream Team <junk@carter.works>",
+  "license": "MIT"
+}
