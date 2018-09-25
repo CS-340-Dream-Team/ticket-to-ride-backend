@@ -12,6 +12,9 @@ export class ServerCommunicator {
     private gamesHandler: GamesHandler;
 
     constructor() {
+        this.registerHandler = new RegisterHandler();
+        this.loginHandler = new LoginHandler();
+        this.gamesHandler = new GamesHandler();
         const port = 4040;
         this.app = express();
         this.app.listen(port, function() {
