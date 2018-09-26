@@ -35,9 +35,9 @@ export class ServerCommunicator {
         const router = express.Router();
 
         router.get('/', (req: Request, res: Response) => {
-        res.status(200).send({
-            message: "Root endpoint reached"
-        })
+            res.status(200).send({
+                message: "Root endpoint reached"
+            })
         });
 
         router.post('/login', (req: Request, res: Response) => {
@@ -71,16 +71,16 @@ export class ServerCommunicator {
                 message: "Join game endpoint reached",
                 params: req.params
             });
-        })
+        });
 
-        router.delete('/games/:id'), (req: Request, res: Response) => {
+        router.delete('/games/:id', (req: Request, res: Response) => {
             let handler = new GamesHandler();
             let response = handler.handle(req);
             res.status(200).send({
                 message: "Delete endpoint reached",
                 params: req.params
             });
-        }
+        });
 
         this.app.use('/', router);
     }
