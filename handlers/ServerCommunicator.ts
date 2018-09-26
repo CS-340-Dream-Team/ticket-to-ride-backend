@@ -7,14 +7,11 @@ import { GamesHandler } from "./GamesHandler";
 
 export class ServerCommunicator {
 
-    private registerHandler: RegisterHandler;
-    private loginHandler: LoginHandler;
-    private gamesHandler: GamesHandler;
+    private registerHandler: RegisterHandler = new RegisterHandler();
+    private loginHandler: LoginHandler = new LoginHandler();
+    private gamesHandler: GamesHandler = new GamesHandler();
 
     constructor() {
-        this.registerHandler = new RegisterHandler();
-        this.loginHandler = new LoginHandler();
-        this.gamesHandler = new GamesHandler();
         const port = 4040;
         this.app = express();
         this.app.listen(port, function() {
