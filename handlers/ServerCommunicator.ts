@@ -1,4 +1,4 @@
-import * as express from "express";
+import express from "express";
 import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
 import { RegisterHandler } from "./RegisterHandler";
@@ -39,7 +39,7 @@ export class ServerCommunicator {
 
         router.post('/login', (req: Request, res: Response) => {
             let handler = new LoginHandler();
-            let response = handler.handle(req);
+            let response = handler.handle(req, res);
             res.status(200).send({
                 message: "Login endpoint reached"
             });
@@ -47,7 +47,7 @@ export class ServerCommunicator {
         
         router.post('/register', (req: Request, res: Response) => {
             let handler = new RegisterHandler();
-            let response = handler.handle(req);
+            let response = handler.handle(req, res);
             res.status(200).send({
                 message: "Register endpoint reached"
             });
@@ -55,7 +55,7 @@ export class ServerCommunicator {
         
         router.post('/games', (req: Request, res: Response) => {
             let handler = new GamesHandler();
-            let response = handler.handle(req);
+            let response = handler.handle(req, res);
             res.status(200).send({
                 message: "Games endpoint reached"
             });
@@ -63,7 +63,7 @@ export class ServerCommunicator {
 
         router.post('/games/:id/join', (req: Request, res: Response) => {
             let handler = new GamesHandler();
-            let response = handler.handle(req);
+            let response = handler.handle(req, res);
             res.status(200).send({
                 message: "Join game endpoint reached",
                 params: req.params
@@ -72,7 +72,7 @@ export class ServerCommunicator {
 
         router.delete('/games/:id', (req: Request, res: Response) => {
             let handler = new GamesHandler();
-            let response = handler.handle(req);
+            let response = handler.handle(req, res);
             res.status(200).send({
                 message: "Delete endpoint reached",
                 params: req.params

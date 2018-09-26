@@ -7,7 +7,6 @@ export class LoginHandler extends BaseHandler{
         super();
     }
 
-    handle(req: Request): Response {
-        return;
+    handle(req: Request, res: Response): void {
     }
 }

@@ -4,7 +4,10 @@ import { ServerFacade } from "../facade/ServerFacade";
 export class BaseHandler {
     protected serverFacade: ServerFacade;
 
-    handle(req: Request): Response {
-        return;
+    constructor() {
+        this.serverFacade = new ServerFacade();
+    }
+
+    handle(req: Request, res: Response): void {
     }
 }
