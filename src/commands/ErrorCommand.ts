@@ -1,7 +1,7 @@
 import {ICommand} from "./ICommand"
 export class ErrorCommand implements ICommand{
     data:Object;
-    execute(){
-        
+    constructor(error:Error){
+        this.data=error;
     }
 }

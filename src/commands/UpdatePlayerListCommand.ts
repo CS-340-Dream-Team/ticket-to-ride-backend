@@ -1,7 +1,7 @@
 import {ICommand} from "./ICommand"
 export class UpdatePlayerListCommand implements ICommand{
     data:Object;
-    execute(){
-        
+    constructor(data:Object){
+        this.data=data;
     }
 }
