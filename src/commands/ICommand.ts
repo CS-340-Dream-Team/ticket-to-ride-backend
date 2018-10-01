@@ -1,3 +1,5 @@
 export interface ICommand{
-    data:Object
+    type:string;
+    data:Object;
+
 }

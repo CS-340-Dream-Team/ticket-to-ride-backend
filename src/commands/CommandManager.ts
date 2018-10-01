@@ -1,15 +1,15 @@
-import {RegisterCommand} from "./RegisterCommand"
-import {LoginCommand} from "./LoginCommand"
-import {UpdateGameListCommand} from "./UpdateGameListCommand"
-import {UpdatePlayerListCommand} from "./UpdatePlayerListCommand"
+import {Command} from "./Command"
 export class CommandManager {
-    gameListCommands:Array<UpdateGameListCommand>;
-    playerListCommands: Array<UpdatePlayerListCommand>;
+    gameListCommands:Array<Command>;
+    playerListCommands: Array<Command>;
     constructor(){
-        this.gameListCommands=new Array<UpdateGameListCommand>();
-        this.playerListCommands= new Array<UpdatePlayerListCommand>();
+        this.gameListCommands=new Array<Command>();
+        this.playerListCommands= new Array<Command>();
+
     }
     getGameList(){
         return this.gameListCommands;
     }
+    //Create save() function
+
 }

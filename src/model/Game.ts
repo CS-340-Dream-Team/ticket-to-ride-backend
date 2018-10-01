@@ -13,10 +13,20 @@ export class Game{
     }
     addPlayer(player:Player):boolean{
         if(this.numPlayers<5){
-            this.playersJoined.push(player);
-            this.numPlayers+=1;
-            return true;
+            //Player Duplication Check
+            if(this.playersJoined.includes(player))
+            {
+                return false;
+            }
+            else
+            {
+                this.playersJoined.push(player);
+                this.numPlayers+=1;
+                return true;
+            }
         }
         return false;
     }
+
+
 }

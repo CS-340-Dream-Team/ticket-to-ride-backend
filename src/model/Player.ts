@@ -1,8 +1,8 @@
 export class Player{
     name:string;
-    password:string;
-    constructor(name:string, password:string){
+    color:string;
+    constructor(name:string, color:string){
         this.name=name;
-        this.password=password;
+        this.color=color;
     }
 }
