@@ -10,7 +10,7 @@ export class RegisterHandler extends BaseHandler{
 
     handle(req: Request, res: Response): void {
         try {
-            let token = this.model.register(req.body.userName,req.body.password);
+            let token = this.model.register(req.body.username,req.body.password);
             res.status(200).send({
                 token: token
             });

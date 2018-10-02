@@ -70,7 +70,8 @@ export class ServerModel {
         if (!game) {
             throw new Error(this.GAME_DOES_NOT_EXIST);
         }
-        this.activeGames.splice(id, 1);
+        let index = this.activeGames.indexOf(game);
+        this.activeGames.splice(index, 1);
         return new Command("updateGameList", { gameList: this.activeGames });
     }
 
