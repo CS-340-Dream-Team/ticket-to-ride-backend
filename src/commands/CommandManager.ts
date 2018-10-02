@@ -1,15 +1,17 @@
 import {Command} from "./Command"
 export class CommandManager {
-    gameListCommands:Array<Command>;
-    playerListCommands: Array<Command>;
-    constructor(){
-        this.gameListCommands=new Array<Command>();
-        this.playerListCommands= new Array<Command>();
+    gameListCommands: Command[];
+    playerListCommands: Command[];
 
+    constructor(){
+        this.gameListCommands= [];
+        this.playerListCommands= [];
     }
+
     getGameList(){
         return this.gameListCommands;
     }
+
     //Create save() function
 
 }

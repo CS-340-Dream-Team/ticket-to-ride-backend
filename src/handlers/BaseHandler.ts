@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { ServerFacade } from "../facade/ServerFacade";
+import { ServerModel } from "../model/ServerModel";
 
 export class BaseHandler {
-    protected serverFacade: ServerFacade;
+    protected model: ServerModel;
 
     constructor() {
-        this.serverFacade = new ServerFacade();
+        this.model = ServerModel.getInstance();
     }
 
     handle(req: Request, res: Response): void {

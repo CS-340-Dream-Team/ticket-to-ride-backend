@@ -1,16 +1,21 @@
 import {Player} from "./Player"
 export class Game{
-    playersJoined: Array<Player>;
+
+    playersJoined: Player[];
     host: Player;
     name: string;
+    id: number = 0;
     numPlayers: number;
-    constructor(host:Player, name:string){
-        this.playersJoined=new Array<Player>();
+
+    constructor(host: Player, name: string){
+        this.playersJoined= [];
         this.host= host;
         this.name= name;
+        this.id += 1;
         this.numPlayers=0;
         this.addPlayer(host);
     }
+
     addPlayer(player:Player):boolean{
         if(this.numPlayers<5){
             //Player Duplication Check
@@ -27,6 +32,5 @@ export class Game{
         }
         return false;
     }
-
 
 }

@@ -1,4 +1,5 @@
 import {ICommand} from "./ICommand"
+
 export class Command implements ICommand{
     type:string;
     data:Object;

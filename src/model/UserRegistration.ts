@@ -1,15 +1,20 @@
 import { IUserRegistration } from "./IUserRegistration";
+import { Player } from "./Player";
+import { Color } from "./Color";
 
 export class UserRegistration implements IUserRegistration{
+
+    username:string;
     password:string;
     tokens:string[];
-    username:string;
+    player: Player;
+
     constructor(username:string, password:string, token:string){
         this.password=password;
-        //Make a list of tokens
         this.tokens= [];
         this.tokens.push(token);
         this.username=username;
+        this.player = new Player(username, Color.None);
     }
 
 }

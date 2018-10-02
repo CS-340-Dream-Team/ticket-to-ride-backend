@@ -13,7 +13,8 @@
     "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline",
     "server": "node lib/index.js",
     "test": "jest",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "start": "npm run build:types && npm run build:js && node lib/index.js"
   },
   "keywords": [],
   "devDependencies": {
@@ -32,7 +33,9 @@
     "typescript": "^3.0.1"
   },
   "dependencies": {
+    "@types/hat": "^0.0.0",
     "body-parser": "^1.18.3",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "hat": "^0.0.3"
   }
 }
