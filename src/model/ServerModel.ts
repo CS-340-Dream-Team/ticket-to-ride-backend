@@ -70,7 +70,8 @@ export class ServerModel {
         if (!game) {
             throw new Error(this.GAME_DOES_NOT_EXIST);
         }
-        this.activeGames.splice(id, 1);
+        let index = this.activeGames.indexOf(game);
+        this.activeGames.splice(index, 1);
         return new Command("updateGameList", { gameList: this.activeGames });
     }
 
@@ -98,9 +99,9 @@ export class ServerModel {
         return new Command("updateGameList", { gameList: this.activeGames });
     }
 
-    getGamesList(token: string | undefined): Game[] {
+    getGameList(token: string | undefined): Command {
         this.getUserByToken(token);
-        return this.activeGames;
+        return new Command("updateGameList", { gameList: this.activeGames });
     }
 
     private getUserByUsername(username: string): UserRegistration | null {

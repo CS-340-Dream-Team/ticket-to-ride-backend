@@ -1,6 +1,6 @@
 import { IUserRegistration } from "./IUserRegistration";
 import { Player } from "./Player";
-import { Color } from "./Color";
+import { PlayerColor } from "./Color";
 
 export class UserRegistration implements IUserRegistration{
 
@@ -14,7 +14,7 @@ export class UserRegistration implements IUserRegistration{
         this.tokens= [];
         this.tokens.push(token);
         this.username=username;
-        this.player = new Player(username, Color.None);
+        this.player = new Player(username, PlayerColor.None);
     }
 
 }

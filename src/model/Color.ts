@@ -1,5 +1,5 @@
 
-export enum Color {
+export enum PlayerColor {
     None,
     Red,
     Green,

@@ -18,7 +18,7 @@ export class GamesHandler extends BaseHandler{
                 this.createGame(req, res);
             }
         } else if (req.method === "GET") {
-            this.getGamesList(req, res);
+            this.getGameList(req, res);
         }
     }
 
@@ -61,11 +61,11 @@ export class GamesHandler extends BaseHandler{
         }
     }
 
-    private getGamesList(req: Request, res: Response) {
+    private getGameList(req: Request, res: Response) {
         try {
-            let gamesList = this.model.getGamesList(req.headers.authorization);
+            let gamesList = this.model.getGameList(req.headers.authorization);
             res.status(200).send({
-                gamesList: gamesList
+                command: gamesList
             });
         } catch(e) {
             res.status(400).send({

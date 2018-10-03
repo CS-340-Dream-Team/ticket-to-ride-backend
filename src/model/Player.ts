@@ -1,10 +1,10 @@
-import { Color } from "./Color";
+import { PlayerColor } from "./Color";
 
 export class Player{
     name:string;
-    color: Color;
+    color: PlayerColor;
 
-    constructor(name: string, color: Color){
+    constructor(name: string, color: PlayerColor){
         this.name=name;
         this.color= color;
     }
