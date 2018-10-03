@@ -1,7 +1,7 @@
 import { BaseHandler } from "./BaseHandler";
 import { Request, Response } from "express";
 import { Command } from "../commands/Command";
-
+import {ErrorMsgs} from "../model/ErrorMsgs"
 export class GamesHandler extends BaseHandler{
 
     constructor() {
@@ -29,9 +29,17 @@ export class GamesHandler extends BaseHandler{
                 command: command
             });
         } catch(e) {
-            res.status(400).send({
-                command: new Command("showError", { message: e.message })
-            })
+            if(e.message===ErrorMsgs.GAME_DOES_NOT_EXIST)
+            {
+                res.status(403).send({
+                    command: new Command("showError", { message: e.message })
+                })
+            }
+            else{
+                res.status(400).send({
+                    command: new Command("showError", { message: e.message })
+                })
+            }
         }
     }
 
@@ -42,9 +50,22 @@ export class GamesHandler extends BaseHandler{
                 command: command
             });
         } catch(e) {
-            res.status(400).send({
-                command: new Command("showError", { message: e.message })
-            })
+            if(e.message===ErrorMsgs.GAME_DOES_NOT_EXIST)
+            {
+                res.status(403).send({
+                    command: new Command("showError", { message: e.message })
+                })
+            }
+            else if(e.message === ErrorMsgs.PLAYER_ALREADY_IN_GAME){
+                res.status(409).send({
+                    command: new Command("showError", { message: e.message })
+                })
+            }
+            else{
+                res.status(400).send({
+                    command: new Command("showError", { message: e.message })
+                })
+            }
         }
     }
 
@@ -55,9 +76,16 @@ export class GamesHandler extends BaseHandler{
                 command: command
             });
         } catch(e) {
-            res.status(400).send({
-                command: new Command("showError", { message: e.message })
-            })
+            if(e.message === ErrorMsgs.GAME_ALREADY_EXISTS){
+                res.status(409).send({
+                    command: new Command("showError", { message: e.message })
+                })
+            }
+            else{
+                res.status(400).send({
+                    command: new Command("showError", { message: e.message })
+                })
+            }
         }
     }
 

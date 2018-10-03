@@ -1,7 +1,7 @@
 import { BaseHandler } from "./BaseHandler";
 import { Request, Response } from "express";
 import { Command } from "../commands/Command";
-
+import {ErrorMsgs} from "../model/ErrorMsgs"
 export class LoginHandler extends BaseHandler{
 
     constructor() {
@@ -15,9 +15,18 @@ export class LoginHandler extends BaseHandler{
                 token: token
             });
         } catch(e) {
-            res.status(400).send({
-                command: new Command("showError", { message: e.message })
-            })
+            if(e.message===ErrorMsgs.USER_DOES_NOT_EXIST)
+            {
+                res.status(403).send({
+                    command: new Command("showError", { message: e.message })
+                })
+            }
+            else{
+                res.status(400).send({
+                    command: new Command("showError", { message: e.message })
+                })
+            }
+            
         }
     }
 }
