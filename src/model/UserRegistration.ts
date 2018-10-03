@@ -1,6 +1,6 @@
 import { IUserRegistration } from "./IUserRegistration";
 import { Player } from "./Player";
-import { PlayerColor } from "./Color";
+import { PlayerColor } from "./PlayerColor";
 
 export class UserRegistration implements IUserRegistration{
 

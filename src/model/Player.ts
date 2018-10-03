@@ -1,4 +1,4 @@
-import { PlayerColor } from "./Color";
+import { PlayerColor } from "./PlayerColor";
 
 export class Player{
     name:string;

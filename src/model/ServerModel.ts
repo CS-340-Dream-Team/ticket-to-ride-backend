@@ -3,7 +3,7 @@ import { Player } from "./Player";
 import hat from "hat";
 import { UserRegistration } from "./UserRegistration";
 import { Command } from "../commands/Command";
-
+import {ErrorMsgs} from "./ErrorMsgs"
 export class ServerModel {
 
     private static _instance : ServerModel;
@@ -11,18 +11,10 @@ export class ServerModel {
     private players: Player[];
     private loggedInUsers: UserRegistration[];
     private allUsers: UserRegistration[];
-    //error messages
-    private readonly USER_DOES_NOT_EXIST = "User does not exist. Invalid login.";
-    private readonly USERNAME_EXISTS = "Username already exists.";
-    private readonly GAME_DOES_NOT_EXIST = "Game does not exist.";
-    private readonly NO_AUTHORIZATION = "No authorization provided.";
-    private readonly INVALID_AUTHORIZATION = "Invalid authorization.";
-    private readonly PLAYER_ALREADY_IN_GAME = "Player already joined this game. Cannot join.";
-    private readonly GAME_ALREADY_EXISTS = "Game with this name already exists.";
-    
 
     private constructor() {
         if (ServerModel._instance) {
+            //500
             throw new Error("Error: Instantiation failed");
         }
         ServerModel._instance = this;
@@ -43,7 +35,8 @@ export class ServerModel {
     login(username: string, password: string): string {
         var user = this.getUserByUsername(username);
         if (!user) {
-            throw new Error(this.USER_DOES_NOT_EXIST);
+            //403 Forbidden/ user does not exist
+            throw new Error(ErrorMsgs.USER_DOES_NOT_EXIST);
         }
         this.loggedInUsers.push(user);
         let token = hat();
@@ -54,7 +47,8 @@ export class ServerModel {
     register(username: string, password: string): string {
         var user = this.getUserByUsername(username);
         if (user) {
-            throw new Error(this.USERNAME_EXISTS);
+            //409 Conflict
+            throw new Error(ErrorMsgs.USERNAME_EXISTS);
         }
         let token = hat();
         user = new UserRegistration(username, password, token);
@@ -68,7 +62,8 @@ export class ServerModel {
     deleteGame(id: number): Command {
         var game = this.getGameById(id);
         if (!game) {
-            throw new Error(this.GAME_DOES_NOT_EXIST);
+            //403 Forbidden
+            throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
         }
         let index = this.activeGames.indexOf(game);
         this.activeGames.splice(index, 1);
@@ -79,12 +74,14 @@ export class ServerModel {
         let user = this.getUserByToken(token);
         let gameToJoin = this.getGameById(gameId);
         if (!gameToJoin) {
-            throw new Error(this.GAME_DOES_NOT_EXIST);
+            //403 Forbidden
+            throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
         }
         if (gameToJoin.playersJoined.indexOf(user.player) === -1) {
             gameToJoin.playersJoined.push(user.player);
         } else {
-            throw new Error(this.PLAYER_ALREADY_IN_GAME);
+            //409 Conflict
+            throw new Error(ErrorMsgs.PLAYER_ALREADY_IN_GAME);
         }
         return new Command("updatePlayerList", { playerList: gameToJoin.playersJoined });
     }
@@ -93,7 +90,8 @@ export class ServerModel {
         let hostUser = this.getUserByToken(hostToken);
         let game = this.getGameByName(gameName);
         if (game) {
-            throw new Error(this.GAME_ALREADY_EXISTS);
+            //409 Conflict
+            throw new Error(ErrorMsgs.GAME_ALREADY_EXISTS);
         }
         this.activeGames.push(new Game(hostUser.player, gameName));
         return new Command("updateGameList", { gameList: this.activeGames });
@@ -115,15 +113,16 @@ export class ServerModel {
 
     private getUserByToken(token: string | undefined): UserRegistration {
         if (!token) {
-            throw new Error(this.NO_AUTHORIZATION);
+            //400 Bad Request
+            throw new Error(ErrorMsgs.NO_AUTHORIZATION);
         }
         for (let user of this.loggedInUsers) {
             if (user.tokens.includes(token)) {
                 return user;
             }
         }
-
-        throw new Error(this.INVALID_AUTHORIZATION);
+        //500 Failed to Authenticate
+        throw new Error(ErrorMsgs.INVALID_AUTHORIZATION);
     }
 
     private getGameByName(name: string): Game | null {
