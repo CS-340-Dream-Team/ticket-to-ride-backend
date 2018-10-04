@@ -1,5 +1,6 @@
 import express from "express";
 import * as bodyParser from "body-parser";
+import cors from 'cors';
 import { Request, Response } from "express";
 import { RegisterHandler } from "./RegisterHandler";
 import { LoginHandler } from "./LoginHandler";
@@ -24,6 +25,7 @@ export class ServerCommunicator {
     public app: express.Application;
 
     private config(): void {
+        this.app.use(cors);
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
     }

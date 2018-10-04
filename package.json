@@ -25,6 +25,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-typescript": "^7.0.0",
     "@types/body-parser": "^1.17.0",
+    "@types/cors": "^2.8.4",
     "@types/express": "^4.16.0",
     "@types/jest": "^23.3.2",
     "@types/node": "^10.9.4",
@@ -35,6 +36,7 @@
   "dependencies": {
     "@types/hat": "^0.0.0",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "hat": "^0.0.3"
   }
