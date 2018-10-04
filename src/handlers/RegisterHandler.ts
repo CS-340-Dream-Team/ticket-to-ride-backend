@@ -1,6 +1,5 @@
 import { BaseHandler } from "./BaseHandler";
 import { Request, Response } from "express";
-import { Command } from "../commands/Command";
 import { ErrorMsgs} from "../model/ErrorMsgs"
 export class RegisterHandler extends BaseHandler{
    
@@ -12,18 +11,21 @@ export class RegisterHandler extends BaseHandler{
         try {
             let token = this.model.register(req.body.username,req.body.password);
             res.status(200).send({
+                success: true,
                 token: token
             });
         } catch(e) {
             if(e.message===ErrorMsgs.USERNAME_EXISTS)
             {
                 res.status(409).send({
-                    command: new Command("showError", { message: e.message })
+                    success: false,
+                    message: e.message
                 })
             }
             else{
                 res.status(400).send({
-                    command: new Command("showError", { message: e.message })
+                    success: false,
+                    message: e.message
                 })
             }
         }
