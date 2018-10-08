@@ -64,7 +64,9 @@ export class ServerCommunicator {
         router.delete('/games/:id', (req: Request, res: Response) => {
             this.gamesHandler.handle(req, res);
         });
-
+        router.post('/games/:id/start', (req: Request, res: Response)=>{
+            this.gamesHandler.handle(req, res);
+        })
         this.app.use('/', router);
     }
 

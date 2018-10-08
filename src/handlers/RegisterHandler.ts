@@ -11,20 +11,17 @@ export class RegisterHandler extends BaseHandler{
         try {
             let token = this.model.register(req.body.username,req.body.password);
             res.status(200).send({
-                success: true,
                 token: token
             });
         } catch(e) {
             if(e.message===ErrorMsgs.USERNAME_EXISTS)
             {
                 res.status(409).send({
-                    success: false,
                     message: e.message
                 })
             }
             else{
                 res.status(400).send({
-                    success: false,
                     message: e.message
                 })
             }
