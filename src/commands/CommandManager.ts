@@ -1,15 +1,12 @@
 import {Command} from "./Command"
+
+// This class will be used for commands within games to update all games with new moves
 export class CommandManager {
-    gameListCommands: Command[];
-    playerListCommands: Command[];
 
     constructor(){
-        this.gameListCommands= [];
-        this.playerListCommands= [];
     }
 
     getGameList(){
-        return this.gameListCommands;
     }
 
     //Create save() function

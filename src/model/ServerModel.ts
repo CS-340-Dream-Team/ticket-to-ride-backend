@@ -14,7 +14,6 @@ export class ServerModel {
     private unstartedGameLimit: number;
     private constructor() {
         if (ServerModel._instance) {
-            //500
             throw new Error("Error: Instantiation failed");
         }
         ServerModel._instance = this;
@@ -34,10 +33,12 @@ export class ServerModel {
     }
 
     login(username: string, password: string): string {
+        if (!username || !password) {
+            throw new Error(ErrorMsgs.USERNAME_OR_PASSWORD_UNDEFINED);
+        }
         var user = this.getUserByUsername(username);
-        if (!user) {
-            //403 Forbidden/ user does not exist
-            throw new Error(ErrorMsgs.USER_DOES_NOT_EXIST);
+        if (!user || (user && user.password !== password)) {
+            throw new Error(ErrorMsgs.WRONG_USERNAME_OR_PASSWORD);
         }
         this.loggedInUsers.push(user);
         let token = hat();
@@ -46,9 +47,11 @@ export class ServerModel {
     }
 
     register(username: string, password: string): string {
+        if (!username || !password) {
+            throw new Error(ErrorMsgs.USERNAME_OR_PASSWORD_UNDEFINED);
+        }
         var user = this.getUserByUsername(username);
         if (user) {
-            //409 Conflict
             throw new Error(ErrorMsgs.USERNAME_EXISTS);
         }
         let token = hat();
@@ -63,7 +66,6 @@ export class ServerModel {
     deleteGame(id: number): Command {
         var game = this.getGameById(id);
         if (!game) {
-            //403 Forbidden
             throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
         }
         let index = this.activeGames.indexOf(game);
@@ -71,27 +73,24 @@ export class ServerModel {
         return new Command("updateGameList", { gameList: this.activeGames });
     }
 
-    joinGame(token: string | undefined, gameId: number): Command {
-        let user = this.getUserByToken(token);
+    joinGame(bearerToken: string | undefined, gameId: number): Command {
+        let user = this.getUserByToken(bearerToken);
         let gameToJoin = this.getGameById(gameId);
         if (!gameToJoin) {
-            //403 Forbidden
             throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
         }
         if (gameToJoin.playersJoined.indexOf(user.player) === -1) {
-            gameToJoin.playersJoined.push(user.player);
+            gameToJoin.addPlayer(user.player);
         } else {
-            //409 Conflict
             throw new Error(ErrorMsgs.PLAYER_ALREADY_IN_GAME);
         }
         return new Command("updatePlayerList", { playerList: gameToJoin.playersJoined });
     }
 
-    createGame(hostToken: string | undefined, gameName: string): Command {
-        let hostUser = this.getUserByToken(hostToken);
+    createGame(bearerToken: string | undefined, gameName: string): Command {
+        let hostUser = this.getUserByToken(bearerToken);
         let game = this.getGameByName(gameName);
         if (game) {
-            //409 Conflict
             throw new Error(ErrorMsgs.GAME_ALREADY_EXISTS);
         }
         if (this.getNumUnstartedGames()+1>this.unstartedGameLimit){
@@ -102,8 +101,8 @@ export class ServerModel {
         return new Command("updateGameList", { gameList: this.activeGames });
     }
 
-    getGameList(token: string | undefined): Command {
-        this.getUserByToken(token);
+    getGameList(bearerToken: string | undefined): Command {
+        this.getUserByToken(bearerToken);
         return new Command("updateGameList", { gameList: this.activeGames });
     }
 
@@ -116,17 +115,16 @@ export class ServerModel {
         return null;
     }
 
-    private getUserByToken(token: string | undefined): UserRegistration {
-        if (!token) {
-            //400 Bad Request
+    private getUserByToken(bearerToken: string | undefined): UserRegistration {
+        if (!bearerToken) {
             throw new Error(ErrorMsgs.NO_AUTHORIZATION);
         }
+        let token = this.extractToken(bearerToken);
         for (let user of this.loggedInUsers) {
             if (user.tokens.includes(token)) {
                 return user;
             }
         }
-        //500 Failed to Authenticate
         throw new Error(ErrorMsgs.INVALID_AUTHORIZATION);
     }
 
@@ -146,6 +144,14 @@ export class ServerModel {
             }
         }
         return null;
+    }
+
+    private extractToken(bearerToken: string): string {
+        let bearer = "Bearer: ";
+        if (!bearerToken.startsWith(bearer)) {
+            throw new Error(ErrorMsgs.INVALID_AUTHORIZATION);
+        }
+        return bearerToken.replace(bearer, "");
     }
     private getNumUnstartedGames():number{
         let unstartedGames=0;
