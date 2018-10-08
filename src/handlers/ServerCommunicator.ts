@@ -30,6 +30,10 @@ export class ServerCommunicator {
         this.app.use(cors({ maxAge }));
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(function (req, res, next) {
+            res.header("Content-Type",'application/json');
+            next();
+        });
     }
 
     private routes(): void {

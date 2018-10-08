@@ -32,12 +32,12 @@ export class GamesHandler extends BaseHandler{
             if(e.message===ErrorMsgs.GAME_DOES_NOT_EXIST)
             {
                 res.status(403).send({
-                    command: new Command("showError", { message: e.message })
+                    message: e.message
                 })
             }
             else{
                 res.status(400).send({
-                    command: new Command("showError", { message: e.message })
+                    message: e.message
                 })
             }
         }
@@ -53,17 +53,17 @@ export class GamesHandler extends BaseHandler{
             if(e.message===ErrorMsgs.GAME_DOES_NOT_EXIST)
             {
                 res.status(403).send({
-                    command: new Command("showError", { message: e.message })
+                    message: e.message
                 })
             }
             else if(e.message === ErrorMsgs.PLAYER_ALREADY_IN_GAME){
                 res.status(409).send({
-                    command: new Command("showError", { message: e.message })
+                    message: e.message
                 })
             }
             else{
                 res.status(400).send({
-                    command: new Command("showError", { message: e.message })
+                    message: e.message
                 })
             }
         }
@@ -78,17 +78,17 @@ export class GamesHandler extends BaseHandler{
         } catch(e) {
             if(e.message === ErrorMsgs.GAME_ALREADY_EXISTS){
                 res.status(409).send({
-                    command: new Command("showError", { message: e.message })
+                    message: e.message
                 })
             }
             else if(e.message === ErrorMsgs.UNSTARTED_LIMIT){
                 res.status(403).send({
-                    command: new Command("showError", {message: e.message})
+                    message: e.message
                 })
             }
             else{
                 res.status(400).send({
-                    command: new Command("showError", { message: e.message })
+                    message: e.message
                 })
             }
         }
@@ -102,7 +102,7 @@ export class GamesHandler extends BaseHandler{
             });
         } catch(e) {
             res.status(400).send({
-                command: new Command("showError", { message: e.message })
+                message: e.message
             })
         }
     }
