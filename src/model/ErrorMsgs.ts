@@ -5,5 +5,6 @@ export enum ErrorMsgs{
     NO_AUTHORIZATION = "No authorization provided.",
     INVALID_AUTHORIZATION = "Invalid authorization.",
     PLAYER_ALREADY_IN_GAME = "Player already joined this game. Cannot join.",
-    GAME_ALREADY_EXISTS = "Game with this name already exists."
+    GAME_ALREADY_EXISTS = "Game with this name already exists.",
+    UNSTARTED_LIMIT = "Number of unstarted games exceeded."
 }

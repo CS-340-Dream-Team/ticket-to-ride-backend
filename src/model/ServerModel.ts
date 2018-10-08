@@ -11,7 +11,7 @@ export class ServerModel {
     private players: Player[];
     private loggedInUsers: UserRegistration[];
     private allUsers: UserRegistration[];
-
+    private unstartedGameLimit: number;
     private constructor() {
         if (ServerModel._instance) {
             //500
@@ -22,6 +22,7 @@ export class ServerModel {
         this.players = [];
         this.loggedInUsers = [];
         this.allUsers = [];
+        this.unstartedGameLimit=6;
     }
 
     public static getInstance(): ServerModel {
@@ -93,6 +94,10 @@ export class ServerModel {
             //409 Conflict
             throw new Error(ErrorMsgs.GAME_ALREADY_EXISTS);
         }
+        if (this.getNumUnstartedGames()+1>this.unstartedGameLimit){
+            //403
+            throw new Error(ErrorMsgs.UNSTARTED_LIMIT);
+        }
         this.activeGames.push(new Game(hostUser.player, gameName));
         return new Command("updateGameList", { gameList: this.activeGames });
     }
@@ -141,5 +146,13 @@ export class ServerModel {
             }
         }
         return null;
+    }
+    private getNumUnstartedGames():number{
+        let unstartedGames=0;
+        this.activeGames.forEach(game => {
+            if(game.started===false)
+                unstartedGames++;
+        });
+        return unstartedGames;
     }
 }

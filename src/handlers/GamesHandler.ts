@@ -81,6 +81,11 @@ export class GamesHandler extends BaseHandler{
                     command: new Command("showError", { message: e.message })
                 })
             }
+            else if(e.message === ErrorMsgs.UNSTARTED_LIMIT){
+                res.status(403).send({
+                    command: new Command("showError", {message: e.message})
+                })
+            }
             else{
                 res.status(400).send({
                     command: new Command("showError", { message: e.message })

@@ -7,6 +7,7 @@ export class Game{
     static _id: number = 0
     id: number;
     numPlayers: number;
+    started:boolean;
 
     constructor(host: Player, name: string){
         this.playersJoined= [];
@@ -14,6 +15,7 @@ export class Game{
         this.name= name;
         this.id = Game._id++;
         this.numPlayers=0;
+        this.started=false;
         this.addPlayer(host);
     }
 
