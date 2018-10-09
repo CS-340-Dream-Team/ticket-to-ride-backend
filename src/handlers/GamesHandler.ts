@@ -97,7 +97,7 @@ export class GamesHandler extends BaseHandler{
             }
             else if(e.message === ErrorMsgs.GAMENAME_UNDEFINED){
                 res.status(400).send({
-                    command: new Command("showError", {message: e.message})
+                    message: e.message
                 })
             }
             else{

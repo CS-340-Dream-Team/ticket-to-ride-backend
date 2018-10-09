@@ -17,7 +17,7 @@ export class LoginHandler extends BaseHandler{
             if(e.message===ErrorMsgs.USER_DOES_NOT_EXIST)
             {
                 res.status(403).send({
-                    message: JSON.stringify(e.message)
+                    message: e.message
                 })
             }
             else{
