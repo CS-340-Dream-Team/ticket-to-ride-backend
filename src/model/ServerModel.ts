@@ -4,6 +4,7 @@ import hat from "hat";
 import { UserRegistration } from "./UserRegistration";
 import { Command } from "../commands/Command";
 import {ErrorMsgs} from "./ErrorMsgs"
+import { hostname, userInfo } from "os";
 export class ServerModel {
 
     private static _instance : ServerModel;
@@ -97,10 +98,32 @@ export class ServerModel {
             //403
             throw new Error(ErrorMsgs.UNSTARTED_LIMIT);
         }
+        if (gameName==="")
+        {
+            throw new Error(ErrorMsgs.GAMENAME_UNDEFINED);
+        }
         this.activeGames.push(new Game(hostUser.player, gameName));
         return new Command("updateGameList", { gameList: this.activeGames });
     }
-
+    startGame(bearerToken:string| undefined, gameId:number):Command{
+        let game = this.getGameById(gameId)
+        let playerName= this.getUsernameByToken(bearerToken)
+        if(!game)
+        {
+            throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST)
+        }
+        else if(game.numPlayers<2)
+        {
+            throw new Error(ErrorMsgs.NOT_ENOUGH_PLAYERS)
+        }
+        else if(game.host.name!==playerName)
+        {
+            throw new Error(ErrorMsgs.NOT_HOST)
+        }
+        game.started=true;
+        //TODO update later
+        return new Command("startGame",{})
+    }
     getGameList(bearerToken: string | undefined): Command {
         this.getUserByToken(bearerToken);
         return new Command("updateGameList", { gameList: this.activeGames });
@@ -127,7 +150,10 @@ export class ServerModel {
         }
         throw new Error(ErrorMsgs.INVALID_AUTHORIZATION);
     }
-
+    private getUsernameByToken(bearerToken: string|undefined):string{
+        let name = this.getUserByToken(bearerToken).username
+        return name;
+    }
     private getGameByName(name: string): Game | null {
         for (let game of this.activeGames) {
             if (game.name == name) {

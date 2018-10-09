@@ -8,6 +8,8 @@ export enum ErrorMsgs{
     PLAYER_ALREADY_IN_GAME = "Player already joined this game. Cannot join.",
     GAME_ALREADY_EXISTS = "Game with this name already exists.",
     USERNAME_OR_PASSWORD_UNDEFINED = "The username or password was not received",
-    UNSTARTED_LIMIT = "Number of unstarted games exceeded."
-
+    UNSTARTED_LIMIT = "Number of unstarted games exceeded.",
+    NOT_ENOUGH_PLAYERS = "Not Enough Players.",
+    NOT_HOST = "Not Host",
+    GAMENAME_UNDEFINED ="Game name is undefined."
 }

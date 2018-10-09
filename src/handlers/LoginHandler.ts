@@ -11,7 +11,6 @@ export class LoginHandler extends BaseHandler{
         try {
             let token = this.model.login(req.body.username, req.body.password);
             res.status(200).send({
-                success: true,
                 token: token
             });
         } catch(e) {

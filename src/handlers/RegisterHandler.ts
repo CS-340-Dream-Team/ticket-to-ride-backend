@@ -11,7 +11,6 @@ export class RegisterHandler extends BaseHandler{
         try {
             let token = this.model.register(req.body.username,req.body.password);
             res.status(200).send({
-                success: true,
                 token: token
             });
         } catch(e) {
