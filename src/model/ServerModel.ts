@@ -1,25 +1,26 @@
-import { Game } from "../model/Game";
+import { Game } from "./Game";
 import { Player } from "./Player";
-import hat from "hat";
 import { UserRegistration } from "./UserRegistration";
 import { Command } from "../commands/Command";
 import {ErrorMsgs} from "./ErrorMsgs"
-import { hostname, userInfo } from "os";
+
+import hat from "hat";
+
 export class ServerModel {
 
     private static _instance : ServerModel;
     private activeGames: Game[];
-    private players: Player[];
     private loggedInUsers: UserRegistration[];
     private allUsers: UserRegistration[];
     private unstartedGameLimit: number;
+
     private constructor() {
         if (ServerModel._instance) {
             throw new Error("Error: Instantiation failed");
         }
+
         ServerModel._instance = this;
         this.activeGames = [];
-        this.players = [];
         this.loggedInUsers = [];
         this.allUsers = [];
         this.unstartedGameLimit=6;
@@ -80,32 +81,34 @@ export class ServerModel {
         if (!gameToJoin) {
             throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
         }
-        if (gameToJoin.playersJoined.indexOf(user.player) === -1) {
-            gameToJoin.addPlayer(user.player);
-        } else {
+        if(this.isPlayerInAGame(user.player)) {
             throw new Error(ErrorMsgs.PLAYER_ALREADY_IN_GAME);
         }
+        gameToJoin.addPlayer(user.player);
         return new Command("updatePlayerList", { playerList: gameToJoin.playersJoined });
     }
 
     createGame(bearerToken: string | undefined, gameName: string): Command {
         let hostUser = this.getUserByToken(bearerToken);
         let game = this.getGameByName(gameName);
+        if (gameName === "")
+        {
+            throw new Error(ErrorMsgs.GAMENAME_UNDEFINED);
+        }
         if (game) {
             throw new Error(ErrorMsgs.GAME_ALREADY_EXISTS);
         }
         if (this.getNumUnstartedGames()+1>this.unstartedGameLimit){
-            //403
             throw new Error(ErrorMsgs.UNSTARTED_LIMIT);
         }
-        if (gameName==="")
-        {
-            throw new Error(ErrorMsgs.GAMENAME_UNDEFINED);
+        if (this.isPlayerInAGame(hostUser.player)) {
+            throw new Error(ErrorMsgs.PLAYER_ALREADY_IN_GAME_CANNOT_CREATE);
         }
         this.activeGames.push(new Game(hostUser.player, gameName));
         return new Command("updateGameList", { gameList: this.activeGames });
     }
-    startGame(bearerToken:string| undefined, gameId:number):Command{
+
+    startGame(bearerToken: string | undefined, gameId: number): Command {
         let game = this.getGameById(gameId)
         let playerName= this.getUsernameByToken(bearerToken)
         if(!game)
@@ -124,6 +127,7 @@ export class ServerModel {
         //TODO update later
         return new Command("startGame",{})
     }
+
     getGameList(bearerToken: string | undefined): Command {
         this.getUserByToken(bearerToken);
         return new Command("updateGameList", { gameList: this.activeGames });
@@ -150,10 +154,12 @@ export class ServerModel {
         }
         throw new Error(ErrorMsgs.INVALID_AUTHORIZATION);
     }
-    private getUsernameByToken(bearerToken: string|undefined):string{
+
+    private getUsernameByToken(bearerToken: string| undefined ): string {
         let name = this.getUserByToken(bearerToken).username
         return name;
     }
+
     private getGameByName(name: string): Game | null {
         for (let game of this.activeGames) {
             if (game.name == name) {
@@ -179,12 +185,22 @@ export class ServerModel {
         }
         return bearerToken.replace(bearer, "");
     }
-    private getNumUnstartedGames():number{
+
+    private getNumUnstartedGames(): number {
         let unstartedGames=0;
         this.activeGames.forEach(game => {
             if(game.started===false)
                 unstartedGames++;
         });
         return unstartedGames;
+    }
+
+    private isPlayerInAGame(player: Player): boolean {
+        for (let game of this.activeGames) {
+            if (game.playersJoined.includes(player)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

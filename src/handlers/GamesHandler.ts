@@ -85,7 +85,8 @@ export class GamesHandler extends BaseHandler{
                 command: command
             });
         } catch(e) {
-            if(e.message === ErrorMsgs.GAME_ALREADY_EXISTS){
+            if(e.message === ErrorMsgs.GAME_ALREADY_EXISTS || 
+                e.message === ErrorMsgs.PLAYER_ALREADY_IN_GAME_CANNOT_CREATE){
                 res.status(409).send({
                     message: e.message
                 })
@@ -107,6 +108,7 @@ export class GamesHandler extends BaseHandler{
             }
         }
     }
+
     private startGame(req: Request, res: Response):void{
         try{
             let command = this.model.startGame(req.headers.authorization, req.params.id)
@@ -136,6 +138,7 @@ export class GamesHandler extends BaseHandler{
             }
         }
     }
+
     private getGameList(req: Request, res: Response) {
         try {
             let gamesList = this.model.getGameList(req.headers.authorization);
