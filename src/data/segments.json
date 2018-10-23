@@ -1,0 +1,2102 @@
+[
+    {
+       "id": 1,
+       "start": {
+          "name": "Baseball Stadium",
+          "latLong": {
+             "lat": 40.254821,
+             "long": -111.651125
+          }
+       },
+       "end": {
+          "name": "LaVell Edwards Stadium",
+          "latLong": {
+             "lat": 40.257536,
+             "long": -111.654664
+          }
+       },
+       "length": 1,
+       "owner": null,
+       "pair": 2,
+       "color": "any"
+    },
+    {
+       "id": 2,
+       "start": {
+          "name": "Baseball Stadium",
+          "latLong": {
+             "lat": 40.254821,
+             "long": -111.651125
+          }
+       },
+       "end": {
+          "name": "LaVell Edwards Stadium",
+          "latLong": {
+             "lat": 40.257536,
+             "long": -111.654664
+          }
+       },
+       "length": 1,
+       "owner": null,
+       "pair": 1,
+       "color": "any"
+    },
+    {
+       "id": 3,
+       "start": {
+          "name": "Baseball Stadium",
+          "latLong": {
+             "lat": 40.254821,
+             "long": -111.651125
+          }
+       },
+       "end": {
+          "name": "The Wilk",
+          "latLong": {
+             "lat": 40.248543,
+             "long": -111.647104
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": 4,
+       "color": "green"
+    },
+    {
+       "id": 4,
+       "start": {
+          "name": "Baseball Stadium",
+          "latLong": {
+             "lat": 40.254821,
+             "long": -111.651125
+          }
+       },
+       "end": {
+          "name": "The Wilk",
+          "latLong": {
+             "lat": 40.248543,
+             "long": -111.647104
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": 3,
+       "color": "yellow"
+    },
+    {
+       "id": 5,
+       "start": {
+          "name": "Baseball Stadium",
+          "latLong": {
+             "lat": 40.254821,
+             "long": -111.651125
+          }
+       },
+       "end": {
+          "name": "Provo Temple",
+          "latLong": {
+             "lat": 40.263665,
+             "long": -111.639844
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "white"
+    },
+    {
+       "id": 6,
+       "start": {
+          "name": "BYU Independent Study",
+          "latLong": {
+             "lat": 40.253645,
+             "long": -111.644678
+          }
+       },
+       "end": {
+          "name": "Baseball Stadium",
+          "latLong": {
+             "lat": 40.254821,
+             "long": -111.651125
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 7,
+       "start": {
+          "name": "BYU Independent Study",
+          "latLong": {
+             "lat": 40.253645,
+             "long": -111.644678
+          }
+       },
+       "end": {
+          "name": "Provo Temple",
+          "latLong": {
+             "lat": 40.263665,
+             "long": -111.639844
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "pink"
+    },
+    {
+       "id": 8,
+       "start": {
+          "name": "Chip Cookie",
+          "latLong": {
+             "lat": 40.24028,
+             "long": -111.661463
+          }
+       },
+       "end": {
+          "name": "Smith's",
+          "latLong": {
+             "lat": 40.238777,
+             "long": -111.661374
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 9,
+       "color": "black"
+    },
+    {
+       "id": 9,
+       "start": {
+          "name": "Chip Cookie",
+          "latLong": {
+             "lat": 40.24028,
+             "long": -111.661463
+          }
+       },
+       "end": {
+          "name": "Smith's",
+          "latLong": {
+             "lat": 40.238777,
+             "long": -111.661374
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 8,
+       "color": "pink"
+    },
+    {
+       "id": 10,
+       "start": {
+          "name": "Chip Cookie",
+          "latLong": {
+             "lat": 40.24028,
+             "long": -111.661463
+          }
+       },
+       "end": {
+          "name": "The Velour",
+          "latLong": {
+             "lat": 40.235612,
+             "long": -111.658968
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": 11,
+       "color": "pink"
+    },
+    {
+       "id": 11,
+       "start": {
+          "name": "Chip Cookie",
+          "latLong": {
+             "lat": 40.24028,
+             "long": -111.661463
+          }
+       },
+       "end": {
+          "name": "The Velour",
+          "latLong": {
+             "lat": 40.235612,
+             "long": -111.658968
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": 10,
+       "color": "any"
+    },
+    {
+       "id": 12,
+       "start": {
+          "name": "City Center Temple",
+          "latLong": {
+             "lat": 40.232688,
+             "long": -111.659303
+          }
+       },
+       "end": {
+          "name": "DMV",
+          "latLong": {
+             "lat": 40.233169,
+             "long": -111.656048
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "green"
+    },
+    {
+       "id": 13,
+       "start": {
+          "name": "City Center Temple",
+          "latLong": {
+             "lat": 40.232688,
+             "long": -111.659303
+          }
+       },
+       "end": {
+          "name": "Rancheritos #3",
+          "latLong": {
+             "lat": 40.221128,
+             "long": -111.659283
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "pink"
+    },
+    {
+       "id": 14,
+       "start": {
+          "name": "Day's Market",
+          "latLong": {
+             "lat": 40.275109,
+             "long": -111.652089
+          }
+       },
+       "end": {
+          "name": "Squaw Peak",
+          "latLong": {
+             "lat": 40.301397,
+             "long": -111.62542
+          }
+       },
+       "length": 6,
+       "owner": null,
+       "pair": null,
+       "color": "green"
+    },
+    {
+       "id": 15,
+       "start": {
+          "name": "DMV",
+          "latLong": {
+             "lat": 40.233169,
+             "long": -111.656048
+          }
+       },
+       "end": {
+          "name": "Provo Peaks Elementary School",
+          "latLong": {
+             "lat": 40.234407,
+             "long": -111.647263
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 16,
+       "start": {
+          "name": "DMV",
+          "latLong": {
+             "lat": 40.233169,
+             "long": -111.656048
+          }
+       },
+       "end": {
+          "name": "Seven Peaks",
+          "latLong": {
+             "lat": 40.235018,
+             "long": -111.638132
+          }
+       },
+       "length": 6,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 17,
+       "start": {
+          "name": "Duck Pond",
+          "latLong": {
+             "lat": 40.244553,
+             "long": -111.65126
+          }
+       },
+       "end": {
+          "name": "J-Dawgs",
+          "latLong": {
+             "lat": 40.245286,
+             "long": -111.646318
+          }
+       },
+       "length": 1,
+       "owner": null,
+       "pair": 18,
+       "color": "orange"
+    },
+    {
+       "id": 18,
+       "start": {
+          "name": "Duck Pond",
+          "latLong": {
+             "lat": 40.244553,
+             "long": -111.65126
+          }
+       },
+       "end": {
+          "name": "J-Dawgs",
+          "latLong": {
+             "lat": 40.245286,
+             "long": -111.646318
+          }
+       },
+       "length": 1,
+       "owner": null,
+       "pair": 17,
+       "color": "any"
+    },
+    {
+       "id": 19,
+       "start": {
+          "name": "Duck Pond",
+          "latLong": {
+             "lat": 40.244553,
+             "long": -111.65126
+          }
+       },
+       "end": {
+          "name": "Chip Cookie",
+          "latLong": {
+             "lat": 40.24028,
+             "long": -111.661463
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "blue"
+    },
+    {
+       "id": 20,
+       "start": {
+          "name": "Smith Field House",
+          "latLong": {
+             "lat": 40.247467,
+             "long": -111.654305
+          }
+       },
+       "end": {
+          "name": "Swig",
+          "latLong": {
+             "lat": 40.254286,
+             "long": -111.656429
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 21,
+       "color": "any"
+    },
+    {
+       "id": 21,
+       "start": {
+          "name": "Smith Field House",
+          "latLong": {
+             "lat": 40.247467,
+             "long": -111.654305
+          }
+       },
+       "end": {
+          "name": "Swig",
+          "latLong": {
+             "lat": 40.254286,
+             "long": -111.656429
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 20,
+       "color": "blue"
+    },
+    {
+       "id": 22,
+       "start": {
+          "name": "Smith Field House",
+          "latLong": {
+             "lat": 40.247467,
+             "long": -111.654305
+          }
+       },
+       "end": {
+          "name": "Baseball Stadium",
+          "latLong": {
+             "lat": 40.254821,
+             "long": -111.651125
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "blue"
+    },
+    {
+       "id": 23,
+       "start": {
+          "name": "J-Dawgs",
+          "latLong": {
+             "lat": 40.245286,
+             "long": -111.646318
+          }
+       },
+       "end": {
+          "name": "Vasa",
+          "latLong": {
+             "lat": 40.240334,
+             "long": -111.642054
+          }
+       },
+       "length": 1,
+       "owner": null,
+       "pair": 24,
+       "color": "any"
+    },
+    {
+       "id": 24,
+       "start": {
+          "name": "J-Dawgs",
+          "latLong": {
+             "lat": 40.245286,
+             "long": -111.646318
+          }
+       },
+       "end": {
+          "name": "Vasa",
+          "latLong": {
+             "lat": 40.240334,
+             "long": -111.642054
+          }
+       },
+       "length": 1,
+       "owner": null,
+       "pair": 23,
+       "color": "any"
+    },
+    {
+       "id": 25,
+       "start": {
+          "name": "Kiwanis Park",
+          "latLong": {
+             "lat": 40.246957,
+             "long": -111.639696
+          }
+       },
+       "end": {
+          "name": "The Apple Chapel",
+          "latLong": {
+             "lat": 40.24732,
+             "long": -111.636243
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "yellow"
+    },
+    {
+       "id": 26,
+       "start": {
+          "name": "Little Caesar's",
+          "latLong": {
+             "lat": 40.239529,
+             "long": -111.642796
+          }
+       },
+       "end": {
+          "name": "Taco Bell",
+          "latLong": {
+             "lat": 40.239452,
+             "long": -111.643632
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 27,
+       "start": {
+          "name": "Little Caesar's",
+          "latLong": {
+             "lat": 40.239529,
+             "long": -111.642796
+          }
+       },
+       "end": {
+          "name": "Provo Peaks Elementary School",
+          "latLong": {
+             "lat": 40.234407,
+             "long": -111.647263
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": 28,
+       "color": "any"
+    },
+    {
+       "id": 28,
+       "start": {
+          "name": "Little Caesar's",
+          "latLong": {
+             "lat": 40.239529,
+             "long": -111.642796
+          }
+       },
+       "end": {
+          "name": "Provo Peaks Elementary School",
+          "latLong": {
+             "lat": 40.234407,
+             "long": -111.647263
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": 27,
+       "color": "pink"
+    },
+    {
+       "id": 29,
+       "start": {
+          "name": "Neighborhood Walmart",
+          "latLong": {
+             "lat": 40.262996,
+             "long": -111.669913
+          }
+       },
+       "end": {
+          "name": "Wilson Diamonds",
+          "latLong": {
+             "lat": 40.26376,
+             "long": -111.666684
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 30,
+       "color": "blue"
+    },
+    {
+       "id": 30,
+       "start": {
+          "name": "Neighborhood Walmart",
+          "latLong": {
+             "lat": 40.262996,
+             "long": -111.669913
+          }
+       },
+       "end": {
+          "name": "Wilson Diamonds",
+          "latLong": {
+             "lat": 40.26376,
+             "long": -111.666684
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 29,
+       "color": "red"
+    },
+    {
+       "id": 31,
+       "start": {
+          "name": "Peaks Ice Arena",
+          "latLong": {
+             "lat": 40.235058,
+             "long": -111.638106
+          }
+       },
+       "end": {
+          "name": "Seven Peaks",
+          "latLong": {
+             "lat": 40.235018,
+             "long": -111.638132
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 32,
+       "color": "any"
+    },
+    {
+       "id": 32,
+       "start": {
+          "name": "Peaks Ice Arena",
+          "latLong": {
+             "lat": 40.235058,
+             "long": -111.638106
+          }
+       },
+       "end": {
+          "name": "Seven Peaks",
+          "latLong": {
+             "lat": 40.235018,
+             "long": -111.638132
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 31,
+       "color": "white"
+    },
+    {
+       "id": 33,
+       "start": {
+          "name": "Peaks Ice Arena",
+          "latLong": {
+             "lat": 40.235058,
+             "long": -111.638106
+          }
+       },
+       "end": {
+          "name": "Little Caesar's",
+          "latLong": {
+             "lat": 40.239529,
+             "long": -111.642796
+          }
+       },
+       "length": 6,
+       "owner": null,
+       "pair": null,
+       "color": "yellow"
+    },
+    {
+       "id": 34,
+       "start": {
+          "name": "Pioneer Park",
+          "latLong": {
+             "lat": 40.233067,
+             "long": -111.668455
+          }
+       },
+       "end": {
+          "name": "City Center Temple",
+          "latLong": {
+             "lat": 40.232688,
+             "long": -111.659303
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 35,
+       "start": {
+          "name": "Pioneer Park",
+          "latLong": {
+             "lat": 40.233067,
+             "long": -111.668455
+          }
+       },
+       "end": {
+          "name": "Rancheritos #3",
+          "latLong": {
+             "lat": 40.221128,
+             "long": -111.659283
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": 36,
+       "color": "orange"
+    },
+    {
+       "id": 36,
+       "start": {
+          "name": "Pioneer Park",
+          "latLong": {
+             "lat": 40.233067,
+             "long": -111.668455
+          }
+       },
+       "end": {
+          "name": "Rancheritos #3",
+          "latLong": {
+             "lat": 40.221128,
+             "long": -111.659283
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": 35,
+       "color": "any"
+    },
+    {
+       "id": 37,
+       "start": {
+          "name": "Pioneer Park",
+          "latLong": {
+             "lat": 40.233067,
+             "long": -111.668455
+          }
+       },
+       "end": {
+          "name": "Provo Rec Center",
+          "latLong": {
+             "lat": 40.241701,
+             "long": -111.664284
+          }
+       },
+       "length": 5,
+       "owner": null,
+       "pair": 38,
+       "color": "any"
+    },
+    {
+       "id": 38,
+       "start": {
+          "name": "Pioneer Park",
+          "latLong": {
+             "lat": 40.233067,
+             "long": -111.668455
+          }
+       },
+       "end": {
+          "name": "Provo Rec Center",
+          "latLong": {
+             "lat": 40.241701,
+             "long": -111.664284
+          }
+       },
+       "length": 5,
+       "owner": null,
+       "pair": 37,
+       "color": "orange"
+    },
+    {
+       "id": 39,
+       "start": {
+          "name": "Pioneer Park",
+          "latLong": {
+             "lat": 40.233067,
+             "long": -111.668455
+          }
+       },
+       "end": {
+          "name": "Waffle Love",
+          "latLong": {
+             "lat": 40.258426,
+             "long": -111.674803
+          }
+       },
+       "length": 6,
+       "owner": null,
+       "pair": null,
+       "color": "white"
+    },
+    {
+       "id": 40,
+       "start": {
+          "name": "Provo Peaks Elementary School",
+          "latLong": {
+             "lat": 40.234407,
+             "long": -111.647263
+          }
+       },
+       "end": {
+          "name": "Taco Bell",
+          "latLong": {
+             "lat": 40.239452,
+             "long": -111.643632
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "red"
+    },
+    {
+       "id": 41,
+       "start": {
+          "name": "Provo Peaks Elementary School",
+          "latLong": {
+             "lat": 40.234407,
+             "long": -111.647263
+          }
+       },
+       "end": {
+          "name": "Peaks Ice Arena",
+          "latLong": {
+             "lat": 40.235058,
+             "long": -111.638106
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "red"
+    },
+    {
+       "id": 42,
+       "start": {
+          "name": "Provo Rec Center",
+          "latLong": {
+             "lat": 40.241701,
+             "long": -111.664284
+          }
+       },
+       "end": {
+          "name": "Chip Cookie",
+          "latLong": {
+             "lat": 40.24028,
+             "long": -111.661463
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 43,
+       "color": "any"
+    },
+    {
+       "id": 43,
+       "start": {
+          "name": "Provo Rec Center",
+          "latLong": {
+             "lat": 40.241701,
+             "long": -111.664284
+          }
+       },
+       "end": {
+          "name": "Chip Cookie",
+          "latLong": {
+             "lat": 40.24028,
+             "long": -111.661463
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 42,
+       "color": "any"
+    },
+    {
+       "id": 44,
+       "start": {
+          "name": "Provo Rec Center",
+          "latLong": {
+             "lat": 40.241701,
+             "long": -111.664284
+          }
+       },
+       "end": {
+          "name": "Smith's",
+          "latLong": {
+             "lat": 40.238777,
+             "long": -111.661374
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 45,
+       "start": {
+          "name": "Provo Temple",
+          "latLong": {
+             "lat": 40.263665,
+             "long": -111.639844
+          }
+       },
+       "end": {
+          "name": "Day's Market",
+          "latLong": {
+             "lat": 40.275109,
+             "long": -111.652089
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 46,
+       "start": {
+          "name": "Provo Temple",
+          "latLong": {
+             "lat": 40.263665,
+             "long": -111.639844
+          }
+       },
+       "end": {
+          "name": "The Apple Chapel",
+          "latLong": {
+             "lat": 40.24732,
+             "long": -111.636243
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "red"
+    },
+    {
+       "id": 47,
+       "start": {
+          "name": "Provo Temple",
+          "latLong": {
+             "lat": 40.263665,
+             "long": -111.639844
+          }
+       },
+       "end": {
+          "name": "The Y Trail Head",
+          "latLong": {
+             "lat": 40.245143,
+             "long": -111.627166
+          }
+       },
+       "length": 5,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 48,
+       "start": {
+          "name": "Rancheritos #2",
+          "latLong": {
+             "lat": 40.250417,
+             "long": -111.657712
+          }
+       },
+       "end": {
+          "name": "The Testing Center",
+          "latLong": {
+             "lat": 40.245433,
+             "long": -111.652399
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 49,
+       "start": {
+          "name": "Rancheritos #2",
+          "latLong": {
+             "lat": 40.250417,
+             "long": -111.657712
+          }
+       },
+       "end": {
+          "name": "Smith Field House",
+          "latLong": {
+             "lat": 40.247467,
+             "long": -111.654305
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 50,
+       "start": {
+          "name": "Rancheritos #1",
+          "latLong": {
+             "lat": 40.255273,
+             "long": -111.6709
+          }
+       },
+       "end": {
+          "name": "Neighborhood Walmart",
+          "latLong": {
+             "lat": 40.262996,
+             "long": -111.669913
+          }
+       },
+       "length": 1,
+       "owner": null,
+       "pair": null,
+       "color": "orange"
+    },
+    {
+       "id": 51,
+       "start": {
+          "name": "Rancheritos #1",
+          "latLong": {
+             "lat": 40.255273,
+             "long": -111.6709
+          }
+       },
+       "end": {
+          "name": "Waffle Love",
+          "latLong": {
+             "lat": 40.258426,
+             "long": -111.674803
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "pink"
+    },
+    {
+       "id": 52,
+       "start": {
+          "name": "Rancheritos #1",
+          "latLong": {
+             "lat": 40.255273,
+             "long": -111.6709
+          }
+       },
+       "end": {
+          "name": "University Mall",
+          "latLong": {
+             "lat": 40.274804,
+             "long": -111.681413
+          }
+       },
+       "length": 5,
+       "owner": null,
+       "pair": 53,
+       "color": "black"
+    },
+    {
+       "id": 53,
+       "start": {
+          "name": "Rancheritos #1",
+          "latLong": {
+             "lat": 40.255273,
+             "long": -111.6709
+          }
+       },
+       "end": {
+          "name": "University Mall",
+          "latLong": {
+             "lat": 40.274804,
+             "long": -111.681413
+          }
+       },
+       "length": 5,
+       "owner": null,
+       "pair": 52,
+       "color": "orange"
+    },
+    {
+       "id": 54,
+       "start": {
+          "name": "Rockwell's Ice Cream",
+          "latLong": {
+             "lat": 40.234413,
+             "long": -111.659124
+          }
+       },
+       "end": {
+          "name": "City Center Temple",
+          "latLong": {
+             "lat": 40.232688,
+             "long": -111.659303
+          }
+       },
+       "length": 1,
+       "owner": null,
+       "pair": 55,
+       "color": "green"
+    },
+    {
+       "id": 55,
+       "start": {
+          "name": "Rockwell's Ice Cream",
+          "latLong": {
+             "lat": 40.234413,
+             "long": -111.659124
+          }
+       },
+       "end": {
+          "name": "City Center Temple",
+          "latLong": {
+             "lat": 40.232688,
+             "long": -111.659303
+          }
+       },
+       "length": 1,
+       "owner": null,
+       "pair": 54,
+       "color": "white"
+    },
+    {
+       "id": 56,
+       "start": {
+          "name": "Rockwell's Ice Cream",
+          "latLong": {
+             "lat": 40.234413,
+             "long": -111.659124
+          }
+       },
+       "end": {
+          "name": "The Velour",
+          "latLong": {
+             "lat": 40.235612,
+             "long": -111.658968
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 57,
+       "color": "black"
+    },
+    {
+       "id": 57,
+       "start": {
+          "name": "Rockwell's Ice Cream",
+          "latLong": {
+             "lat": 40.234413,
+             "long": -111.659124
+          }
+       },
+       "end": {
+          "name": "The Velour",
+          "latLong": {
+             "lat": 40.235612,
+             "long": -111.658968
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 56,
+       "color": "blue"
+    },
+    {
+       "id": 58,
+       "start": {
+          "name": "Rockwell's Ice Cream",
+          "latLong": {
+             "lat": 40.234413,
+             "long": -111.659124
+          }
+       },
+       "end": {
+          "name": "DMV",
+          "latLong": {
+             "lat": 40.233169,
+             "long": -111.656048
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 59,
+       "start": {
+          "name": "Smith's",
+          "latLong": {
+             "lat": 40.238777,
+             "long": -111.661374
+          }
+       },
+       "end": {
+          "name": "The Velour",
+          "latLong": {
+             "lat": 40.235612,
+             "long": -111.658968
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 60,
+       "color": "black"
+    },
+    {
+       "id": 60,
+       "start": {
+          "name": "Smith's",
+          "latLong": {
+             "lat": 40.238777,
+             "long": -111.661374
+          }
+       },
+       "end": {
+          "name": "The Velour",
+          "latLong": {
+             "lat": 40.235612,
+             "long": -111.658968
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 59,
+       "color": "any"
+    },
+    {
+       "id": 61,
+       "start": {
+          "name": "Smith's",
+          "latLong": {
+             "lat": 40.238777,
+             "long": -111.661374
+          }
+       },
+       "end": {
+          "name": "Rockwell's Ice Cream",
+          "latLong": {
+             "lat": 40.234413,
+             "long": -111.659124
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 62,
+       "start": {
+          "name": "Smith's",
+          "latLong": {
+             "lat": 40.238777,
+             "long": -111.661374
+          }
+       },
+       "end": {
+          "name": "Pioneer Park",
+          "latLong": {
+             "lat": 40.233067,
+             "long": -111.668455
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "red"
+    },
+    {
+       "id": 63,
+       "start": {
+          "name": "Rancheritos #3",
+          "latLong": {
+             "lat": 40.221128,
+             "long": -111.659283
+          }
+       },
+       "end": {
+          "name": "DMV",
+          "latLong": {
+             "lat": 40.233169,
+             "long": -111.656048
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "orange"
+    },
+    {
+       "id": 64,
+       "start": {
+          "name": "Squaw Peak",
+          "latLong": {
+             "lat": 40.301397,
+             "long": -111.62542
+          }
+       },
+       "end": {
+          "name": "LaVell Edwards Stadium",
+          "latLong": {
+             "lat": 40.257536,
+             "long": -111.654664
+          }
+       },
+       "length": 6,
+       "owner": null,
+       "pair": null,
+       "color": "white"
+    },
+    {
+       "id": 65,
+       "start": {
+          "name": "Swig",
+          "latLong": {
+             "lat": 40.254286,
+             "long": -111.656429
+          }
+       },
+       "end": {
+          "name": "Wyview",
+          "latLong": {
+             "lat": 40.261354,
+             "long": -111.659173
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 66,
+       "color": "any"
+    },
+    {
+       "id": 66,
+       "start": {
+          "name": "Swig",
+          "latLong": {
+             "lat": 40.254286,
+             "long": -111.656429
+          }
+       },
+       "end": {
+          "name": "Wyview",
+          "latLong": {
+             "lat": 40.261354,
+             "long": -111.659173
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 65,
+       "color": "any"
+    },
+    {
+       "id": 67,
+       "start": {
+          "name": "Swig",
+          "latLong": {
+             "lat": 40.254286,
+             "long": -111.656429
+          }
+       },
+       "end": {
+          "name": "LaVell Edwards Stadium",
+          "latLong": {
+             "lat": 40.257536,
+             "long": -111.654664
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 68,
+       "start": {
+          "name": "Taco Bell",
+          "latLong": {
+             "lat": 40.239452,
+             "long": -111.643632
+          }
+       },
+       "end": {
+          "name": "The Village",
+          "latLong": {
+             "lat": 40.241043,
+             "long": -111.647476
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 69,
+       "color": "any"
+    },
+    {
+       "id": 69,
+       "start": {
+          "name": "Taco Bell",
+          "latLong": {
+             "lat": 40.239452,
+             "long": -111.643632
+          }
+       },
+       "end": {
+          "name": "The Village",
+          "latLong": {
+             "lat": 40.241043,
+             "long": -111.647476
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 68,
+       "color": "green"
+    },
+    {
+       "id": 70,
+       "start": {
+          "name": "The Testing Center",
+          "latLong": {
+             "lat": 40.245433,
+             "long": -111.652399
+          }
+       },
+       "end": {
+          "name": "Duck Pond",
+          "latLong": {
+             "lat": 40.244553,
+             "long": -111.65126
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 71,
+       "color": "any"
+    },
+    {
+       "id": 71,
+       "start": {
+          "name": "The Testing Center",
+          "latLong": {
+             "lat": 40.245433,
+             "long": -111.652399
+          }
+       },
+       "end": {
+          "name": "Duck Pond",
+          "latLong": {
+             "lat": 40.244553,
+             "long": -111.65126
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 70,
+       "color": "blue"
+    },
+    {
+       "id": 72,
+       "start": {
+          "name": "The Testing Center",
+          "latLong": {
+             "lat": 40.245433,
+             "long": -111.652399
+          }
+       },
+       "end": {
+          "name": "Smith Field House",
+          "latLong": {
+             "lat": 40.247467,
+             "long": -111.654305
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "pink"
+    },
+    {
+       "id": 73,
+       "start": {
+          "name": "The Testing Center",
+          "latLong": {
+             "lat": 40.245433,
+             "long": -111.652399
+          }
+       },
+       "end": {
+          "name": "The Wilk",
+          "latLong": {
+             "lat": 40.248543,
+             "long": -111.647104
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 74,
+       "start": {
+          "name": "The Apple Chapel",
+          "latLong": {
+             "lat": 40.24732,
+             "long": -111.636243
+          }
+       },
+       "end": {
+          "name": "Vasa",
+          "latLong": {
+             "lat": 40.240334,
+             "long": -111.642054
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": 75,
+       "color": "any"
+    },
+    {
+       "id": 75,
+       "start": {
+          "name": "The Apple Chapel",
+          "latLong": {
+             "lat": 40.24732,
+             "long": -111.636243
+          }
+       },
+       "end": {
+          "name": "Vasa",
+          "latLong": {
+             "lat": 40.240334,
+             "long": -111.642054
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": 74,
+       "color": "any"
+    },
+    {
+       "id": 76,
+       "start": {
+          "name": "The Apple Chapel",
+          "latLong": {
+             "lat": 40.24732,
+             "long": -111.636243
+          }
+       },
+       "end": {
+          "name": "The Y Trail Head",
+          "latLong": {
+             "lat": 40.245143,
+             "long": -111.627166
+          }
+       },
+       "length": 5,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 77,
+       "start": {
+          "name": "The Quarry",
+          "latLong": {
+             "lat": 40.266937,
+             "long": -111.67005
+          }
+       },
+       "end": {
+          "name": "University Mall",
+          "latLong": {
+             "lat": 40.274804,
+             "long": -111.681413
+          }
+       },
+       "length": 5,
+       "owner": null,
+       "pair": null,
+       "color": "orange"
+    },
+    {
+       "id": 78,
+       "start": {
+          "name": "The Quarry",
+          "latLong": {
+             "lat": 40.266937,
+             "long": -111.67005
+          }
+       },
+       "end": {
+          "name": "UVU",
+          "latLong": {
+             "lat": 40.278773,
+             "long": -111.715047
+          }
+       },
+       "length": 5,
+       "owner": null,
+       "pair": null,
+       "color": "green"
+    },
+    {
+       "id": 79,
+       "start": {
+          "name": "The Village",
+          "latLong": {
+             "lat": 40.241043,
+             "long": -111.647476
+          }
+       },
+       "end": {
+          "name": "J-Dawgs",
+          "latLong": {
+             "lat": 40.245286,
+             "long": -111.646318
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "yellow"
+    },
+    {
+       "id": 80,
+       "start": {
+          "name": "The Village",
+          "latLong": {
+             "lat": 40.241043,
+             "long": -111.647476
+          }
+       },
+       "end": {
+          "name": "Duck Pond",
+          "latLong": {
+             "lat": 40.244553,
+             "long": -111.65126
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "yellow"
+    },
+    {
+       "id": 81,
+       "start": {
+          "name": "The Village",
+          "latLong": {
+             "lat": 40.241043,
+             "long": -111.647476
+          }
+       },
+       "end": {
+          "name": "DMV",
+          "latLong": {
+             "lat": 40.233169,
+             "long": -111.656048
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "yellow"
+    },
+    {
+       "id": 82,
+       "start": {
+          "name": "The Wilk",
+          "latLong": {
+             "lat": 40.248543,
+             "long": -111.647104
+          }
+       },
+       "end": {
+          "name": "BYU Independent Study",
+          "latLong": {
+             "lat": 40.253645,
+             "long": -111.644678
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 83,
+       "start": {
+          "name": "The Wilk",
+          "latLong": {
+             "lat": 40.248543,
+             "long": -111.647104
+          }
+       },
+       "end": {
+          "name": "J-Dawgs",
+          "latLong": {
+             "lat": 40.245286,
+             "long": -111.646318
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 84,
+       "start": {
+          "name": "The Wilk",
+          "latLong": {
+             "lat": 40.248543,
+             "long": -111.647104
+          }
+       },
+       "end": {
+          "name": "Kiwanis Park",
+          "latLong": {
+             "lat": 40.246957,
+             "long": -111.639696
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 85,
+       "start": {
+          "name": "The Y Trail Head",
+          "latLong": {
+             "lat": 40.245143,
+             "long": -111.627166
+          }
+       },
+       "end": {
+          "name": "Little Caesar's",
+          "latLong": {
+             "lat": 40.239529,
+             "long": -111.642796
+          }
+       },
+       "length": 6,
+       "owner": null,
+       "pair": null,
+       "color": "black"
+    },
+    {
+       "id": 86,
+       "start": {
+          "name": "University Mall",
+          "latLong": {
+             "lat": 40.274804,
+             "long": -111.681413
+          }
+       },
+       "end": {
+          "name": "LaVell Edwards Stadium",
+          "latLong": {
+             "lat": 40.257536,
+             "long": -111.654664
+          }
+       },
+       "length": 6,
+       "owner": null,
+       "pair": null,
+       "color": "white"
+    },
+    {
+       "id": 87,
+       "start": {
+          "name": "Utah Lake",
+          "latLong": {
+             "lat": 40.238467,
+             "long": -111.738912
+          }
+       },
+       "end": {
+          "name": "Rancheritos #1",
+          "latLong": {
+             "lat": 40.255273,
+             "long": -111.6709
+          }
+       },
+       "length": 6,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 88,
+       "start": {
+          "name": "Utah Lake",
+          "latLong": {
+             "lat": 40.238467,
+             "long": -111.738912
+          }
+       },
+       "end": {
+          "name": "The Quarry",
+          "latLong": {
+             "lat": 40.266937,
+             "long": -111.67005
+          }
+       },
+       "length": 6,
+       "owner": null,
+       "pair": null,
+       "color": "white"
+    },
+    {
+       "id": 89,
+       "start": {
+          "name": "UVU",
+          "latLong": {
+             "lat": 40.278773,
+             "long": -111.715047
+          }
+       },
+       "end": {
+          "name": "Utah Lake",
+          "latLong": {
+             "lat": 40.238467,
+             "long": -111.738912
+          }
+       },
+       "length": 5,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 90,
+       "start": {
+          "name": "Vasa",
+          "latLong": {
+             "lat": 40.240334,
+             "long": -111.642054
+          }
+       },
+       "end": {
+          "name": "Little Caesar's",
+          "latLong": {
+             "lat": 40.239529,
+             "long": -111.642796
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 91,
+       "color": "black"
+    },
+    {
+       "id": 91,
+       "start": {
+          "name": "Vasa",
+          "latLong": {
+             "lat": 40.240334,
+             "long": -111.642054
+          }
+       },
+       "end": {
+          "name": "Little Caesar's",
+          "latLong": {
+             "lat": 40.239529,
+             "long": -111.642796
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": 90,
+       "color": "yellow"
+    },
+    {
+       "id": 92,
+       "start": {
+          "name": "Vasa",
+          "latLong": {
+             "lat": 40.240334,
+             "long": -111.642054
+          }
+       },
+       "end": {
+          "name": "Kiwanis Park",
+          "latLong": {
+             "lat": 40.246957,
+             "long": -111.639696
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 93,
+       "start": {
+          "name": "The Velour",
+          "latLong": {
+             "lat": 40.235612,
+             "long": -111.658968
+          }
+       },
+       "end": {
+          "name": "The Village",
+          "latLong": {
+             "lat": 40.241043,
+             "long": -111.647476
+          }
+       },
+       "length": 3,
+       "owner": null,
+       "pair": null,
+       "color": "red"
+    },
+    {
+       "id": 94,
+       "start": {
+          "name": "Waffle Love",
+          "latLong": {
+             "lat": 40.258426,
+             "long": -111.674803
+          }
+       },
+       "end": {
+          "name": "Neighborhood Walmart",
+          "latLong": {
+             "lat": 40.262996,
+             "long": -111.669913
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 95,
+       "start": {
+          "name": "Waffle Love",
+          "latLong": {
+             "lat": 40.258426,
+             "long": -111.674803
+          }
+       },
+       "end": {
+          "name": "Provo Rec Center",
+          "latLong": {
+             "lat": 40.241701,
+             "long": -111.664284
+          }
+       },
+       "length": 5,
+       "owner": null,
+       "pair": null,
+       "color": "green"
+    },
+    {
+       "id": 96,
+       "start": {
+          "name": "Wilson Diamonds",
+          "latLong": {
+             "lat": 40.26376,
+             "long": -111.666684
+          }
+       },
+       "end": {
+          "name": "Swig",
+          "latLong": {
+             "lat": 40.254286,
+             "long": -111.656429
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "blue"
+    },
+    {
+       "id": 97,
+       "start": {
+          "name": "Wilson Diamonds",
+          "latLong": {
+             "lat": 40.26376,
+             "long": -111.666684
+          }
+       },
+       "end": {
+          "name": "Wyview",
+          "latLong": {
+             "lat": 40.261354,
+             "long": -111.659173
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "black"
+    },
+    {
+       "id": 98,
+       "start": {
+          "name": "Wilson Diamonds",
+          "latLong": {
+             "lat": 40.26376,
+             "long": -111.666684
+          }
+       },
+       "end": {
+          "name": "Provo Rec Center",
+          "latLong": {
+             "lat": 40.241701,
+             "long": -111.664284
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    },
+    {
+       "id": 99,
+       "start": {
+          "name": "Wyview",
+          "latLong": {
+             "lat": 40.261354,
+             "long": -111.659173
+          }
+       },
+       "end": {
+          "name": "Rancheritos #2",
+          "latLong": {
+             "lat": 40.250417,
+             "long": -111.657712
+          }
+       },
+       "length": 2,
+       "owner": null,
+       "pair": null,
+       "color": "red"
+    },
+    {
+       "id": 100,
+       "start": {
+          "name": "Wyview",
+          "latLong": {
+             "lat": 40.261354,
+             "long": -111.659173
+          }
+       },
+       "end": {
+          "name": "Chip Cookie",
+          "latLong": {
+             "lat": 40.24028,
+             "long": -111.661463
+          }
+       },
+       "length": 4,
+       "owner": null,
+       "pair": null,
+       "color": "any"
+    }
+ ]

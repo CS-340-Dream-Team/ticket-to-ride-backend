@@ -5,9 +5,11 @@ import { Request, Response } from "express";
 import { RegisterHandler } from "./RegisterHandler";
 import { LoginHandler } from "./LoginHandler";
 import { GamesHandler } from "./GamesHandler";
+import { MapHandler } from "./MapHandler";
 
 export class ServerCommunicator {
 
+    private mapHandler: MapHandler = new MapHandler(); 
     private registerHandler: RegisterHandler = new RegisterHandler();
     private loginHandler: LoginHandler = new LoginHandler();
     private gamesHandler: GamesHandler = new GamesHandler();
@@ -53,6 +55,10 @@ export class ServerCommunicator {
             this.registerHandler.handle(req, res);
         });
         
+        router.get('/map', (req: Request, res: Response) => {
+            this.mapHandler.handle(req, res);
+        });
+
         router.post('/games', (req: Request, res: Response) => {
             this.gamesHandler.handle(req, res);
         });

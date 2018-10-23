@@ -1,0 +1,289 @@
+[
+    {
+       "name": "Baseball Stadium",
+       "latLong": {
+          "lat": 40.254821,
+          "long": -111.651125
+       }
+    },
+    {
+       "name": "BYU Independent Study",
+       "latLong": {
+          "lat": 40.253645,
+          "long": -111.644678
+       }
+    },
+    {
+       "name": "Chip Cookie",
+       "latLong": {
+          "lat": 40.24028,
+          "long": -111.661463
+       }
+    },
+    {
+       "name": "City Center Temple",
+       "latLong": {
+          "lat": 40.232688,
+          "long": -111.659303
+       }
+    },
+    {
+       "name": "Day's Market",
+       "latLong": {
+          "lat": 40.275109,
+          "long": -111.652089
+       }
+    },
+    {
+       "name": "DMV",
+       "latLong": {
+          "lat": 40.233169,
+          "long": -111.656048
+       }
+    },
+    {
+       "name": "Duck Pond",
+       "latLong": {
+          "lat": 40.244553,
+          "long": -111.65126
+       }
+    },
+    {
+       "name": "J-Dawgs",
+       "latLong": {
+          "lat": 40.245286,
+          "long": -111.646318
+       }
+    },
+    {
+       "name": "Kiwanis Park",
+       "latLong": {
+          "lat": 40.246957,
+          "long": -111.639696
+       }
+    },
+    {
+       "name": "LaVell Edwards Stadium",
+       "latLong": {
+          "lat": 40.257536,
+          "long": -111.654664
+       }
+    },
+    {
+       "name": "Little Caesar's",
+       "latLong": {
+          "lat": 40.239529,
+          "long": -111.642796
+       }
+    },
+    {
+       "name": "Neighborhood Walmart",
+       "latLong": {
+          "lat": 40.262996,
+          "long": -111.669913
+       }
+    },
+    {
+       "name": "Peaks Ice Arena",
+       "latLong": {
+          "lat": 40.235058,
+          "long": -111.638106
+       }
+    },
+    {
+       "name": "Pioneer Park",
+       "latLong": {
+          "lat": 40.233067,
+          "long": -111.668455
+       }
+    },
+    {
+       "name": "Provo Peaks Elementary School",
+       "latLong": {
+          "lat": 40.234407,
+          "long": -111.647263
+       }
+    },
+    {
+       "name": "Provo Rec Center",
+       "latLong": {
+          "lat": 40.241701,
+          "long": -111.664284
+       }
+    },
+    {
+       "name": "Provo Temple",
+       "latLong": {
+          "lat": 40.263665,
+          "long": -111.639844
+       }
+    },
+    {
+       "name": "Rancheritos #2",
+       "latLong": {
+          "lat": 40.250417,
+          "long": -111.657712
+       }
+    },
+    {
+       "name": "Rancheritos #1",
+       "latLong": {
+          "lat": 40.255273,
+          "long": -111.6709
+       }
+    },
+    {
+       "name": "Rockwell's Ice Cream",
+       "latLong": {
+          "lat": 40.234413,
+          "long": -111.659124
+       }
+    },
+    {
+       "name": "Seven Peaks",
+       "latLong": {
+          "lat": 40.235018,
+          "long": -111.638132
+       }
+    },
+    {
+       "name": "Smith Field House",
+       "latLong": {
+          "lat": 40.247467,
+          "long": -111.654305
+       }
+    },
+    {
+       "name": "Smith's",
+       "latLong": {
+          "lat": 40.238777,
+          "long": -111.661374
+       }
+    },
+    {
+       "name": "Rancheritos #3",
+       "latLong": {
+          "lat": 40.221128,
+          "long": -111.659283
+       }
+    },
+    {
+       "name": "Squaw Peak",
+       "latLong": {
+          "lat": 40.301397,
+          "long": -111.62542
+       }
+    },
+    {
+       "name": "Swig",
+       "latLong": {
+          "lat": 40.254286,
+          "long": -111.656429
+       }
+    },
+    {
+       "name": "Taco Bell",
+       "latLong": {
+          "lat": 40.239452,
+          "long": -111.643632
+       }
+    },
+    {
+       "name": "The Apple Chapel",
+       "latLong": {
+          "lat": 40.24732,
+          "long": -111.636243
+       }
+    },
+    {
+       "name": "The Testing Center",
+       "latLong": {
+          "lat": 40.245433,
+          "long": -111.652399
+       }
+    },
+    {
+       "name": "The Quarry",
+       "latLong": {
+          "lat": 40.266937,
+          "long": -111.67005
+       }
+    },
+    {
+       "name": "The Velour",
+       "latLong": {
+          "lat": 40.235612,
+          "long": -111.658968
+       }
+    },
+    {
+       "name": "The Village",
+       "latLong": {
+          "lat": 40.241043,
+          "long": -111.647476
+       }
+    },
+    {
+       "name": "The Wilk",
+       "latLong": {
+          "lat": 40.248543,
+          "long": -111.647104
+       }
+    },
+    {
+       "name": "University Mall",
+       "latLong": {
+          "lat": 40.274804,
+          "long": -111.681413
+       }
+    },
+    {
+       "name": "Utah Lake",
+       "latLong": {
+          "lat": 40.238467,
+          "long": -111.738912
+       }
+    },
+    {
+       "name": "UVU",
+       "latLong": {
+          "lat": 40.278773,
+          "long": -111.715047
+       }
+    },
+    {
+       "name": "Vasa",
+       "latLong": {
+          "lat": 40.240334,
+          "long": -111.642054
+       }
+    },
+    {
+       "name": "Waffle Love",
+       "latLong": {
+          "lat": 40.258426,
+          "long": -111.674803
+       }
+    },
+    {
+       "name": "Wilson Diamonds",
+       "latLong": {
+          "lat": 40.26376,
+          "long": -111.666684
+       }
+    },
+    {
+       "name": "Wyview",
+       "latLong": {
+          "lat": 40.261354,
+          "long": -111.659173
+       }
+    },
+    {
+       "name": "The Y Trail Head",
+       "latLong": {
+          "lat": 40.245143,
+          "long": -111.627166
+       }
+    }
+ ]

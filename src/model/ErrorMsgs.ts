@@ -1,4 +1,5 @@
 export enum ErrorMsgs{
+    DATA_DOES_NOT_EXIST = "Could not send map data",
     GAME_ALREADY_EXISTS = "Game with this name already exists.",
     GAME_DOES_NOT_EXIST = "Game does not exist.",
     GAMENAME_UNDEFINED ="Game name is undefined.",
