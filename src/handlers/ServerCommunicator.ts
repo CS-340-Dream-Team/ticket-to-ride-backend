@@ -5,6 +5,7 @@ import { Request, Response } from "express";
 import { RegisterHandler } from "./RegisterHandler";
 import { LoginHandler } from "./LoginHandler";
 import { GamesHandler } from "./GamesHandler";
+import { GamePlayHandler} from "./GamePlayHandler";
 import { MapHandler } from "./MapHandler";
 
 export class ServerCommunicator {
@@ -13,7 +14,7 @@ export class ServerCommunicator {
     private registerHandler: RegisterHandler = new RegisterHandler();
     private loginHandler: LoginHandler = new LoginHandler();
     private gamesHandler: GamesHandler = new GamesHandler();
-
+    private gameplayHandler: GamePlayHandler = new GamePlayHandler();
     constructor() {
         const port = 4040;
         this.app = express();
@@ -76,6 +77,24 @@ export class ServerCommunicator {
         });
         router.post('/games/:id/start', (req: Request, res: Response)=>{
             this.gamesHandler.handle(req, res);
+        })
+        router.post('/play/segment', (req:Request, res:Response)=>{
+            this.gameplayHandler.handle(req, res);
+        })
+        router.post('/play/bus/:index', (req:Request, res:Response)=>{
+            this.gameplayHandler.handle(req, res);
+        })
+        router.get('/play/bus', (req:Request, res:Response)=>{
+            this.gameplayHandler.handle(req, res);
+        })
+        router.get('/play/routes', (req:Request, res:Response)=>{
+            this.gameplayHandler.handle(req, res);
+        })
+        router.delete('/play/bus', (req:Request, res:Response)=>{
+            this.gameplayHandler.handle(req, res);
+        })
+        router.get('/play', (req:Request, res:Response)=>{
+            this.gameplayHandler.handle(req, res);
         })
         this.app.use('/', router);
     }

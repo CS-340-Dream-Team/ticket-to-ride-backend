@@ -127,10 +127,28 @@ export class ServerModel {
         //TODO update later
         return new Command("startGame",{})
     }
-
+    
     getGameList(bearerToken: string | undefined): Command {
         this.getUserByToken(bearerToken);
         return new Command("updateGameList", { gameList: this.activeGames });
+    }
+    /*
+    getSpread(authorization: string):Command{
+        let game= this.getGameByToken(authorization);
+        
+        let spread=game.getSpread();
+        return new Command("spread",{spread})
+        
+      
+    }
+*/
+    private getGameByToken(bearerToken: string|undefined):Game|undefined{
+        let user=this.getUserByToken(bearerToken)
+        for( let game of this.activeGames){
+            if(game.playersJoined.includes(user.player))
+                return game
+        }
+        throw new Error(ErrorMsgs.PLAYER_NOT_IN_A_GAME)
     }
 
     private getUserByUsername(username: string): UserRegistration | null {
