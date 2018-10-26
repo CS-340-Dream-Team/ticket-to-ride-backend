@@ -55,5 +55,10 @@ export class Game{
     getSpread(){
         return this.spread.getSpread()
     }
+    assignColors():void{
+        for (let x = 0; x <this.playersJoined.length; x++) {
+            this.playersJoined[x].color=x+1;
+        }
+    }
 
 }

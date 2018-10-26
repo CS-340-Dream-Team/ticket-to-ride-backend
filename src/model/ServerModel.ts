@@ -129,9 +129,10 @@ export class ServerModel {
             throw new Error(ErrorMsgs.NOT_HOST)
         }
         game.started=true;
-        //TODO update later
+        game.assignColors();
         return new Command("startGame",{})
     }
+
     
     getGameList(bearerToken: string | undefined): Command {
         this.getUserByToken(bearerToken);
