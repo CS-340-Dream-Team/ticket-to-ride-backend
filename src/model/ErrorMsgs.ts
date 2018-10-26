@@ -4,6 +4,7 @@ export enum ErrorMsgs {
     GAME_DOES_NOT_EXIST = "Game does not exist.",
     GAMENAME_UNDEFINED = "Game name is undefined.",
     INVALID_AUTHORIZATION = "Invalid authorization.",
+    PLAYER_NOT_IN_GAME = "Player is not in any game and cannot send a message",
     NO_AUTHORIZATION = "No authorization provided.",
     NOT_ENOUGH_PLAYERS = "Not Enough Players.",
     NOT_HOST = "Not Host",

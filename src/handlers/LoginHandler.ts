@@ -1,6 +1,7 @@
 import { BaseHandler } from "./BaseHandler";
 import { Request, Response } from "express";
-import {ErrorMsgs} from "../model/ErrorMsgs"
+import {ErrorMsgs} from "../model/ErrorMsgs";
+
 export class LoginHandler extends BaseHandler{
 
     constructor() {

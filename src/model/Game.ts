@@ -1,4 +1,5 @@
 import {Player} from "./Player"
+import { Chat } from "./Chat";
 import {BusDeck} from "./BusDeck"
 import {RouteDeck} from "./RouteDeck"
 import { DrawSpread } from "./DrawSpread";
@@ -11,9 +12,11 @@ export class Game{
     id: number;
     numPlayers: number;
     started:boolean;
+    chat: Chat;
     busDeck:BusDeck;
     routeDeck:RouteDeck;
     spread:DrawSpread;
+
     constructor(host: Player, name: string){
         this.playersJoined= [];
         this.host= host;
@@ -21,6 +24,7 @@ export class Game{
         this.id = Game._id++;
         this.numPlayers=0;
         this.started=false;
+        this.chat = new Chat();
         this.addPlayer(host);
         //New Stuff
         this.busDeck=new BusDeck();

@@ -3,12 +3,15 @@ import { Player } from "./Player";
 import { UserRegistration } from "./UserRegistration";
 import { Command } from "../commands/Command";
 import {ErrorMsgs} from "./ErrorMsgs"
+import { CommandManager } from "../commands/CommandManager";
+import { Message } from "./Message";
 
 import hat from "hat";
 
 export class ServerModel {
 
     private static _instance : ServerModel;
+    private commandManager: CommandManager;
     private activeGames: Game[];
     private loggedInUsers: UserRegistration[];
     private allUsers: UserRegistration[];
@@ -20,6 +23,7 @@ export class ServerModel {
         }
 
         ServerModel._instance = this;
+        this.commandManager = new CommandManager();
         this.activeGames = [];
         this.loggedInUsers = [];
         this.allUsers = [];
@@ -62,6 +66,7 @@ export class ServerModel {
         this.loggedInUsers.push(user);
         let id = hat();
         user.tokens.push(token);
+
         return token;
     }
 
@@ -151,6 +156,27 @@ export class ServerModel {
         throw new Error(ErrorMsgs.PLAYER_NOT_IN_A_GAME)
     }
 
+    addMessage(bearerToken: string | undefined, messageText: string, prevTimestamp: number): Command {
+        let user = this.getUserByToken(bearerToken);
+        let player = user.player;
+        //FIXME uncomment lines below when we can start game
+        // let game = this.getGameByPlayer(player);
+        let message = new Message(messageText, player);
+        // this.activeGames[game.id].chat.messages.push(message);
+        // this.game.chat.messages.push(message);
+        // return this.commandManager.addChatCommand(game.id, message, prevTimestamp);
+        return this.commandManager.addChatCommand(0, message, prevTimestamp);
+    }
+
+    getMessagesAfter(bearerToken: string | undefined, prevTimestamp: number): Command[] {
+        let user = this.getUserByToken(bearerToken);
+        let player = user.player;
+        //FIXME uncomment lines below when we can start game
+        // let game = this.getGameByPlayer(player);
+        return this.commandManager.getMessagesAfter(0, prevTimestamp);
+        // return this.commandManager.getMessagesAfter(game.id, prevTimestamp);
+    }
+
     private getUserByUsername(username: string): UserRegistration | null {
         for (let user of this.allUsers) {
             if (user.username === username) {
@@ -194,6 +220,15 @@ export class ServerModel {
             }
         }
         return null;
+    }
+
+    private getGameByPlayer(player: Player): Game {
+        for (let game of this.activeGames) {
+            if (game.playersJoined.includes(player)) {
+                return game;
+            }
+        }
+        throw new Error(ErrorMsgs.PLAYER_NOT_IN_GAME);
     }
 
     private extractToken(bearerToken: string): string {
