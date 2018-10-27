@@ -135,8 +135,18 @@ export class ServerModel {
 
     
     getGameList(bearerToken: string | undefined): Command {
-        this.getUserByToken(bearerToken);
-        return new Command("updateGameList", { gameList: this.activeGames });
+        let user = this.getUserByToken(bearerToken);
+        let commandToReturn = new Command("updateGameList", { gameList: this.activeGames });
+        this.activeGames.forEach(game => {
+            if (game.started) {
+                game.playersJoined.forEach(player => {
+                    if (player.name === user.username) {
+                        commandToReturn = new Command("gameStarted", { game: game});
+                    }
+                });
+            }
+        });
+        return commandToReturn;
     }
     /*
     getSpread(authorization: string):Command{
