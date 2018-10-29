@@ -130,6 +130,7 @@ export class ServerModel {
         }
         game.started=true;
         game.assignColors();
+        this.commandManager.addGame();
         return new Command("startGame",{})
     }
 
@@ -170,22 +171,18 @@ export class ServerModel {
     addMessage(bearerToken: string | undefined, messageText: string, prevTimestamp: number): Command {
         let user = this.getUserByToken(bearerToken);
         let player = user.player;
-        //FIXME uncomment lines below when we can start game
-        // let game = this.getGameByPlayer(player);
+        let game = this.getGameByPlayer(player);
         let message = new Message(messageText, player);
-        // this.activeGames[game.id].chat.messages.push(message);
-        // this.game.chat.messages.push(message);
-        // return this.commandManager.addChatCommand(game.id, message, prevTimestamp);
-        return this.commandManager.addChatCommand(0, message, prevTimestamp);
+        this.activeGames[game.id].chat.messages.push(message);
+        game.chat.messages.push(message);
+        return this.commandManager.addChatCommand(game.id, message, prevTimestamp);
     }
 
     getMessagesAfter(bearerToken: string | undefined, prevTimestamp: number): Command[] {
         let user = this.getUserByToken(bearerToken);
         let player = user.player;
-        //FIXME uncomment lines below when we can start game
-        // let game = this.getGameByPlayer(player);
-        return this.commandManager.getMessagesAfter(0, prevTimestamp);
-        // return this.commandManager.getMessagesAfter(game.id, prevTimestamp);
+        let game = this.getGameByPlayer(player);
+        return this.commandManager.getMessagesAfter(game.id, prevTimestamp);
     }
 
     private getUserByUsername(username: string): UserRegistration | null {

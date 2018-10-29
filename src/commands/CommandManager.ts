@@ -11,9 +11,6 @@ export class CommandManager {
     constructor(){
         this.gameCommandQueues = [];
         this.chatCommandQueues = [];
-
-        //FIXME remove once we can start a game
-        this.chatCommandQueues.push([]);
     }
 
     addGame() {
