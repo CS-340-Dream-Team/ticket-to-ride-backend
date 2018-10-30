@@ -185,11 +185,11 @@ export class ServerModel {
         return this.commandManager.getMessagesAfter(game.id, prevTimestamp);
     }
 
-    getGameData(bearerToken: string | undefined, prevTimestamp: number) {
+    getGameData(bearerToken: string | undefined, prevId: number) {
         let user = this.getUserByToken(bearerToken);
         let player = user.player;
         let game = this.getGameByPlayer(player);
-        return this.commandManager.getGameplayAfter(game.id, prevTimestamp);
+        return this.commandManager.getGameplayAfter(game.id, prevId);
     }
 
     private getUserByUsername(username: string): UserRegistration | null {

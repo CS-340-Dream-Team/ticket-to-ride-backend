@@ -17,5 +17,6 @@ export enum ErrorMsgs {
     WRONG_USERNAME_OR_PASSWORD = "Wrong username or password",
     ENDPOINT_DNE = "Endpoint does not exist",
     PLAYER_NOT_IN_A_GAME = "Player is not in a game.",
-    NOT_ENOUGH_CARDS = "Not enough cards."
+    NOT_ENOUGH_CARDS = "Not enough cards.",
+    INVALID_COMMAND = "Invalid command received"
 }
