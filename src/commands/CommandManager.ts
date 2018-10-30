@@ -46,6 +46,17 @@ export class CommandManager {
         return commands;
     }
 
+    getGameplayAfter(gameId: number, prevTimestamp: number): Command[] {
+        let commands: Command[] = [];
+        this.gameCommandQueues[gameId].forEach( command => {
+            //FIXME figure out how to determine which commands to send
+            // if (command.data.timestamp > prevTimestamp) {
+                // commands.push(command);
+            // }
+        });
+        return commands;
+    }
+
     getGameList(){
     }
 
