@@ -12,7 +12,8 @@ export class ServerModel {
 
     private static _instance : ServerModel;
     private commandManager: CommandManager;
-    private activeGames: Game[];
+    private unstartedGames: Game[];
+    private startedGames: { [key:number]:Game; };
     private loggedInUsers: UserRegistration[];
     private allUsers: UserRegistration[];
     private unstartedGameLimit: number;
@@ -24,7 +25,8 @@ export class ServerModel {
 
         ServerModel._instance = this;
         this.commandManager = new CommandManager();
-        this.activeGames = [];
+        this.unstartedGames = [];
+        this.startedGames = {};
         this.loggedInUsers = [];
         this.allUsers = [];
         this.unstartedGameLimit=6;
@@ -75,9 +77,9 @@ export class ServerModel {
         if (!game) {
             throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
         }
-        let index = this.activeGames.indexOf(game);
-        this.activeGames.splice(index, 1);
-        return new Command("updateGameList", { gameList: this.activeGames });
+        let index = this.unstartedGames.indexOf(game);
+        this.unstartedGames.splice(index, 1);
+        return new Command("updateGameList", { gameList: this.unstartedGames });
     }
 
     joinGame(bearerToken: string | undefined, gameId: number): Command {
@@ -103,14 +105,14 @@ export class ServerModel {
         if (game) {
             throw new Error(ErrorMsgs.GAME_ALREADY_EXISTS);
         }
-        if (this.getNumUnstartedGames()+1>this.unstartedGameLimit){
+        if (this.unstartedGames.length + 1 > this.unstartedGameLimit){
             throw new Error(ErrorMsgs.UNSTARTED_LIMIT);
         }
         if (this.isPlayerInAGame(hostUser.player)) {
             throw new Error(ErrorMsgs.PLAYER_ALREADY_IN_GAME_CANNOT_CREATE);
         }
-        this.activeGames.push(new Game(hostUser.player, gameName));
-        return new Command("updateGameList", { gameList: this.activeGames });
+        this.unstartedGames.push(new Game(hostUser.player, gameName));
+        return new Command("updateGameList", { gameList: this.unstartedGames });
     }
 
     startGame(bearerToken: string | undefined, gameId: number): Command {
@@ -129,6 +131,8 @@ export class ServerModel {
             throw new Error(ErrorMsgs.NOT_HOST)
         }
         game.started=true;
+        this.deleteGame(game.id);
+        this.startedGames[game.id] = game;
         game.assignColors();
         this.commandManager.addGame();
         return new Command("startGame",{})
@@ -137,15 +141,13 @@ export class ServerModel {
     
     getGameList(bearerToken: string | undefined): Command {
         let user = this.getUserByToken(bearerToken);
-        let commandToReturn = new Command("updateGameList", { gameList: this.activeGames });
-        this.activeGames.forEach(game => {
-            if (game.started) {
-                game.playersJoined.forEach(player => {
-                    if (player.name === user.username) {
-                        commandToReturn = new Command("gameStarted", { game: game});
-                    }
-                });
-            }
+        let commandToReturn = new Command("updateGameList", { gameList: this.unstartedGames });
+        Object.values(this.startedGames).forEach(game => {
+            game.playersJoined.forEach(player => {
+                if (player.name === user.username) {
+                    commandToReturn = new Command("gameStarted", { game: game});
+                }
+            })
         });
         return commandToReturn;
     }
@@ -161,10 +163,11 @@ export class ServerModel {
 */
     private getGameByToken(bearerToken: string|undefined):Game|undefined{
         let user=this.getUserByToken(bearerToken)
-        for( let game of this.activeGames){
-            if(game.playersJoined.includes(user.player))
-                return game
-        }
+        Object.values(this.startedGames).forEach(game => {
+            if (game.playersJoined.includes(user.player)) {
+                return game;
+            }
+        });
         throw new Error(ErrorMsgs.PLAYER_NOT_IN_A_GAME)
     }
 
@@ -173,7 +176,7 @@ export class ServerModel {
         let player = user.player;
         let game = this.getGameByPlayer(player);
         let message = new Message(messageText, player);
-        this.activeGames[game.id].chat.messages.push(message);
+        this.startedGames[game.id].chat.messages.push(message); //TODO: make sure startedGames are in the same order?
         game.chat.messages.push(message);
         return this.commandManager.addChatCommand(game.id, message, prevTimestamp);
     }
@@ -213,7 +216,7 @@ export class ServerModel {
     }
 
     private getGameByName(name: string): Game | null {
-        for (let game of this.activeGames) {
+        for (let game of this.unstartedGames) {
             if (game.name == name) {
                 return game;
             }
@@ -222,7 +225,7 @@ export class ServerModel {
     }
 
     private getGameById(id: number): Game | null {
-        for (let game of this.activeGames) {
+        for (let game of this.unstartedGames) {
             if (game.id == id) {
                 return game;
             }
@@ -231,10 +234,16 @@ export class ServerModel {
     }
 
     private getGameByPlayer(player: Player): Game {
-        for (let game of this.activeGames) {
-            if (game.playersJoined.includes(player)) {
-                return game;
+        var foundGame = null;
+        Object.values(this.startedGames).forEach(game => {
+            for (let joinedPlayer of game.playersJoined) {
+                if (joinedPlayer === player) {
+                    foundGame = game;
+                }
             }
+        });
+        if (foundGame) {
+            return foundGame;
         }
         throw new Error(ErrorMsgs.PLAYER_NOT_IN_GAME);
     }
@@ -247,17 +256,8 @@ export class ServerModel {
         return bearerToken.replace(bearer, "");
     }
 
-    private getNumUnstartedGames(): number {
-        let unstartedGames=0;
-        this.activeGames.forEach(game => {
-            if(game.started===false)
-                unstartedGames++;
-        });
-        return unstartedGames;
-    }
-
     private isPlayerInAGame(player: Player): boolean {
-        for (let game of this.activeGames) {
+        for (let game of this.unstartedGames) {
             if (game.playersJoined.includes(player)) {
                 return true;
             }
