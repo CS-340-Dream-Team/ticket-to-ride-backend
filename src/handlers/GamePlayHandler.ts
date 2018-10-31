@@ -1,7 +1,7 @@
 import { BaseHandler } from "./BaseHandler";
 import {Request, Response} from "express"
-import { Command } from "../commands/Command";
 import {ErrorMsgs} from "../model/ErrorMsgs"
+import { Command } from "../commands/Command";
 export class GamePlayHandler extends BaseHandler{
 
     constructor(){
@@ -9,63 +9,66 @@ export class GamePlayHandler extends BaseHandler{
     }
 
     handle(req: Request, res:Response):void{
-        if(req.method==="GET")
-        {
-            //See top 5 bus cards
-            if(req.url==="/play/bus"){
-                try {
-                    /*
+        try{
+            if(req.method==="GET")
+            {
+                //See top 5 bus cards
+                if(req.url==="/play/bus"){
+                    
+                    if(!req.headers.authorization){
+                        throw new Error(ErrorMsgs.NO_AUTHORIZATION)
+                    }
+                    
                     let command = this.model.getSpread(req.headers.authorization);
+                    //sends back a Command not a GameCommand b/c doesn't modify the name
                     res.status(200).send({
                         command: command
                     });
-                    */
-                } catch(e) {
-                        res.status(400).send({
-                            message: e.message
-                        })
-                    }
+                    
+                }
+                //Draw 3 route cards
+                else if(req.url==="/play/routes"){
+                    let command=this.model.drawRoutes(req.headers.authorization);
+                    res.status(200).send({command:command})
+                }
+                // Poll for game updates
+                else if(req.url.startsWith("/play/")) {  // FIXME Check if this should be ===
+                    let commands = this.model.getGameData(req.headers.authorization, req.params.id);
+                    res.status(200).send({
+                        command: commands
+                    })  
+                }
+                else{
+                    console.log(req.url);
+                    throw Error(ErrorMsgs.ENDPOINT_DNE)
+                }
             }
-            //Draw 3 route cards
-            else if(req.url==="/play/routes"){
+            else if(req.method==="POST")
+            {
+                //Select a bus card from the deck. 0-4 represent face-up cards, 5 represents a random card from the face-down deck.
+                if (req.url===`/play/bus/${req.params.index}`){
+                    //this.pickBusCard(game:Game)
+                }
+                //Purpose: Claim a segment
+                else if (req.url==='/play/segment'){
 
-            }
-            // Poll for game updates
-            else if(req.url==="/play"){
-                let command = this.model.getGameData(req.headers.authorization, req.params.id);
-                res.status(200).send({
-                    command: command
-                })
+                }
+                //Purpose: Discard a route card
+                else if (req.url==='/play/routes') {
+                    let command=this.model.discardRoutes(req.headers.authorization, req.body.rejectedRoutes)
+                    res.status(200).send({command:command})
+                }
+                else{
+                    throw Error(ErrorMsgs.ENDPOINT_DNE)
+                }
             }
             else{
                 throw Error(ErrorMsgs.ENDPOINT_DNE)
             }
         }
-        else if(req.method==="POST")
-        {
-            //Select a bus card from the deck. 0-4 represent face-up cards, 5 represents a random card from the face-down deck.
-            if (req.url===`/play/bus/${req.params.index}`){
-                //this.pickBusCard(game:Game)
-            }
-            //Purpose: Claim a segment
-            else if (req.url==='/play/segment'){
-
-            }
-            else{
-                throw Error(ErrorMsgs.ENDPOINT_DNE)
-            }
+        catch(e){
+            res.status(400).send({command:new Command("showError",{message: e.message})}) 
         }
-        //Purpose: Discard a route card
-        else if(req.method==="DELETE")
-        {
-            
-        }
-        else{
-           throw Error(ErrorMsgs.ENDPOINT_DNE)
-        }
-    }
-    private drawRoutes(){
-
     }
 
 

@@ -12,6 +12,7 @@ import { MapHandler } from "./MapHandler";
 import { Command } from "../commands/Command";
 import { DrawSpread } from "../model/DrawSpread";
 import { RouteCard } from "../model/RouteCard";
+import { BusCard } from "../model/BusCard";
 
 export class ServerCommunicator {
 
@@ -107,76 +108,30 @@ export class ServerCommunicator {
         router.get('/play/routes', (req:Request, res:Response)=>{
             this.gameplayHandler.handle(req, res);
         })
-        router.delete('/play/bus', (req:Request, res:Response)=>{
+        router.post('/play/routes', (req:Request, res:Response)=>{
             this.gameplayHandler.handle(req, res);
         })
         router.get('/play/:id', (req:Request, res:Response)=>{
+            // this.gameplayHandler.handle(req,res);
             console.log(req.params.id);
-            let routeCards = [
-                {
-                    "name": "Gains 'n' Grades",
-                    "points": 4,
-                    "start": {
-                       "name": "The Testing Center",
-                       "latLong": {
-                          "lat": 40.245433,
-                          "long": -111.652399
-                       }
-                    },
-                    "end": {
-                       "name": "Vasa",
-                       "latLong": {
-                          "lat": 40.240334,
-                          "long": -111.642054
-                       }
-                    }
-                 } as RouteCard,
-                 {
-                    "name": "America's Passtime",
-                    "points": 5,
-                    "start": {
-                       "name": "J-Dawgs",
-                       "latLong": {
-                          "lat": 40.245286,
-                          "long": -111.646318
-                       }
-                    },
-                    "end": {
-                       "name": "Baseball Stadium",
-                       "latLong": {
-                          "lat": 40.254821,
-                          "long": -111.651125
-                       }
-                    }
-                 } as RouteCard,
-                 {
-                    "name": "Comfort Food",
-                    "points": 6,
-                    "start": {
-                       "name": "DMV",
-                       "latLong": {
-                          "lat": 40.233169,
-                          "long": -111.656048
-                       }
-                    },
-                    "end": {
-                       "name": "Chip Cookie",
-                       "latLong": {
-                          "lat": 40.24028,
-                          "long": -111.661463
-                       }
-                    }
-                 } as RouteCard
-            ];
             let clientPlayer = new Player("Client Player", 1);
-            clientPlayer.routeCards = routeCards;
+            clientPlayer.busCards = [
+                {
+                    color: 0
+                } as BusCard,
+                {
+                    color: 1
+                } as BusCard,
+                {
+                    color: 2
+                } as BusCard,
+                {
+                    color: 3
+                } as BusCard
+            ]
             if (req.params.id == -1) {
                 res.status(200).send({
                     commands: [
-                        new Command("updateSpread", {
-                            spread: new DrawSpread().getSpread(),
-                            deckSize: 110
-                        }),
                         new Command("updateClientPlayer", {
                             player: clientPlayer,
                             // { What the object looks like
@@ -225,7 +180,6 @@ export class ServerCommunicator {
                     })]
                 })
             }
-            // this.gameplayHandler.handle(req, res);
         })
         this.app.use('/', router);
     }

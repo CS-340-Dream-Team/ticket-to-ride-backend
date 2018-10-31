@@ -11,6 +11,7 @@ export class Player{
     busPieces: number;
     busCards: BusCard[];
     routeCards: RouteCard[];
+    routeCardBuffer: RouteCard[]
 
     constructor(name: string, color: PlayerColor){
         this.name=name;
@@ -19,6 +20,7 @@ export class Player{
         this.busPieces = numStartingBusPieces;
         this.busCards = [];
         this.routeCards = [];
+        this.routeCardBuffer=[];
     }
 
 }

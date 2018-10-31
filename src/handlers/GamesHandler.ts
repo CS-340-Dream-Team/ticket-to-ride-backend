@@ -133,7 +133,7 @@ export class GamesHandler extends BaseHandler{
             }
             else{
                 res.status(400).send({
-                    message: e.message
+                    command: new Command("showError", {message: e.message})
                 })
             }
         }

@@ -5,12 +5,17 @@ import { Command } from "../commands/Command";
 import {ErrorMsgs} from "./ErrorMsgs"
 import { CommandManager } from "../commands/CommandManager";
 import { Message } from "./Message";
-
+import {GameState} from "./GameState"
 import hat from "hat";
 import { BusDeck } from "./BusDeck";
 import { DrawSpread } from "./DrawSpread";
+import { GameCommand } from "../commands/GameCommand";
+import { RouteCard } from "./RouteCard";
+import { ICommand } from "../commands/ICommand";
 
 export class ServerModel {
+
+   
 
 
     private static _instance : ServerModel;
@@ -154,33 +159,75 @@ export class ServerModel {
         });
         return commandToReturn;
     }
-    drawRoutes(bearerToken:string|undefined): Command {
+    drawRoutes(bearerToken:string|undefined):GameCommand{
         let game=this.getGameByToken(bearerToken)
+        let user= this.getUserByToken(bearerToken)
+        let player=user.player;
         if(game===undefined)
         {
             throw new Error("Game is undefined")
         }
         let hand=game.drawRoutes()
-        return new Command("drawRoutes",hand)
+        player.routeCardBuffer=hand
+        let command=this.commandManager.addCommand(game.id,"drawRoutes",game.routeDeck.getNumCards(),hand, player.name);
+        return command;
     }
-    /*
-    getSpread(authorization: string):Command{
-        let game= this.getGameByToken(authorization);
+    discardRoutes(bearerToken: string | undefined, routeCards: RouteCard[]): GameCommand {
+        let game=this.getGameByToken(bearerToken)
+        let user= this.getUserByToken(bearerToken)
+        let player=user.player;
+        if(game===undefined)
+        {
+            throw new Error("Game is undefined")
+        }
+        routeCards.forEach(card => {
+            for(let i=0;i<0;i++){
+                if(card.name===player.routeCardBuffer[i].name){
+                    player.routeCardBuffer.splice(i,1)
+                }
+            }  
+        });
+        player.routeCards.push(...player.routeCardBuffer)
+        player.routeCardBuffer=[]
+        game.routeDeck.discard(routeCards)
         
-        let spread=game.getSpread();
-        return new Command("spread",{spread})
-        
-      
+        let publicData={cardsDiscarded:routeCards.length}
+        let privateData={cardsDiscarded:routeCards}
+        let command=this.commandManager.addCommand(game.id,"discardRoutes",publicData,privateData,player.name)
+        return command;
     }
-*/
+    
+    getSpread(bearerToken: string):Command{
+        let game= this.getGameByToken(bearerToken);
+        if(!game)
+        {
+            throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST)
+        }
+        return new Command("updateSpread", {
+            spread: game.spread.getSpread(),
+            deckSize: game.spread.getBusDeckCount()
+        });
+    }
     private getGameByToken(bearerToken: string|undefined):Game|undefined{
         let user=this.getUserByToken(bearerToken)
+        let returnGame = null;
+        console.log(user);
         Object.values(this.startedGames).forEach(game => {
-            if (game.playersJoined.includes(user.player)) {
-                return game;
-            }
+            console.log('Searching for ' + user.player.name);
+            game.playersJoined.forEach(player => {
+                console.log(player.name);
+                if (player.name === user.player.name) {
+                    console.log('Returning game');
+                    returnGame = game;
+                }
+            });
         });
-        throw new Error(ErrorMsgs.PLAYER_NOT_IN_A_GAME)
+        if (returnGame != null) {
+            return returnGame;
+        }
+        else {
+            throw new Error(ErrorMsgs.PLAYER_NOT_IN_A_GAME)
+        }
     }
 
     addMessage(bearerToken: string | undefined, messageText: string, prevTimestamp: number): Command {
@@ -200,34 +247,24 @@ export class ServerModel {
         return this.commandManager.getMessagesAfter(game.id, prevTimestamp);
     }
 
-    getGameData(bearerToken: string | undefined, prevId: number) {
+    getGameData(bearerToken: string | undefined, prevId: string):ICommand[]{
         let user = this.getUserByToken(bearerToken);
         let player = user.player;
         let game = this.getGameByPlayer(player);
-        if (prevId == 0) {
-            return this.initializeGame(game);
+        let gameState=new GameState(game,player.name)
+        let commands=[]
+        let updateClient=new Command("updatePlayers",gameState.playerStates)
+        let commandUpdates=this.commandManager.getGameplayAfter(game.id, +prevId, player.name);
+        console.log(prevId);
+        console.log(typeof(prevId));
+        if (prevId === '-1') {
+            console.log('Adding an update client player command');
+            commands.push(new Command("updateClientPlayer", {clientPlayer: player}))
         }
-        return this.commandManager.getGameplayAfter(game.id, prevId);
-    }
-
-    private initializeGame(game: Game): Command[] {
-        let commands: Command[] = [];
-        game.spread = new DrawSpread();
-
-        commands.push(new Command("updateSpread", {
-            spread: game.spread,
-            deckNum: game.spread.busDeck.cards.length
-        }));
-        game.playersJoined.forEach( player => {
-            
-        });
-        console.log(game.spread.getSpread);
-        console.log(game.playersJoined);
-        // commands.push(new Command("updatePlayers", {
-        //     clientPlayer: player,
-        //     otherPlayers: 
-        // }));
-        return commands;
+        commands.push(updateClient);
+        commands.push(...commandUpdates)  
+        return commands;  
+        // else return command/do nothing
     }
 
     private getUserByUsername(username: string): UserRegistration | null {

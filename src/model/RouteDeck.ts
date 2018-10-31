@@ -25,39 +25,42 @@ export class RouteDeck extends Deck{
             let routes:Route[] = JSON.parse(routesJSON);
             
             routes.forEach(route => {
-            let start=route.start
-            let end= route.end
-            let start_loc=new Location(start.name,start.latLong)
-            let end_loc = new Location(end.name,end.latLong)
-            this.cards.push(new RouteCard(route.name,route.points,start_loc,end_loc))
+                let start=route.start
+                let end= route.end
+                let start_loc=new Location(start.name,start.latLong)
+                let end_loc = new Location(end.name,end.latLong)
+                this.cards.push(new RouteCard(route.name,route.points,start_loc,end_loc))
             });
-            
         }
         catch (e) {
             console.log("Could not read data JSON. Check that the file exists at the expected path.");
         }
         // console.log(this.cards)
     }
-    draw(){
+    draw():RouteCard[]{
         
-        if(this.cards.length>0){
-            let hand=[]
-            for(let x=0;x<3;x++){
-                if(this.cards.length>0)
-                    hand.push(this.cards.pop())
-            }
-            return hand;
-        }
-        else{
+        if(this.cards.length === 0){
             throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS)
         }
+        let hand:RouteCard[]=[]
+        for(let x=0;x<3;x++){
+            if(this.cards.length>0){
+                let card=this.cards.pop()
+                if(card){
+                    hand.push(card)
+                }    
+            }     
+        }
+        return hand;
         
     }
     discard(cards:RouteCard[]){
         cards.forEach(card => {
-            this.cards.push(card)
+            this.cards.unshift(card)
         });
     }
-
+    getNumCards():number{
+        return this.cards.length;
+    }
 
 }

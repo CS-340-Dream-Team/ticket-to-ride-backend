@@ -41,5 +41,8 @@ export class DrawSpread{
    getSpread():BusCard[]{
     return this.spread;
    }
+   getBusDeckCount():number{
+       return this.busDeck.cards.length;
+   }
 
 }
