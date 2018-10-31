@@ -7,8 +7,11 @@ import { CommandManager } from "../commands/CommandManager";
 import { Message } from "./Message";
 
 import hat from "hat";
+import { BusDeck } from "./BusDeck";
+import { DrawSpread } from "./DrawSpread";
 
 export class ServerModel {
+
 
     private static _instance : ServerModel;
     private commandManager: CommandManager;
@@ -151,6 +154,15 @@ export class ServerModel {
         });
         return commandToReturn;
     }
+    drawRoutes(bearerToken:string|undefined): Command {
+        let game=this.getGameByToken(bearerToken)
+        if(game===undefined)
+        {
+            throw new Error("Game is undefined")
+        }
+        let hand=game.drawRoutes()
+        return new Command("drawRoutes",hand)
+    }
     /*
     getSpread(authorization: string):Command{
         let game= this.getGameByToken(authorization);
@@ -186,6 +198,36 @@ export class ServerModel {
         let player = user.player;
         let game = this.getGameByPlayer(player);
         return this.commandManager.getMessagesAfter(game.id, prevTimestamp);
+    }
+
+    getGameData(bearerToken: string | undefined, prevId: number) {
+        let user = this.getUserByToken(bearerToken);
+        let player = user.player;
+        let game = this.getGameByPlayer(player);
+        if (prevId == 0) {
+            return this.initializeGame(game);
+        }
+        return this.commandManager.getGameplayAfter(game.id, prevId);
+    }
+
+    private initializeGame(game: Game): Command[] {
+        let commands: Command[] = [];
+        game.spread = new DrawSpread();
+
+        commands.push(new Command("updateSpread", {
+            spread: game.spread,
+            deckNum: game.spread.busDeck.cards.length
+        }));
+        game.playersJoined.forEach( player => {
+            
+        });
+        console.log(game.spread.getSpread);
+        console.log(game.playersJoined);
+        // commands.push(new Command("updatePlayers", {
+        //     clientPlayer: player,
+        //     otherPlayers: 
+        // }));
+        return commands;
     }
 
     private getUserByUsername(username: string): UserRegistration | null {

@@ -1,15 +1,21 @@
 import { BusCard } from "./BusCard";
+import { Game } from "./Game";
+import { BusDeck } from "./BusDeck";
 
 export class DrawSpread{
-    spread:BusCard[]
+    spread:BusCard[];
+    busDeck:BusDeck;
+
     constructor(){
-       this.spread=[]
-        
-        
+        this.busDeck=new BusDeck()
+        this.spread = this.busDeck.cards.slice(0,5);
+        this.busDeck.cards.splice(0, 5);
     }
+
     private getNumCards():number{
         return this.spread.length;
     }
+
     private hasThreeWilds():boolean{
         let count=0;
         this.spread.forEach(card => {
@@ -22,6 +28,7 @@ export class DrawSpread{
         }
         return false;
     }
+    
     private replaceCard(card:BusCard)
     {
 

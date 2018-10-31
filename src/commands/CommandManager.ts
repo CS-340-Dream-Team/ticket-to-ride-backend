@@ -1,6 +1,7 @@
 import {Command} from "./Command"
 import { Message } from "../model/Message";
 import { Player } from "../model/Player";
+import { ErrorMsgs } from "../model/ErrorMsgs";
 
 // This class will be used for commands within games to update all games with new moves
 export class CommandManager {
@@ -41,6 +42,22 @@ export class CommandManager {
             let message = command.data as Message
             if (message.timestamp > prevTimestamp) {
                 commands.push(command);
+            }
+        });
+        return commands;
+    }
+
+    getGameplayAfter(gameId: number, prevId: number): Command[] {
+        let commands: Command[] = [];
+        this.gameCommandQueues[gameId].forEach( command => {
+            //FIXME figure out how to determine which commands to send
+            if (command.id) {
+                if (command.id > prevId) {
+                    commands.push(command);
+                }
+            }
+            else {
+                throw new Error(ErrorMsgs.INVALID_COMMAND);
             }
         });
         return commands;

@@ -23,7 +23,7 @@ export class MapDataManager {
         }
         return MapDataManager.instance;
     }
-
+    
     get locations() {
         if (this._locations.length == 0) {
             throw new Error(ErrorMsgs.DATA_DOES_NOT_EXIST);

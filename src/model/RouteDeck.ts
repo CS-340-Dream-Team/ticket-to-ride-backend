@@ -1,6 +1,7 @@
 import { RouteCard } from "./RouteCard";
 import { ErrorMsgs } from "./ErrorMsgs";
 import { Deck } from "./Deck";
+import {Location} from "./Location"
 //import json
 //import from "../data/routes.json";
 export class RouteDeck extends Deck{
@@ -9,20 +10,48 @@ export class RouteDeck extends Deck{
         super();
         this.cards=[]
         //load cards from json
+        this.loadCards()
+        this.shuffle()
+    }
+    loadCards(){
+        try {
+            var fileSystem = require('fs');
+            var routesJSON = fileSystem.readFileSync("src/data/routes.json");
+            type Route={ name: string;
+                points: number;
+                 start: { name: string; latLong: { lat: number; long: number; }; };
+                  end: { name: string; latLong: { lat: number; long: number; }; }; 
+               }
+            let routes:Route[] = JSON.parse(routesJSON);
+            
+            routes.forEach(route => {
+            let start=route.start
+            let end= route.end
+            let start_loc=new Location(start.name,start.latLong)
+            let end_loc = new Location(end.name,end.latLong)
+            this.cards.push(new RouteCard(route.name,route.points,start_loc,end_loc))
+            });
+            
+        }
+        catch (e) {
+            console.log("Could not read data JSON. Check that the file exists at the expected path.");
+        }
+        // console.log(this.cards)
     }
     draw(){
-        /*
-        if(this.cards.length>2){
+        
+        if(this.cards.length>0){
             let hand=[]
             for(let x=0;x<3;x++){
-                hand.push(this.cards.pop())
+                if(this.cards.length>0)
+                    hand.push(this.cards.pop())
             }
-            return hand;  
+            return hand;
         }
         else{
             throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS)
         }
-        */
+        
     }
     discard(cards:RouteCard[]){
         cards.forEach(card => {

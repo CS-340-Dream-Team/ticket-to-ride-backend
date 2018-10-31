@@ -3,6 +3,7 @@ import { Chat } from "./Chat";
 import {BusDeck} from "./BusDeck"
 import {RouteDeck} from "./RouteDeck"
 import { DrawSpread } from "./DrawSpread";
+import { GameMap } from "./GameMap";
 export class Game{
 
     playersJoined: Player[];
@@ -13,9 +14,9 @@ export class Game{
     numPlayers: number;
     started:boolean;
     chat: Chat;
-    busDeck:BusDeck;
     routeDeck:RouteDeck;
     spread:DrawSpread;
+    gameMap:GameMap;
 
     constructor(host: Player, name: string){
         this.playersJoined= [];
@@ -26,10 +27,9 @@ export class Game{
         this.started=false;
         this.chat = new Chat();
         this.addPlayer(host);
-        //New Stuff
-        this.busDeck=new BusDeck();
         this.routeDeck=new RouteDeck();
-        this.spread= new DrawSpread()
+        this.spread= new DrawSpread();
+        this.gameMap = new GameMap();
     }
 
     addPlayer(player:Player):boolean{
@@ -48,7 +48,7 @@ export class Game{
         }
         return false;
     }
-    drawRouteCards(){
+    drawRoutes(){
         //Check if there are enough routes
         return this.routeDeck.draw()
     }

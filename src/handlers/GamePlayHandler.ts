@@ -32,7 +32,10 @@ export class GamePlayHandler extends BaseHandler{
             }
             // Poll for game updates
             else if(req.url==="/play"){
-                
+                let command = this.model.getGameData(req.headers.authorization, req.params.id);
+                res.status(200).send({
+                    command: command
+                })
             }
             else{
                 throw Error(ErrorMsgs.ENDPOINT_DNE)
