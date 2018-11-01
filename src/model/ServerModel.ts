@@ -12,6 +12,7 @@ import { DrawSpread } from "./DrawSpread";
 import { GameCommand } from "../commands/GameCommand";
 import { RouteCard } from "./RouteCard";
 import { ICommand } from "../commands/ICommand";
+import { BusCard } from "./BusCard";
 
 export class ServerModel {
 
@@ -124,7 +125,7 @@ export class ServerModel {
     }
 
     startGame(bearerToken: string | undefined, gameId: number): Command {
-        let game = this.getGameById(gameId)
+        let game = this.getGameById(gameId);
         let playerName= this.getUsernameByToken(bearerToken)
         if(!game)
         {
@@ -211,13 +212,9 @@ export class ServerModel {
     private getGameByToken(bearerToken: string|undefined):Game|undefined{
         let user=this.getUserByToken(bearerToken)
         let returnGame = null;
-        console.log(user);
         Object.values(this.startedGames).forEach(game => {
-            console.log('Searching for ' + user.player.name);
             game.playersJoined.forEach(player => {
-                console.log(player.name);
                 if (player.name === user.player.name) {
-                    console.log('Returning game');
                     returnGame = game;
                 }
             });
@@ -251,20 +248,57 @@ export class ServerModel {
         let user = this.getUserByToken(bearerToken);
         let player = user.player;
         let game = this.getGameByPlayer(player);
-        let gameState=new GameState(game,player.name)
-        let commands=[]
-        let updateClient=new Command("updatePlayers",gameState.playerStates)
-        let commandUpdates=this.commandManager.getGameplayAfter(game.id, +prevId, player.name);
-        console.log(prevId);
-        console.log(typeof(prevId));
-        if (prevId === '-1') {
-            console.log('Adding an update client player command');
-            commands.push(new Command("updateClientPlayer", {clientPlayer: player}))
-        }
-        commands.push(updateClient);
-        commands.push(...commandUpdates)  
-        return commands;  
-        // else return command/do nothing
+        var opponentName;
+        game.playersJoined.forEach( gamePlayer => {
+            if (gamePlayer.name != player.name) {
+                opponentName = gamePlayer.name;
+            }
+        })
+        return [
+                new Command("updatePlayers", {
+                    players: [
+                        {
+                            name: player.name,
+                            color: 1,
+                            points: 0,
+                            busPieces: 45,
+                            busCards: [
+                                {
+                                    color: 0
+                                } as BusCard,
+                                {
+                                    color: 1
+                                } as BusCard,
+                                {
+                                    color: 2
+                                } as BusCard,
+                                {
+                                    color: 3
+                                } as BusCard
+                            ],
+                            routeCards: []
+                        },
+                        {
+                            name: opponentName,
+                            color: 2,
+                            points: 0,
+                            busPieces: 45,
+                            busCards: 4,
+                            routeCards: 0
+                        },
+                    ]
+                }),
+            ]
+        // let gameState=new GameState(game,player.name)
+        // let commands=[]
+        // let updateClient=new Command("updatePlayers",gameState.playerStates)
+        // let commandUpdates=this.commandManager.getGameplayAfter(game.id, +prevId, player.name);
+        // if (prevId === '-1') {
+        //     commands.push(new Command("updateClientPlayer", {clientPlayer: player}))
+        // }
+        // commands.push(updateClient);
+        // commands.push(...commandUpdates)  
+        // return commands;  
     }
 
     private getUserByUsername(username: string): UserRegistration | null {

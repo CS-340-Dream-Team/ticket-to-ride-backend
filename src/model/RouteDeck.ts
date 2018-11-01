@@ -35,7 +35,6 @@ export class RouteDeck extends Deck{
         catch (e) {
             console.log("Could not read data JSON. Check that the file exists at the expected path.");
         }
-        // console.log(this.cards)
     }
     draw():RouteCard[]{
         

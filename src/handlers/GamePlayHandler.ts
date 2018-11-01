@@ -35,11 +35,10 @@ export class GamePlayHandler extends BaseHandler{
                 else if(req.url.startsWith("/play/")) {  // FIXME Check if this should be ===
                     let commands = this.model.getGameData(req.headers.authorization, req.params.id);
                     res.status(200).send({
-                        command: commands
+                        commands: commands
                     })  
                 }
                 else{
-                    console.log(req.url);
                     throw Error(ErrorMsgs.ENDPOINT_DNE)
                 }
             }
