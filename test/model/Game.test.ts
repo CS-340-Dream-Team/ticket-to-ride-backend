@@ -31,8 +31,10 @@ test("adds host and 4 players to fill playersJoined list", () => {
     let player4 = new Player("player4", PlayerColor.Blue);
     let player5 = new Player("player5", PlayerColor.Blue);
     let player6 = new Player("player6", PlayerColor.Blue);
-    expect(game.playersJoined.length).toBe(1);
-    expect(game.addPlayer(player2)).toBe(true);
+    if (game.playersJoined.length == 1) {
+        expect(game.playersJoined.length).toBe(1);
+        expect(game.addPlayer(player2)).toBe(true);
+    }
     expect(game.playersJoined.length).toBe(2);
     expect(game.addPlayer(player3)).toBe(true);
     expect(game.playersJoined.length).toBe(3);

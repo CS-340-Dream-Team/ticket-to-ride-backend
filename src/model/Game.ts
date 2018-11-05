@@ -4,6 +4,7 @@ import {BusDeck} from "./BusDeck"
 import {RouteDeck} from "./RouteDeck"
 import { DrawSpread } from "./DrawSpread";
 import { GameMap } from "./GameMap";
+import { PlayerColor } from "./PlayerColor";
 export class Game{
 
     playersJoined: Player[];
@@ -19,11 +20,11 @@ export class Game{
     gameMap:GameMap;
 
     constructor(host: Player, name: string){
-        this.playersJoined= [];
+        this.playersJoined= [new Player('Betty the Bot', PlayerColor.None)];
         this.host= host;
         this.name= name;
         this.id = Game._id++;
-        this.numPlayers=0;
+        this.numPlayers=1;
         this.started=false;
         this.chat = new Chat();
         this.addPlayer(host);
