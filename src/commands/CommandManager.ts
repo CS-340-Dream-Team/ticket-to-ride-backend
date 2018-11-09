@@ -24,6 +24,7 @@ export class CommandManager {
         let commandID=this.gameCommandQueues[gameId].length
         let command = new GameCommand(commandType, publicData, privateData, player, commandID);
         this.gameCommandQueues[gameId].push(command);
+        //console.log(command)
         return command;
     }
     /*

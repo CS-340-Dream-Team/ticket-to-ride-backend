@@ -144,6 +144,14 @@ export class ServerModel {
         this.startedGames[game.id] = game;
         game.assignColors();
         this.commandManager.addGame();
+        game.playersJoined.forEach(player => {
+			if(game)
+			{
+				player.routeCardBuffer=game.drawRoutes();
+				this.commandManager.addCommand(game.id,"drawRoutes",game.routeDeck.getNumCards(),player.routeCardBuffer,player.name);
+			}
+			
+		});
         return new Command("startGame",{})
     }
 
@@ -189,11 +197,12 @@ export class ServerModel {
             }  
         });
         player.routeCards.push(...player.routeCardBuffer)
+        let publicData={numCardsKept:player.routeCardBuffer.length}
+        let privateData={cardsKept:player.routeCardBuffer}
         player.routeCardBuffer=[]
         game.routeDeck.discard(routeCards)
         
-        let publicData={cardsDiscarded:routeCards.length}
-        let privateData={cardsDiscarded:routeCards}
+        
         let command=this.commandManager.addCommand(game.id,"discardRoutes",publicData,privateData,player.name)
         return command;
     }
