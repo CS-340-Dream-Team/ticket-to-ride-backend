@@ -147,8 +147,11 @@ export class ServerModel {
         game.playersJoined.forEach(player => {
 			if(game)
 			{
+
+                game.initBusCards();
 				player.routeCardBuffer=game.drawRoutes();
-				this.commandManager.addCommand(game.id,"drawRoutes",game.routeDeck.getNumCards(),player.routeCardBuffer,player.name);
+                this.commandManager.addCommand(game.id,"drawRoutes",game.routeDeck.getNumCards(),player.routeCardBuffer,player.name);
+
 			}
 			
 		});
@@ -257,57 +260,34 @@ export class ServerModel {
         let user = this.getUserByToken(bearerToken);
         let player = user.player;
         let game = this.getGameByPlayer(player);
+        /*
         var opponentName;
         game.playersJoined.forEach( gamePlayer => {
             if (gamePlayer.name != player.name) {
                 opponentName = gamePlayer.name;
             }
         })
-        return [
-                new Command("updatePlayers", {
-                    players: [
-                        {
-                            name: player.name,
-                            color: 1,
-                            points: 0,
-                            busPieces: 45,
-                            busCards: [
-                                {
-                                    color: 0
-                                } as BusCard,
-                                {
-                                    color: 1
-                                } as BusCard,
-                                {
-                                    color: 2
-                                } as BusCard,
-                                {
-                                    color: 3
-                                } as BusCard
-                            ],
-                            routeCards: []
-                        },
-                        {
-                            name: opponentName,
-                            color: 2,
-                            points: 0,
-                            busPieces: 45,
-                            busCards: 4,
-                            routeCards: 0
-                        },
-                    ]
-                }),
-            ]
-        // let gameState=new GameState(game,player.name)
-        // let commands=[]
-        // let updateClient=new Command("updatePlayers",gameState.playerStates)
-        // let commandUpdates=this.commandManager.getGameplayAfter(game.id, +prevId, player.name);
-        // if (prevId === '-1') {
-        //     commands.push(new Command("updateClientPlayer", {clientPlayer: player}))
-        // }
-        // commands.push(updateClient);
-        // commands.push(...commandUpdates)  
-        // return commands;  
+        */
+       //return new Command("updatePlayers",)
+
+            let gameState=new GameState(game, player.name)
+            let playerStates=gameState.playerStates;
+            let commands:ICommand[]=[]
+        try{
+            let commandId=parseInt(prevId)
+            if(commandId===-1){
+                let updatePlayersCommand=new Command("updatePlayers", {players:playerStates});
+                commands.push(updatePlayersCommand)
+            }
+            else{
+                commands.push(...this.commandManager.getGameplayAfter(game.id,commandId,player.name))
+            }
+        }
+        catch(e){
+            console.log("messed up in getGameData()")
+        }
+            
+            return commands
     }
 
     private getUserByUsername(username: string): UserRegistration | null {

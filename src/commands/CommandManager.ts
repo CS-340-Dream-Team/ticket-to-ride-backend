@@ -24,7 +24,7 @@ export class CommandManager {
         let commandID=this.gameCommandQueues[gameId].length
         let command = new GameCommand(commandType, publicData, privateData, player, commandID);
         this.gameCommandQueues[gameId].push(command);
-        //console.log(command)
+
         return command;
     }
     /*
@@ -62,7 +62,6 @@ export class CommandManager {
     getGameplayAfter(gameId: number, prevId: number, player:string): GameCommand[] {
         let commands: GameCommand[] = [];
         this.gameCommandQueues[gameId].forEach( command => {
-            //FIXME figure out how to determine which commands to send
             if (command.id !== undefined) {
                 if (command.id > prevId) {
                     commands.push(this.getPrivatizedCommand(player,command))
@@ -74,10 +73,5 @@ export class CommandManager {
         });
         return commands;
     }
-
-    getGameList(){
-    }
-
-    //Create save() function
 
 }

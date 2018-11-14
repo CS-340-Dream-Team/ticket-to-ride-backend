@@ -61,5 +61,10 @@ export class Game{
             this.playersJoined[x].color=x+1;
         }
     }
+    initBusCards():void{
+        this.playersJoined.forEach(player => {
+            player.busCards=this.spread.drawFour();
+        });
+    }
 
 }

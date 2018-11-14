@@ -44,5 +44,14 @@ export class DrawSpread{
    getBusDeckCount():number{
        return this.busDeck.cards.length;
    }
-
+   drawFour():BusCard[]{
+        let cards=[]
+        for(let i=0;i<4;i++){
+            let card=this.busDeck.drawCard();
+            if(card){
+                cards.push(card);
+            }
+        }
+        return cards;
+    }
 }

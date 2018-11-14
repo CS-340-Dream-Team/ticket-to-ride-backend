@@ -113,15 +113,15 @@ export class ServerCommunicator {
             this.gameplayHandler.handle(req, res);
         })
         router.get('/play/:id', (req:Request, res:Response)=>{
-            if (req.params.id == -1) {
+         //   if (req.params.id == -1) {
                 this.gameplayHandler.handle(req,res);
-            } else {
+/*             } else {
                 res.status(200).send({
                     commands: [new Command("doNothing", {
                         nothing: 'nothing'
                     })]
-                })
-            }
+                }) */
+            //}
             // let clientPlayer = new Player("Client Player", 1);
             // clientPlayer.busCards = [
             //     {
