@@ -18,6 +18,7 @@ export class Game{
     routeDeck:RouteDeck;
     spread:DrawSpread;
     gameMap:GameMap;
+    turn: number;
 
     constructor(host: Player, name: string){
         this.playersJoined= [new Player('Betty the Bot', PlayerColor.None)];
@@ -31,6 +32,7 @@ export class Game{
         this.routeDeck=new RouteDeck();
         this.spread= new DrawSpread();
         this.gameMap = new GameMap();
+        this.turn = 0;
     }
 
     addPlayer(player:Player):boolean{

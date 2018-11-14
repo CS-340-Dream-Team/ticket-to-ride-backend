@@ -4,6 +4,7 @@ import { Player } from "../model/Player";
 import { ErrorMsgs } from "../model/ErrorMsgs";
 import { GameCommand } from "./GameCommand";
 
+
 // This class will be used for commands within games to update all games with new moves
 export class CommandManager {
 

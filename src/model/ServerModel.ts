@@ -13,6 +13,7 @@ import { GameCommand } from "../commands/GameCommand";
 import { RouteCard } from "./RouteCard";
 import { ICommand } from "../commands/ICommand";
 import { BusCard } from "./BusCard";
+import { ChatCodes } from "../commands/ChatCodes";
 
 export class ServerModel {
 
@@ -193,9 +194,10 @@ export class ServerModel {
             throw new Error("Game is undefined")
         }
         routeCards.forEach(card => {
-            for(let i=0;i<0;i++){
+            let len = player.routeCardBuffer.length;
+            for(let i = 0; i < len; i++){
                 if(card.name===player.routeCardBuffer[i].name){
-                    player.routeCardBuffer.splice(i,1)
+                    player.routeCardBuffer.splice(i,1);
                 }
             }  
         });
@@ -243,10 +245,17 @@ export class ServerModel {
         let user = this.getUserByToken(bearerToken);
         let player = user.player;
         let game = this.getGameByPlayer(player);
-        let message = new Message(messageText, player);
-        this.startedGames[game.id].chat.messages.push(message); //TODO: make sure startedGames are in the same order?
-        game.chat.messages.push(message);
-        return this.commandManager.addChatCommand(game.id, message, prevTimestamp);
+        var command;
+        if (Object.values(ChatCodes).includes(messageText)) {
+            command =  this.handleChatCode(game.id, messageText, player.name);
+        }
+        else {
+            let message = new Message(messageText, player);
+            this.startedGames[game.id].chat.messages.push(message); //TODO: make sure startedGames are in the same order?
+            game.chat.messages.push(message);
+            command =  this.commandManager.addChatCommand(game.id, message, prevTimestamp);
+        }
+        return command;
     }
 
     getMessagesAfter(bearerToken: string | undefined, prevTimestamp: number): Command[] {
@@ -254,6 +263,23 @@ export class ServerModel {
         let player = user.player;
         let game = this.getGameByPlayer(player);
         return this.commandManager.getMessagesAfter(game.id, prevTimestamp);
+    }
+    
+    private handleChatCode(gameId: number, messageText: string, playerName: string): Command {
+        let game = this.startedGames[gameId];
+        if (messageText === ChatCodes.INCREMENT_TURN) {
+            let name = this.incrementGameTurn(game);
+            return this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: name}, {}, playerName);
+        }
+        else {
+            throw new Error(ErrorMsgs.INVALID_COMMAND);
+        }
+    }
+    
+    private incrementGameTurn(game: Game): string {
+        game.turn += 1;
+        game.turn = game.turn % game.playersJoined.length;
+        return game.playersJoined[game.turn].name;
     }
 
     getGameData(bearerToken: string | undefined, prevId: string):ICommand[]{
