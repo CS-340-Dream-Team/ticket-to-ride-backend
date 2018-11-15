@@ -31,6 +31,13 @@ export class GamePlayHandler extends BaseHandler{
                     let command=this.model.drawRoutes(req.headers.authorization);
                     res.status(200).send({command:command})
                 }
+                // Get full game data (used for refresh)
+                else if(req.url==="/play") {
+                    let command = this.model.getFullGame(req.headers.authorization);
+                    res.status(200).send({
+                        command: command
+                    })
+                }
                 // Poll for game updates
                 else if(req.url.startsWith("/play/")) {  // FIXME Check if this should be ===
                     let commands = this.model.getGameData(req.headers.authorization, req.params.id);

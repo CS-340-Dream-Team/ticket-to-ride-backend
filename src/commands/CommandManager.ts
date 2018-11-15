@@ -75,4 +75,8 @@ export class CommandManager {
         return commands;
     }
 
+    getLastId(gameId: number) {
+        return this.gameCommandQueues[gameId].length - 1;
+    }
+
 }

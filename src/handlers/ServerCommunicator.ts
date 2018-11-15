@@ -113,71 +113,10 @@ export class ServerCommunicator {
             this.gameplayHandler.handle(req, res);
         })
         router.get('/play/:id', (req:Request, res:Response)=>{
-         //   if (req.params.id == -1) {
-                this.gameplayHandler.handle(req,res);
-/*             } else {
-                res.status(200).send({
-                    commands: [new Command("doNothing", {
-                        nothing: 'nothing'
-                    })]
-                }) */
-            //}
-            // let clientPlayer = new Player("Client Player", 1);
-            // clientPlayer.busCards = [
-            //     {
-            //         color: 0
-            //     } as BusCard,
-            //     {
-            //         color: 1
-            //     } as BusCard,
-            //     {
-            //         color: 2
-            //     } as BusCard,
-            //     {
-            //         color: 3
-            //     } as BusCard
-            // ]
-            // if (req.params.id == -1) {
-            //     res.status(200).send({
-            //         commands: [
-            //             new Command("updatePlayers", {
-            //                 players: [
-            //                     clientPlayer,
-            //                     {
-            //                         name: "Opponent 1",
-            //                         color: 2,
-            //                         points: 0,
-            //                         busPieces: 45,
-            //                         busCards: 0,
-            //                         routeCards: 3
-            //                     },
-            //                     {
-            //                         name: "Opponent 2",
-            //                         color: 3,
-            //                         points: 0,
-            //                         busPieces: 45,
-            //                         busCards: 0,
-            //                         routeCards: 2
-            //                     },
-            //                     {
-            //                         name: "Opponent 3",
-            //                         color: 4,
-            //                         points: 0,
-            //                         busPieces: 45,
-            //                         busCards: 0,
-            //                         routeCards: 2
-            //                     }
-            //                 ]
-            //             }),
-            //         ]
-            //     })
-            // } else {
-            //     res.status(200).send({
-            //         commands: [new Command("doNothing", {
-            //             nothing: 'nothing'
-            //         })]
-            //     })
-            // }
+            this.gameplayHandler.handle(req,res);
+        })
+        router.get('/play', (req: Request, res: Response)=>{
+            this.gameplayHandler.handle(req,res);
         })
         this.app.use('/', router);
     }

@@ -185,7 +185,7 @@ export class ServerModel {
         let command=this.commandManager.addCommand(game.id,"drawRoutes",game.routeDeck.getNumCards(),hand, player.name);
         return command;
     }
-    discardRoutes(bearerToken: string | undefined, routeCards: RouteCard[]): GameCommand {
+    discardRoutes(bearerToken: string | undefined, discardedCards: RouteCard[]): GameCommand {
         let game=this.getGameByToken(bearerToken)
         let user= this.getUserByToken(bearerToken)
         let player=user.player;
@@ -193,19 +193,18 @@ export class ServerModel {
         {
             throw new Error("Game is undefined")
         }
-        routeCards.forEach(card => {
-            let len = player.routeCardBuffer.length;
-            for(let i = 0; i < len; i++){
-                if(card.name===player.routeCardBuffer[i].name){
+        discardedCards.forEach(discardedCard => {
+            player.routeCardBuffer.forEach((bufferCard, i) => {
+                if (discardedCard.name === bufferCard.name) {
                     player.routeCardBuffer.splice(i,1);
                 }
-            }  
+            });
         });
         player.routeCards.push(...player.routeCardBuffer)
         let publicData={numCardsKept:player.routeCardBuffer.length}
         let privateData={cardsKept:player.routeCardBuffer}
         player.routeCardBuffer=[]
-        game.routeDeck.discard(routeCards)
+        game.routeDeck.discard(discardedCards)
         
         
         let command=this.commandManager.addCommand(game.id,"discardRoutes",publicData,privateData,player.name)
@@ -286,19 +285,10 @@ export class ServerModel {
         let user = this.getUserByToken(bearerToken);
         let player = user.player;
         let game = this.getGameByPlayer(player);
-        /*
-        var opponentName;
-        game.playersJoined.forEach( gamePlayer => {
-            if (gamePlayer.name != player.name) {
-                opponentName = gamePlayer.name;
-            }
-        })
-        */
-       //return new Command("updatePlayers",)
 
-            let gameState=new GameState(game, player.name)
-            let playerStates=gameState.playerStates;
-            let commands:ICommand[]=[]
+        let gameState=new GameState(game, player.name)
+        let playerStates=gameState.playerStates;
+        let commands:ICommand[]=[]
         try{
             let commandId=parseInt(prevId)
             if(commandId===-1){
@@ -314,6 +304,26 @@ export class ServerModel {
         }
             
             return commands
+    }
+
+    getFullGame(bearerToken: string | undefined): ICommand {
+        let user = this.getUserByToken(bearerToken);
+        let player = user.player;
+        let game = this.getGameByPlayer(player);
+
+
+        let gameState=new GameState(game, player.name)
+        let id = this.commandManager.getLastId(game.id);
+
+        return new Command("updateGame", {
+            clientPlayer: player,
+            players: gameState.playerStates,
+            busDeckSize: gameState.busDeckCount,
+            routeDeckSize: gameState.routeDeckCount,
+            spread: game.spread.spread,
+            turn: game.playersJoined[game.turn].name,
+            id: id
+        })
     }
 
     private getUserByUsername(username: string): UserRegistration | null {
