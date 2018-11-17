@@ -1,3 +1,4 @@
+import * as segments from '../data/segments.json';
 import { Game } from "./Game";
 import { Player } from "./Player";
 import { UserRegistration } from "./UserRegistration";
@@ -7,15 +8,13 @@ import { CommandManager } from "../commands/CommandManager";
 import { Message } from "./Message";
 import { GameState } from "./GameState";
 import hat from "hat";
-import { BusDeck } from "./BusDeck";
-import { DrawSpread } from "./DrawSpread";
 import { GameCommand } from "../commands/GameCommand";
 import { RouteCard } from "./RouteCard";
 import { ICommand } from "../commands/ICommand";
-import { BusCard } from "./BusCard";
 import { ChatCodes } from "../commands/ChatCodes";
 import { Segment } from "./Segment";
 import { GameOverStat } from "./IGameOverStat";
+import { BusCard } from './BusCard.js';
 
 export class ServerModel {
   private static _instance: ServerModel;
@@ -46,6 +45,20 @@ export class ServerModel {
     }
 
     return ServerModel._instance;
+  }
+
+  private segmentsClaimed: boolean[] = segments.map(_ => false);
+
+  private segmentAlreadyClaimed(segmentId: number): boolean {
+      return this.segmentsClaimed[segmentId];
+  }
+
+  private markSegmentClaimed(segmentId: number): void {
+      this.segmentsClaimed[segmentId] = true;
+  }
+
+  private getSegmentById(segmentId: number) {
+    return segments[segmentId];
   }
 
   login(username: string, password: string): string {
@@ -123,6 +136,31 @@ export class ServerModel {
     this.unstartedGames.push(new Game(hostUser.player, gameName));
     return new Command("updateGameList", { gameList: this.unstartedGames });
   }
+
+    /**
+     * Claims a segment for the given player
+     * @param bearerToken Auth token from client request
+     */
+    public claimSegment(bearerToken: string, segmentId: number, cards: BusCard[]) {
+        const game = this.getGameByToken(bearerToken)
+        const user = this.getUserByToken(bearerToken)
+
+        if (game === undefined) throw new Error("Game is undefined");
+        if (this.segmentAlreadyClaimed(segmentId)) throw new Error("Segment already claimed");
+        if (user.player.hasCards(cards)) throw new Error("User doesn't have specified cards");
+        
+        user.player.segments.push(segmentId);
+
+        user.player.removeCards(cards);
+
+        cards.forEach(card => {
+            game.spread.busDeck.discardCard(card);
+        });
+        
+        this.markSegmentClaimed(segmentId);
+        const command = this.commandManager.addCommand(game.id, "claimSegment", {segmentId: segmentId}, {}, user.player.name);
+        return command;
+    }
 
   startGame(bearerToken: string | undefined, gameId: number): Command {
     let game = this.getGameById(gameId);

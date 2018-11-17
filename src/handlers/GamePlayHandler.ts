@@ -2,6 +2,7 @@ import { BaseHandler } from "./BaseHandler";
 import {Request, Response} from "express"
 import {ErrorMsgs} from "../model/ErrorMsgs"
 import { Command } from "../commands/Command";
+import { BusCard } from "../model/BusCard";
 export class GamePlayHandler extends BaseHandler{
 
     constructor(){
@@ -56,8 +57,9 @@ export class GamePlayHandler extends BaseHandler{
                     //this.pickBusCard(game:Game)
                 }
                 //Purpose: Claim a segment
-                else if (req.url==='/play/segment'){
-
+                else if (req.url==='/play/segment') {
+                    const command = this.model.claimSegment(<string>req.headers.authorization, <number>req.body.segmentId, <BusCard[]>req.body.cards);
+                    res.status(200).send({command: command});
                 }
                 //Purpose: Discard a route card
                 else if (req.url==='/play/routes') {
