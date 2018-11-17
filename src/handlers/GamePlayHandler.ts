@@ -52,8 +52,11 @@ export class GamePlayHandler extends BaseHandler{
             else if(req.method==="POST")
             {
                 //Select a bus card from the deck. 0-4 represent face-up cards, 5 represents a random card from the face-down deck.
-                if (req.url===`/play/bus/${req.params.index}`){
-                    //this.pickBusCard(game:Game)
+                if (req.url.startsWith("/play/bus/")){
+                    let commands = this.model.selectBusCard(req.headers.authorization, req.params.index);
+                    res.status(200).send({
+                        commands: commands
+                    });
                 }
                 //Purpose: Claim a segment
                 else if (req.url==='/play/segment'){

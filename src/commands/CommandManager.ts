@@ -79,4 +79,15 @@ export class CommandManager {
         return this.gameCommandQueues[gameId].length - 1;
     }
 
+    inDrawingCardState(gameId: number): boolean {
+        let commands = this.gameCommandQueues[gameId];
+        for (let i = commands.length -1; i > 0; --i) {
+            if (commands[i].type === 'drawBusCard') {
+                return true;
+            } else if (commands[i].type === 'incrementTurn') {
+                return false;
+            }
+        }
+        return false;
+    }
 }

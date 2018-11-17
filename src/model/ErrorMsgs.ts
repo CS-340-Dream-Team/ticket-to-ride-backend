@@ -18,5 +18,7 @@ export enum ErrorMsgs {
     ENDPOINT_DNE = "Endpoint does not exist",
     PLAYER_NOT_IN_A_GAME = "Player is not in a game.",
     NOT_ENOUGH_CARDS = "Not enough cards.",
-    INVALID_COMMAND = "Invalid command received"
+    INVALID_COMMAND = "Invalid command received",
+    INVALID_BUS_CARD_INDEX = "Invalid bus card index requested",
+    CANNOT_DRAW_RAINBOW = "You cannot draw a rainbow card right now"
 }
