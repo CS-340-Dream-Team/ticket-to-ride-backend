@@ -14,7 +14,7 @@ import { ICommand } from "../commands/ICommand";
 import { ChatCodes } from "../commands/ChatCodes";
 import { Segment } from "./Segment";
 import { GameOverStat } from "./IGameOverStat";
-import { BusCard } from './BusCard.js';
+import { BusCard } from './BusCard';
 
 export class ServerModel {
   private static _instance: ServerModel;
@@ -145,9 +145,9 @@ export class ServerModel {
         const game = this.getGameByToken(bearerToken)
         const user = this.getUserByToken(bearerToken)
 
-        if (game === undefined) throw new Error("Game is undefined");
-        if (this.segmentAlreadyClaimed(segmentId)) throw new Error("Segment already claimed");
-        if (user.player.hasCards(cards)) throw new Error("User doesn't have specified cards");
+        if (game === undefined) throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
+        if (this.segmentAlreadyClaimed(segmentId)) throw new Error(ErrorMsgs.SEGMENT_ALREADY_CLAIMED);
+        if (user.player.hasCards(cards)) throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS);
         
         user.player.segments.push(segmentId);
 
