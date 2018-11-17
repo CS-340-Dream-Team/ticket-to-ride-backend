@@ -38,7 +38,7 @@ export class Game {
     this.routeDeck = new RouteDeck();
     this.spread = new DrawSpread();
     this.gameMap = new GameMap();
-    this.turn = 0;
+    this.turn = -1;
   }
 
   addPlayer(player: Player): boolean {

@@ -20,5 +20,6 @@ export enum ErrorMsgs {
     NOT_ENOUGH_CARDS = "Not enough cards.",
     INVALID_COMMAND = "Invalid command received",
     INVALID_BUS_CARD_INDEX = "Invalid bus card index requested",
-    CANNOT_DRAW_RAINBOW = "You cannot draw a rainbow card right now"
+    CANNOT_DRAW_RAINBOW = "You cannot draw a rainbow card right now",
+    CANNOT_DRAW_ROUTE_CARDS = "You cannot draw route cards because you already drew a bus card this turn. Draw another bus to continue."
 }

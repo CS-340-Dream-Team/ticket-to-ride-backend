@@ -151,6 +151,17 @@ export class ServerModel {
           player.routeCardBuffer,
           player.name
         );
+        if (player.name === 'Betty the Bot') {
+            player.routeCards.push(...player.routeCardBuffer);
+            this.commandManager.addCommand(
+                game.id,
+                "discardRoutes",
+                { numCardsKept: 3 },
+                {cardsKept: player.routeCardBuffer},
+                player.name
+            );
+            player.routeCardBuffer = [];
+        }
       }
     });
     return new Command("startGame", {});
@@ -176,6 +187,9 @@ export class ServerModel {
     let player = user.player;
     if (game === undefined) {
       throw new Error("Game is undefined");
+    }
+    if (this.commandManager.inDrawingCardState(game.id)) {
+        throw new Error(ErrorMsgs.CANNOT_DRAW_ROUTE_CARDS);
     }
     let hand = game.drawRoutes();
     player.routeCardBuffer = hand;
@@ -218,6 +232,10 @@ export class ServerModel {
       privateData,
       player.name
     );
+    if (this.commandManager.isInitialized(game.id, game.numPlayers)) {
+        let newPlayer = this.incrementGameTurn(game);
+        this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.name);
+    }
     return command;
   }
 
@@ -326,6 +344,28 @@ export class ServerModel {
           {},
           playerName
         );
+      case ChatCodes.DRAW_ROUTES:
+        let hand = game.drawRoutes();
+        let player = game.players.filter(gamePlayer => gamePlayer.name === 'Betty the Bot')[0];
+        player.routeCardBuffer = hand;
+        this.commandManager.addCommand(
+            game.id,
+            "drawRoutes",
+            game.routeDeck.getNumCards(),
+            hand,
+            player.name
+        );
+        player.routeCards.push(...player.routeCardBuffer);
+        this.commandManager.addCommand(
+                game.id,
+                "discardRoutes",
+                { numCardsKept: 3 },
+                {cardsKept: player.routeCardBuffer},
+                player.name
+            );
+        player.routeCardBuffer = [];
+        let newPlayer = this.incrementGameTurn(game);
+        return this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, playerName);
         case ChatCodes.DRAW_10:
         let cards=game.drawTen(playerName);
         let spread_data = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
