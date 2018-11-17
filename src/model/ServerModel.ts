@@ -12,6 +12,7 @@ import { GameCommand } from "../commands/GameCommand";
 import { RouteCard } from "./RouteCard";
 import { ICommand } from "../commands/ICommand";
 import { ChatCodes } from "../commands/ChatCodes";
+import { BusColor } from "./BusColor";
 import { Segment } from "./Segment";
 import { GameOverStat } from "./IGameOverStat";
 import { BusCard } from './BusCard';
@@ -341,6 +342,16 @@ export class ServerModel {
           {},
           playerName
         );
+      case ChatCodes.DRAW_BUS:
+        let card = game.giveCardToPlayer(5, 'Betty the Bot');
+        let turnOver = this.commandManager.inDrawingCardState(game.id);
+        this.commandManager.addCommand(game.id, 'drawBusCard', {}, {'cardColor': card.color}, 'Betty the Bot');
+        if (turnOver) {
+          let newPlayer = this.incrementGameTurn(game);
+          this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, playerName);        
+        }
+        let newSpreadData = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
+        return this.commandManager.addCommand(game.id, 'updateSpread', newSpreadData, {}, 'Betty the Bot');
       case ChatCodes.END_GAME:
         game.endGame();
         const stats: GameOverStat[] = game.calculateScores(
@@ -355,8 +366,32 @@ export class ServerModel {
         );
       default:
         throw new Error(ErrorMsgs.INVALID_COMMAND);
+      }
     }
-  }
+    
+    selectBusCard(bearerToken: string|undefined, index: number): ICommand[] {
+        let game = this.getGameByToken(bearerToken);
+        if(!game) {
+            throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST)
+        }
+        let player = this.getUserByToken(bearerToken);
+        let card = game.giveCardToPlayer(index, player.username);
+        if (card.color === BusColor.wild && index < 5 && this.commandManager.inDrawingCardState(game.id)) {
+            game.revokePlayerCard(player.username, index);
+            throw new Error(ErrorMsgs.CANNOT_DRAW_RAINBOW);
+        }
+        let turnOver = (card.color === BusColor.wild && index < 5) || this.commandManager.inDrawingCardState(game.id);
+        let drawCommand = this.commandManager.addCommand(game.id, 'drawBusCard', {}, {'cardColor': card.color}, player.username);
+        let newSpreadData = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
+        let newSpreadCommand = this.commandManager.addCommand(game.id, 'updateSpread', newSpreadData, {}, player.username);
+        if (turnOver) {
+            let newPlayer = this.incrementGameTurn(game);
+            let incrementCommand = this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.username);
+            return [drawCommand, newSpreadCommand, incrementCommand];
+        } else {
+            return [drawCommand, newSpreadCommand];
+        }
+    }
 
   private incrementGameTurn(game: Game): string {
     game.turn += 1;

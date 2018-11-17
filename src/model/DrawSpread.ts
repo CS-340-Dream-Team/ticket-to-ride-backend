@@ -1,6 +1,7 @@
 import { BusCard } from "./BusCard";
 import { Game } from "./Game";
 import { BusDeck } from "./BusDeck";
+import { ErrorMsgs } from "./ErrorMsgs";
 
 export class DrawSpread{
     spread:BusCard[];
@@ -29,22 +30,13 @@ export class DrawSpread{
         return false;
     }
     
-    private replaceCard(card:BusCard)
-    {
-
+    getSpread():BusCard[]{
+        return this.spread;
     }
-    /*
-    drawCard(index:number):BusCard{
-        
+    getBusDeckCount():number{
+        return this.busDeck.cards.length;
     }
-    */
-   getSpread():BusCard[]{
-    return this.spread;
-   }
-   getBusDeckCount():number{
-       return this.busDeck.cards.length;
-   }
-   drawFour():BusCard[]{
+    drawFour():BusCard[]{
         let cards=[]
         for(let i=0;i<4;i++){
             let card=this.busDeck.drawCard();
@@ -53,5 +45,32 @@ export class DrawSpread{
             }
         }
         return cards;
+    }
+
+    drawCard(index: number) {
+        if (index >= 0 && index <= 4) {
+            let card = this.spread[index];
+            this.spread[index] = this.busDeck.drawCard();
+            if (this.hasThreeWilds()) {
+                this.spread.forEach((oldCard) => {
+                    this.busDeck.discardCard(oldCard);
+                });
+                this.spread = this.busDeck.cards.slice(0,5);
+                this.busDeck.cards.splice(0, 5);
+            }
+            return card;
+        }
+        else if (index == 5) {
+            return this.busDeck.drawCard();
+        }
+        else {
+            throw new Error(ErrorMsgs.INVALID_BUS_CARD_INDEX);
+        }
+    }
+
+    replaceCard(index: number, oldCard: BusCard) {
+        let card = this.spread[index];
+        this.busDeck.cards.unshift(card);
+        this.spread[index] = oldCard;
     }
 }

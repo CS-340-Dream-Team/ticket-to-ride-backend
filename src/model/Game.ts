@@ -79,34 +79,58 @@ export class Game {
       (maxIndex, stat, index, arr) =>
         stat.totalPoints > arr[maxIndex].totalPoints ? index : maxIndex,
       0
-    );
+      );
     stats[indexOfWinner].winner = true;
     return stats;
   }
-
+  
   endGame(): void {
     this.ended = true;
   }
-
+  
   get players(): Player[] {
     return this.playersJoined;
   }
-
+  
   drawRoutes() {
     //Check if there are enough routes
     return this.routeDeck.draw();
   }
+  
   getSpread() {
     return this.spread.getSpread();
   }
+
   assignColors(): void {
     for (let x = 0; x < this.playersJoined.length; x++) {
       this.playersJoined[x].color = x + 1;
     }
   }
+  
   initBusCards(): void {
     this.playersJoined.forEach(player => {
       player.busCards = this.spread.drawFour();
     });
   }
+  
+  
+
+  giveCardToPlayer(index: number, playerName: string) {
+    let card = this.spread.drawCard(index);
+      this.playersJoined.forEach(player => {
+        if (player.name === playerName) {
+          player.busCards.push(card);
+        }
+      });
+    return card;
+  }
+  
+  revokePlayerCard(playerName: string, index: number) {
+    this.playersJoined.forEach(player => {
+      if (player.name === playerName) {
+        let card = player.busCards[player.busCards.length - 1];
+        this.spread.spread[index] = card;
+      }
+    });
+  } 
 }

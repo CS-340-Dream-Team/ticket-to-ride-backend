@@ -27,7 +27,7 @@ export class BusDeck extends Deck{
        this.shuffle();
     }
     
-    drawCard():BusCard|undefined{
+    drawCard():BusCard{
         if(this.cards.length===0)
         {
             this.cards=this.discard;
@@ -38,7 +38,7 @@ export class BusDeck extends Deck{
         {
             throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS)
         }
-        return this.cards.pop();
+        return this.cards.pop() as BusCard;
     }
     
     discardCard(card:BusCard):void{
