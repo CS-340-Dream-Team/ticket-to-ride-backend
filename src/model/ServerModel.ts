@@ -326,6 +326,11 @@ export class ServerModel {
           {},
           playerName
         );
+        case ChatCodes.DRAW_10:
+        let cards=game.drawTen(playerName);
+        let spread_data = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
+        this.commandManager.addCommand(game.id, 'updateSpread', spread_data, {}, playerName);
+        return this.commandManager.addCommand(game.id, 'drawTen', 10,{'cards':cards},playerName)
       default:
         throw new Error(ErrorMsgs.INVALID_COMMAND);
       }
