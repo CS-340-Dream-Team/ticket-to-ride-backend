@@ -90,4 +90,11 @@ export class CommandManager {
         }
         return false;
     }
+
+    isInitialized(gameId: number, numPlayers: number) : boolean {
+        let commands = this.gameCommandQueues[gameId];
+        let drawRouteCards = commands.filter(command => command.type === 'drawRoutes');
+        let discardRouteCards = commands.filter(command => command.type === 'discardRoutes');
+        return drawRouteCards.length >= numPlayers && discardRouteCards.length >= numPlayers;
+    }
 }
