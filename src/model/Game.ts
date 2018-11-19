@@ -141,7 +141,9 @@ export class Game {
   revokePlayerCard(playerName: string, index: number) {
     this.playersJoined.forEach(player => {
       if (player.name === playerName) {
-        let card = player.busCards[player.busCards.length - 1];
+        let lastIndex = player.busCards.length - 1;
+        let card = player.busCards[lastIndex];
+        player.busCards.splice(lastIndex, 1);
         this.spread.spread[index] = card;
       }
     });

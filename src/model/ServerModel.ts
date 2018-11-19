@@ -17,6 +17,8 @@ import { ChatCodes } from "../commands/ChatCodes";
 import { BusColor } from "./BusColor";
 import { Segment } from "./Segment";
 import { GameOverStat } from "./IGameOverStat";
+import { PlayerState } from "./PlayerState";
+import { Chat } from "./Chat";
 
 export class ServerModel {
   private static _instance: ServerModel;
@@ -181,6 +183,7 @@ export class ServerModel {
     });
     return commandToReturn;
   }
+
   drawRoutes(bearerToken: string | undefined): GameCommand {
     let game = this.getGameByToken(bearerToken);
     let user = this.getUserByToken(bearerToken);
@@ -202,6 +205,7 @@ export class ServerModel {
     );
     return command;
   }
+
   discardRoutes(
     bearerToken: string | undefined,
     discardedCards: RouteCard[]
@@ -388,7 +392,8 @@ export class ServerModel {
             throw new Error(ErrorMsgs.CANNOT_DRAW_RAINBOW);
         }
         let turnOver = (card.color === BusColor.wild && index < 5) || this.commandManager.inDrawingCardState(game.id);
-        let drawCommand = this.commandManager.addCommand(game.id, 'drawBusCard', {}, {'cardColor': card.color}, player.username);
+        let publicData = index < 5 ? {'cardColor': card.color} : {};
+        let drawCommand = this.commandManager.addCommand(game.id, 'drawBusCard', publicData, {'cardColor': card.color}, player.username);
         let newSpreadData = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
         let newSpreadCommand = this.commandManager.addCommand(game.id, 'updateSpread', newSpreadData, {}, player.username);
         if (turnOver) {
@@ -416,20 +421,13 @@ export class ServerModel {
     let commands: ICommand[] = [];
     try {
       let commandId = parseInt(prevId);
-      if (commandId === -1) {
-        let updatePlayersCommand = new Command("updatePlayers", {
-          players: playerStates
-        });
-        commands.push(updatePlayersCommand);
-      } else {
-        commands.push(
-          ...this.commandManager.getGameplayAfter(
-            game.id,
-            commandId,
-            player.name
-          )
-        );
-      }
+      commands.push(
+        ...this.commandManager.getGameplayAfter(
+          game.id,
+          commandId,
+          player.name
+        )
+      );
     } catch (e) {
       console.log("messed up in getGameData()");
     }
@@ -443,7 +441,18 @@ export class ServerModel {
     let game = this.getGameByPlayer(player);
 
     let gameState = new GameState(game, player.name);
-    let id = this.commandManager.getLastId(game.id);
+    var turn;
+    var history: Command[];
+    var id;
+    if (this.commandManager.isInitialized(game.id, game.playersJoined.length)) {
+      turn = game.playersJoined[game.turn].name;
+      history = this.commandManager.getGameplayAfter(game.id, -0, player.name);
+      id = this.commandManager.getLastId(game.id);
+    } else {
+      turn = "";
+      history = [];
+      id = -1;
+    }
 
     return new Command("updateGame", {
       clientPlayer: player,
@@ -451,7 +460,8 @@ export class ServerModel {
       busDeckSize: gameState.busDeckCount,
       routeDeckSize: gameState.routeDeckCount,
       spread: game.spread.spread,
-      turn: game.playersJoined[game.turn].name,
+      turn: turn,
+      history: history,
       id: id
     });
   }
