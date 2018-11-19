@@ -7,8 +7,10 @@ import { GameMap } from "./GameMap";
 import { PlayerColor } from "./PlayerColor";
 import { GameOverStat } from "./IGameOverStat";
 import { Segment } from "./Segment";
+import { BusCard } from "./BusCard";
 
 export class Game {
+
   playersJoined: Player[];
   host: Player;
   name: string;
@@ -36,7 +38,7 @@ export class Game {
     this.routeDeck = new RouteDeck();
     this.spread = new DrawSpread();
     this.gameMap = new GameMap();
-    this.turn = 0;
+    this.turn = -1;
   }
 
   addPlayer(player: Player): boolean {
@@ -124,11 +126,24 @@ export class Game {
       });
     return card;
   }
-  
+  drawTen(playerName: string): BusCard[] {
+    let stack:BusCard[]=[];
+    this.playersJoined.forEach(player=>{
+      if(player.name===playerName){
+        for (let i = 0; i < 10; i++) {   
+          stack.push(this.spread.busDeck.drawCard())
+        }
+        player.busCards.push(...stack);
+      }
+    })
+    return stack;
+}
   revokePlayerCard(playerName: string, index: number) {
     this.playersJoined.forEach(player => {
       if (player.name === playerName) {
-        let card = player.busCards[player.busCards.length - 1];
+        let lastIndex = player.busCards.length - 1;
+        let card = player.busCards[lastIndex];
+        player.busCards.splice(lastIndex, 1);
         this.spread.spread[index] = card;
       }
     });
