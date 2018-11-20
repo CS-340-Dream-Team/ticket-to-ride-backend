@@ -175,11 +175,13 @@ export class ServerModel {
       gameList: this.unstartedGames
     });
     Object.values(this.startedGames).forEach(game => {
-      game.playersJoined.forEach(player => {
-        if (player.name === user.username) {
-          commandToReturn = new Command("gameStarted", { game: game });
-        }
-      });
+      if(game.ended===false){
+        game.playersJoined.forEach(player => {
+          if (player.name === user.username) {
+            commandToReturn = new Command("gameStarted", { game: game });
+          }
+        });
+      }
     });
     return commandToReturn;
   }
@@ -337,10 +339,10 @@ export class ServerModel {
         let newSpreadData = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
         return this.commandManager.addCommand(game.id, 'updateSpread', newSpreadData, {}, 'Betty the Bot');
       case ChatCodes.END_GAME:
-        game.endGame();
         const stats: GameOverStat[] = game.calculateScores(
           [] /** Pass him all the segments */
         );
+        game.endGame();
         return this.commandManager.addCommand(
           game.id,
           "endGame",
@@ -514,11 +516,11 @@ export class ServerModel {
   private getGameByPlayer(player: Player): Game {
     var foundGame = null;
     Object.values(this.startedGames).forEach(game => {
-      for (let joinedPlayer of game.playersJoined) {
-        if (joinedPlayer === player) {
-          foundGame = game;
+        for (let joinedPlayer of game.playersJoined) {
+          if (joinedPlayer === player) {
+            foundGame = game;
+          }
         }
-      }
     });
     if (foundGame) {
       return foundGame;

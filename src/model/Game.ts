@@ -88,6 +88,14 @@ export class Game {
   
   endGame(): void {
     this.ended = true;
+    this.players.forEach(player => {
+      player.busCards=[];
+      player.routeCards=[];
+      player.points=0;
+      player.color=0;
+      player.busPieces=45;
+      player.routeCardBuffer=[];
+    });
   }
   
   get players(): Player[] {
