@@ -142,9 +142,9 @@ export class ServerModel {
     this.startedGames[game.id] = game;
     game.assignColors();
     this.commandManager.addGame();
+    game.initBusCards();
     game.playersJoined.forEach(player => {
       if (game) {
-        game.initBusCards();
         player.routeCardBuffer = game.drawRoutes();
         this.commandManager.addCommand(
           game.id,
@@ -441,7 +441,6 @@ export class ServerModel {
     let user = this.getUserByToken(bearerToken);
     let player = user.player;
     let game = this.getGameByPlayer(player);
-
     let gameState = new GameState(game, player.name);
     var turn;
     var history: Command[];

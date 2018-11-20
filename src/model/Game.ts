@@ -118,12 +118,10 @@ export class Game {
   }
   
   initBusCards(): void {
-    this.playersJoined.forEach(player => {
+      this.playersJoined.forEach(player => {
       player.busCards = this.spread.drawFour();
     });
   }
-  
-  
 
   giveCardToPlayer(index: number, playerName: string) {
     let card = this.spread.drawCard(index);
@@ -139,7 +137,7 @@ export class Game {
     this.playersJoined.forEach(player=>{
       if(player.name===playerName){
         for (let i = 0; i < 10; i++) {   
-          stack.push(this.spread.busDeck.drawCard())
+          stack.push(this.spread.busDeck.drawCard(false))
         }
         player.busCards.push(...stack);
       }
