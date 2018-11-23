@@ -297,7 +297,7 @@ export class ServerModel {
       });
 
       this.markSegmentClaimed(segmentId);
-      const command = this.commandManager.addCommand(game.id, "claimSegment", { segmentId: segmentId }, {}, user.player.name);
+    const command = this.commandManager.addCommand(game.id, "claimSegment", { segmentId: segmentId, player: user.player.name }, {}, user.player.name);
       return command;
   }
 
