@@ -1,6 +1,7 @@
 import { Player } from "./Player";
 import { Chat } from "./Chat";
 import { BusDeck } from "./BusDeck";
+import { Location } from "./Location";
 import { RouteDeck } from "./RouteDeck";
 import { DrawSpread } from "./DrawSpread";
 import { GameMap } from "./GameMap";
@@ -8,6 +9,7 @@ import { PlayerColor } from "./PlayerColor";
 import { GameOverStat } from "./IGameOverStat";
 import { Segment } from "./Segment";
 import { BusCard } from "./BusCard";
+import { getMaxListeners } from "cluster";
 
 export class Game {
 
@@ -55,8 +57,53 @@ export class Game {
     return false;
   }
 
+  calcLongestRoute(segments: Segment[]) {
+    let playerLengths = []
+    for (const player of this.players) {
+      let lengths = [0];
+      const playerSegments: Segment[] = segments.filter(
+        segment => segment.owner === player.name
+      );
+      for (const segment of playerSegments) {
+        lengths.push(this.longestPathForSegment(segment.start, segment.end, segment.length, [segment], playerSegments));
+      }
+      playerLengths.push({name: player.name, length: Math.max(...lengths)});
+    }
+    // Find best from playerLengths
+    let maxLength = 0;
+    let maxPlayer: string[] = [];
+    for (const playerLength of playerLengths) {
+      if (playerLength.length > maxLength) {
+        maxPlayer = [playerLength.name];
+        maxLength = playerLength.length;
+      } else if (playerLength.length == maxLength) {
+        maxPlayer.push(playerLength.name);
+      }
+    }
+    return maxPlayer;
+  }
+
+  longestPathForSegment(start: Location, end: Location, length: number, visited: Segment[], allSegments: Segment[]) {
+    let lengths = [length];
+    for (const segment of allSegments) {
+      if (!visited.includes(segment)) {
+        if (segment.start.name === start.name) {
+          lengths.push(this.longestPathForSegment(segment.end, end, length + segment.length, [...visited, segment], allSegments));
+        } else if (segment.end.name === start.name) {
+          lengths.push(this.longestPathForSegment(segment.start, end, length + segment.length, [...visited, segment], allSegments));
+        } else if (segment.end.name === end.name) {
+          lengths.push(this.longestPathForSegment(start, segment.start,length + segment.length, [...visited, segment], allSegments));
+        } else if (segment.start.name === end.name) {
+          lengths.push(this.longestPathForSegment(start, segment.end, length + segment.length, [...visited, segment], allSegments));
+        }
+      }
+    }
+    return Math.max(...lengths);
+  }
+
   calculateScores(segments: Segment[]): GameOverStat[] {
     const stats: GameOverStat[] = [];
+    let longestRoutePlayers = this.calcLongestRoute(segments);
     for (const player of this.players) {
       let { pointsGained, pointsLost, name } = player;
       const color: string = PlayerColor[player.color];
@@ -67,6 +114,9 @@ export class Game {
         (sum, segment) => sum + segment.pointValue,
         0
       );
+      if (longestRoutePlayers.includes(player.name)) {
+        pointsGained += 10;
+      }
       const totalPoints: number = pointsGained - pointsLost;
       stats.push({
         name,
