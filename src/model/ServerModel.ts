@@ -186,6 +186,13 @@ export class ServerModel {
     return new Command("startGame", {});
   }
 
+  getGameOverCommand(game: Game, username: string) {
+    const stats: GameOverStat[] = game.calculateScores(
+      [] /** Pass him all the segments */
+    );
+    return this.commandManager.addCommand(game.id, "endGame", { stats }, {}, username);
+  }
+
   getGameList(bearerToken: string | undefined): Command {
     let user = this.getUserByToken(bearerToken);
     let commandToReturn = new Command("updateGameList", {
@@ -259,6 +266,9 @@ export class ServerModel {
         let newPlayer = this.incrementGameTurn(game);
         this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.name);
     }
+    if (game.ended) {
+      this.getGameOverCommand(game, player.name);
+    }
     return command;
   }
 
@@ -283,24 +293,32 @@ export class ServerModel {
    * @param bearerToken Auth token from client request
    */
   public claimSegment(bearerToken: string, segmentId: number, cards: BusCard[]) {
-      const game = this.getGameByToken(bearerToken)
-      const user = this.getUserByToken(bearerToken)
+    const game = this.getGameByToken(bearerToken)
+    const user = this.getUserByToken(bearerToken)
 
-      if (game === undefined) throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
-      if (this.segmentAlreadyClaimed(segmentId)) throw new Error(ErrorMsgs.SEGMENT_ALREADY_CLAIMED);
-      if (user.player.hasCards(cards)) throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS);
+    if (game === undefined) throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
+    if (this.segmentAlreadyClaimed(segmentId)) throw new Error(ErrorMsgs.SEGMENT_ALREADY_CLAIMED);
+    if (user.player.hasCards(cards)) throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS);
 
-      user.player.segments.push(segmentId);
+    user.player.segments.push(segmentId);
 
-      user.player.removeCards(cards);
+    user.player.removeCards(cards);
 
-      cards.forEach(card => {
-          game.spread.busDeck.discardCard(card);
-      });
+    cards.forEach(card => {
+        game.spread.busDeck.discardCard(card);
+    });
 
-      this.markSegmentClaimed(segmentId);
-    const command = this.commandManager.addCommand(game.id, "claimSegment", { segmentId: segmentId, player: user.player.name }, {}, user.player.name);
-      return command;
+    this.markSegmentClaimed(segmentId);
+    const claimCommand = this.commandManager.addCommand(game.id, "claimSegment", {segmentId: segmentId}, {}, user.player.name);
+    let newPlayer = this.incrementGameTurn(game);
+    let turnCommand = this.commandManager.addCommand(game.id, "incrementTurn", {playerTurnName: newPlayer}, {}, user.player.name);
+    let returnCommands = [claimCommand, turnCommand];
+    if (game.ended) {
+      returnCommands.push(this.getGameOverCommand(game, user.player.name));        
+    } else if (user.player.busPieces <= 0) {
+      returnCommands.push(this.commandManager.addCommand(game.id, "lastRound", {"lastPlayer": user.player.name}, {}, user.player.name));  
+    }
+    return returnCommands;
   }
 
   private getGameByToken(bearerToken: string | undefined): Game | undefined {
@@ -378,6 +396,9 @@ export class ServerModel {
           let newPlayer = this.incrementGameTurn(game);
           this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, playerName);        
         }
+        if (game.ended) {
+          return this.getGameOverCommand(game, playerName);
+        }
         let newSpreadData = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
         return this.commandManager.addCommand(game.id, 'updateSpread', newSpreadData, {}, 'Betty the Bot');
       case ChatCodes.END_GAME:
@@ -424,33 +445,42 @@ export class ServerModel {
       }
     }
     
-    selectBusCard(bearerToken: string|undefined, index: number): ICommand[] {
-        let game = this.getGameByToken(bearerToken);
-        if(!game) {
-            throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST)
-        }
-        let player = this.getUserByToken(bearerToken);
-        let card = game.giveCardToPlayer(index, player.username);
-        if (card.color === BusColor.wild && index < 5 && this.commandManager.inDrawingCardState(game.id)) {
-            game.revokePlayerCard(player.username, index);
-            throw new Error(ErrorMsgs.CANNOT_DRAW_RAINBOW);
-        }
-        let turnOver = (card.color === BusColor.wild && index < 5) || this.commandManager.inDrawingCardState(game.id);
-        let publicData = index < 5 ? {'cardColor': card.color} : {};
-        let drawCommand = this.commandManager.addCommand(game.id, 'drawBusCard', publicData, {'cardColor': card.color}, player.username);
-        let newSpreadData = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
-        let newSpreadCommand = this.commandManager.addCommand(game.id, 'updateSpread', newSpreadData, {}, player.username);
-        if (turnOver) {
-            let newPlayer = this.incrementGameTurn(game);
-            let incrementCommand = this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.username);
-            return [drawCommand, newSpreadCommand, incrementCommand];
-        } else {
-            return [drawCommand, newSpreadCommand];
-        }
+  selectBusCard(bearerToken: string|undefined, index: number): ICommand[] {
+    let game = this.getGameByToken(bearerToken);
+    if(!game) {
+        throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST)
     }
+    let player = this.getUserByToken(bearerToken);
+    let card = game.giveCardToPlayer(index, player.username);
+    if (card.color === BusColor.wild && index < 5 && this.commandManager.inDrawingCardState(game.id)) {
+        game.revokePlayerCard(player.username, index);
+        throw new Error(ErrorMsgs.CANNOT_DRAW_RAINBOW);
+    }
+    let turnOver = (card.color === BusColor.wild && index < 5) || this.commandManager.inDrawingCardState(game.id);
+    let publicData = index < 5 ? {'cardColor': card.color} : {};
+    let drawCommand = this.commandManager.addCommand(game.id, 'drawBusCard', publicData, {'cardColor': card.color}, player.username);
+    let newSpreadData = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
+    let newSpreadCommand = this.commandManager.addCommand(game.id, 'updateSpread', newSpreadData, {}, player.username);
+    if (turnOver) {
+      let newPlayer = this.incrementGameTurn(game);
+      let incrementCommand = this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.username);
+      if (game.ended) {
+        let gameOverCommand = this.getGameOverCommand(game, player.username);
+        return [drawCommand, newSpreadCommand, incrementCommand, gameOverCommand];
+      }
+      return [drawCommand, newSpreadCommand, incrementCommand];
+    }
+    return [drawCommand, newSpreadCommand];
+  }
 
   private incrementGameTurn(game: Game): string {
     game.turn += 1;
+    if (game.lastRound) {
+      game.turnsLeft -= 1;
+      if (game.turnsLeft == 0) {
+        game.ended = true;
+      }
+    }
     game.turn = game.turn % game.playersJoined.length;
     return game.playersJoined[game.turn].name;
   }
