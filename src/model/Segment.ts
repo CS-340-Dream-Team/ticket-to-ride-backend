@@ -1,6 +1,6 @@
 import { BusColor } from "./BusColor";
 import { Location } from "./Location";
-import PointValues from "../data/segmentPointValues.json";
+const PointValues: number[] = [1, 2, 6, 7, 10, 15];
 
 export class Segment {
   id: number;

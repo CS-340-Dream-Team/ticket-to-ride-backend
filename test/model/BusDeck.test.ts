@@ -32,15 +32,17 @@ test("shuffle", ()=>{
 
 test("drawCard",()=>{
     let deck= new BusDeck();
-    deck.drawCard();
-    expect(deck.cards.length).toEqual(109)
+    let spread = deck.cards.slice(0,5);
+    deck.cards.splice(0,5);
+    deck.drawCard(false);
+    expect(deck.cards.length).toEqual(104)
     deck.cards=[]
     //throw error for drawing card when there are none to draw
     
-    deck.discard.push(new BusCard(BusColor.blue))
-    deck.discard.push(new BusCard(BusColor.blue))
-    deck.discard.push(new BusCard(BusColor.blue))
-    deck.drawCard()
+    deck.cards.push(new BusCard(BusColor.blue))
+    deck.cards.push(new BusCard(BusColor.blue))
+    deck.cards.push(new BusCard(BusColor.blue))
+    deck.drawCard(false);
     expect(deck.cards.length).toEqual(2)
     expect(deck.cards[0]).toBeInstanceOf(BusCard)
     expect(deck.cards[1]).toBeInstanceOf(BusCard)

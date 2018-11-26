@@ -1,4 +1,3 @@
-import * as segments from '../data/segments.json';
 import { Game } from "./Game";
 import { Player } from "./Player";
 import { UserRegistration } from "./UserRegistration";
@@ -8,6 +7,8 @@ import { CommandManager } from "../commands/CommandManager";
 import { Message } from "./Message";
 import { GameState } from "./GameState";
 import hat from "hat";
+import { BusDeck } from "./BusDeck";
+import { DrawSpread } from "./DrawSpread";
 import { GameCommand } from "../commands/GameCommand";
 import { RouteCard } from "./RouteCard";
 import { ICommand } from "../commands/ICommand";
@@ -18,6 +19,8 @@ import { GameOverStat } from "./IGameOverStat";
 import { BusCard } from './BusCard';
 import { PlayerState } from "./PlayerState";
 import { Chat } from "./Chat";
+import loadJSON from '../utils/jsonLoader';
+const segments = loadJSON('src/data/segments.json');
 
 export class ServerModel {
   private static _instance: ServerModel;
@@ -27,6 +30,21 @@ export class ServerModel {
   private loggedInUsers: UserRegistration[];
   private allUsers: UserRegistration[];
   private unstartedGameLimit: number;
+
+  private segmentsClaimed: boolean[] = segments.map(() => false);
+
+
+  private segmentAlreadyClaimed(segmentId: number): boolean {
+      return this.segmentsClaimed[segmentId];
+  }
+
+  private markSegmentClaimed(segmentId: number): void {
+      this.segmentsClaimed[segmentId] = true;
+  }
+
+  private getSegmentById(segmentId: number) {
+      return segments[segmentId];
+  }
 
   private constructor() {
     if (ServerModel._instance) {
@@ -48,20 +66,6 @@ export class ServerModel {
     }
 
     return ServerModel._instance;
-  }
-
-  private segmentsClaimed: boolean[] = segments.map(_ => false);
-
-  private segmentAlreadyClaimed(segmentId: number): boolean {
-      return this.segmentsClaimed[segmentId];
-  }
-
-  private markSegmentClaimed(segmentId: number): void {
-      this.segmentsClaimed[segmentId] = true;
-  }
-
-  private getSegmentById(segmentId: number) {
-    return segments[segmentId];
   }
 
   login(username: string, password: string): string {
@@ -140,31 +144,6 @@ export class ServerModel {
     return new Command("updateGameList", { gameList: this.unstartedGames });
   }
 
-    /**
-     * Claims a segment for the given player
-     * @param bearerToken Auth token from client request
-     */
-    public claimSegment(bearerToken: string, segmentId: number, cards: BusCard[]) {
-        const game = this.getGameByToken(bearerToken)
-        const user = this.getUserByToken(bearerToken)
-
-        if (game === undefined) throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
-        if (this.segmentAlreadyClaimed(segmentId)) throw new Error(ErrorMsgs.SEGMENT_ALREADY_CLAIMED);
-        if (user.player.hasCards(cards)) throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS);
-        
-        user.player.segments.push(segmentId);
-
-        user.player.removeCards(cards);
-
-        cards.forEach(card => {
-            game.spread.busDeck.discardCard(card);
-        });
-        
-        this.markSegmentClaimed(segmentId);
-        const command = this.commandManager.addCommand(game.id, "claimSegment", {segmentId: segmentId}, {}, user.player.name);
-        return command;
-    }
-
   startGame(bearerToken: string | undefined, gameId: number): Command {
     let game = this.getGameById(gameId);
     let playerName = this.getUsernameByToken(bearerToken);
@@ -180,9 +159,9 @@ export class ServerModel {
     this.startedGames[game.id] = game;
     game.assignColors();
     this.commandManager.addGame();
+    game.initBusCards();
     game.playersJoined.forEach(player => {
       if (game) {
-        game.initBusCards();
         player.routeCardBuffer = game.drawRoutes();
         this.commandManager.addCommand(
           game.id,
@@ -213,11 +192,13 @@ export class ServerModel {
       gameList: this.unstartedGames
     });
     Object.values(this.startedGames).forEach(game => {
-      game.playersJoined.forEach(player => {
-        if (player.name === user.username) {
-          commandToReturn = new Command("gameStarted", { game: game });
-        }
-      });
+      if(game.ended===false){
+        game.playersJoined.forEach(player => {
+          if (player.name === user.username) {
+            commandToReturn = new Command("gameStarted", { game: game });
+          }
+        });
+      }
     });
     return commandToReturn;
   }
@@ -295,6 +276,31 @@ export class ServerModel {
   public getSegmentsClaimedByPlayer(player: Player): Segment[] {
     console.warn("This has not been implemented yet!");
     return [];
+  }
+
+  /**
+   * Claims a segment for the given player
+   * @param bearerToken Auth token from client request
+   */
+  public claimSegment(bearerToken: string, segmentId: number, cards: BusCard[]) {
+      const game = this.getGameByToken(bearerToken)
+      const user = this.getUserByToken(bearerToken)
+
+      if (game === undefined) throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
+      if (this.segmentAlreadyClaimed(segmentId)) throw new Error(ErrorMsgs.SEGMENT_ALREADY_CLAIMED);
+      if (user.player.hasCards(cards)) throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS);
+
+      user.player.segments.push(segmentId);
+
+      user.player.removeCards(cards);
+
+      cards.forEach(card => {
+          game.spread.busDeck.discardCard(card);
+      });
+
+      this.markSegmentClaimed(segmentId);
+    const command = this.commandManager.addCommand(game.id, "claimSegment", { segmentId: segmentId, player: user.player.name }, {}, user.player.name);
+      return command;
   }
 
   private getGameByToken(bearerToken: string | undefined): Game | undefined {
@@ -375,10 +381,10 @@ export class ServerModel {
         let newSpreadData = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
         return this.commandManager.addCommand(game.id, 'updateSpread', newSpreadData, {}, 'Betty the Bot');
       case ChatCodes.END_GAME:
-        game.endGame();
         const stats: GameOverStat[] = game.calculateScores(
           [] /** Pass him all the segments */
         );
+        game.endGame();
         return this.commandManager.addCommand(
           game.id,
           "endGame",
@@ -477,7 +483,6 @@ export class ServerModel {
     let user = this.getUserByToken(bearerToken);
     let player = user.player;
     let game = this.getGameByPlayer(player);
-
     let gameState = new GameState(game, player.name);
     var turn;
     var history: Command[];
@@ -552,11 +557,11 @@ export class ServerModel {
   private getGameByPlayer(player: Player): Game {
     var foundGame = null;
     Object.values(this.startedGames).forEach(game => {
-      for (let joinedPlayer of game.playersJoined) {
-        if (joinedPlayer === player) {
-          foundGame = game;
+        for (let joinedPlayer of game.playersJoined) {
+          if (joinedPlayer === player) {
+            foundGame = game;
+          }
         }
-      }
     });
     if (foundGame) {
       return foundGame;
