@@ -149,6 +149,7 @@ export class Game {
       player.color=0;
       player.busPieces=45;
       player.routeCardBuffer=[];
+      player.segments=[];
     });
   }
   

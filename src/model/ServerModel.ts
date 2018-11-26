@@ -299,10 +299,11 @@ export class ServerModel {
     if (game === undefined) throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
     if (this.segmentAlreadyClaimed(segmentId)) throw new Error(ErrorMsgs.SEGMENT_ALREADY_CLAIMED);
     if (user.player.hasCards(cards)) throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS);
+    if (user.player.busPieces<cards.length) throw new Error(ErrorMsgs.NOT_ENOUGH_BUS_PIECES);
 
     user.player.segments.push(segmentId);
-
     user.player.removeCards(cards);
+    user.player.busPieces-=cards.length;
 
     cards.forEach(card => {
         game.spread.busDeck.discardCard(card);
@@ -314,8 +315,10 @@ export class ServerModel {
     let turnCommand = this.commandManager.addCommand(game.id, "incrementTurn", {playerTurnName: newPlayer}, {}, user.player.name);
     let returnCommands = [claimCommand, turnCommand];
     if (game.ended) {
-      returnCommands.push(this.getGameOverCommand(game, user.player.name));        
-    } else if (user.player.busPieces <= 0) {
+      returnCommands.push(this.getGameOverCommand(game, user.player.name));
+      game.endGame();      
+    } else if (user.player.busPieces <= 2 && game.lastRound===false) {
+      game.startLastRound();
       returnCommands.push(this.commandManager.addCommand(game.id, "lastRound", {"lastPlayer": user.player.name}, {}, user.player.name));  
     }
     return returnCommands;
@@ -348,7 +351,7 @@ export class ServerModel {
     let game = this.getGameByPlayer(player);
     var command;
     if (Object.values(ChatCodes).includes(messageText)) {
-      command = this.handleChatCode(game.id, messageText, player.name);
+      command = this.handleChatCode(game.id, messageText, player.name, bearerToken);
     } else {
       let message = new Message(messageText, player);
       this.startedGames[game.id].chat.messages.push(message); //TODO: make sure startedGames are in the same order?
@@ -375,7 +378,8 @@ export class ServerModel {
   private handleChatCode(
     gameId: number,
     messageText: string,
-    playerName: string
+    playerName: string,
+    bearerToken: string|undefined
   ): Command {
     let game = this.startedGames[gameId];
     switch (messageText) {
@@ -435,11 +439,22 @@ export class ServerModel {
         player.routeCardBuffer = [];
         let newPlayer = this.incrementGameTurn(game);
         return this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, playerName);
+
         case ChatCodes.DRAW_10:
         let cards=game.drawTen(playerName);
         let spread_data = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
         this.commandManager.addCommand(game.id, 'updateSpread', spread_data, {}, playerName);
         return this.commandManager.addCommand(game.id, 'drawTen', 10,{'cards':cards},playerName)
+
+        case ChatCodes.CLAIM_TO_END:
+        let myplayer:Player =game.playersJoined.filter(gPlayer => gPlayer.name===playerName)[0];
+        myplayer.busPieces=4;
+        let mycards= [new BusCard(BusColor.wild),new BusCard(BusColor.wild)]
+        myplayer.busCards.push(...mycards);
+        if(bearerToken)
+        this.claimSegment(bearerToken, 1, mycards);
+        let my_data = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
+        return this.commandManager.addCommand(gameId, 'updateSpread', my_data, {}, playerName);
       default:
         throw new Error(ErrorMsgs.INVALID_COMMAND);
       }
