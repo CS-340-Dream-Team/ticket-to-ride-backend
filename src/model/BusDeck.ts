@@ -2,6 +2,7 @@ import { BusCard } from "./BusCard";
 import {BusColor} from "./BusColor"
 import { ErrorMsgs } from "./ErrorMsgs";
 import { Deck } from "./Deck";
+
 export class BusDeck extends Deck{
     cards:BusCard[]
     discard:BusCard[]
@@ -27,15 +28,10 @@ export class BusDeck extends Deck{
        this.shuffle();
     }
     
-    drawCard():BusCard{
-        if(this.cards.length===0)
-        {
-            this.cards=this.discard;
-            this.discard=[];
-            this.shuffle();
-        }
-        if(this.cards.length===0)
-        {
+    drawCard(fromSpread: boolean): BusCard {
+        if(this.deckEmpty() && fromSpread) {
+            this.shuffleDiscardIntoDeck();
+        } else if(this.deckEmpty() && !fromSpread) {
             throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS)
         }
         return this.cards.pop() as BusCard;
@@ -43,5 +39,21 @@ export class BusDeck extends Deck{
     
     discardCard(card:BusCard):void{
         this.discard.push(card);
+    }
+
+    shuffleDiscardIntoDeck() {
+        this.discard.forEach( card => {
+            this.cards.push(card);
+        });
+        this.discard = [];
+        this.shuffle();
+    }
+
+    deckEmpty() {
+        return this.cards.length === 0;
+    }
+
+    discardEmpty() {
+        return this.discard.length === 0;
     }
 }
