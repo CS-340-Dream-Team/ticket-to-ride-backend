@@ -39,6 +39,8 @@ export class GameCommand implements ICommand{
             return this.incrementTurn();
         } else if(this.type === "claimSegment") {
             return this.claimSegment();
+        } else if(this.type === "lastRound"){
+            return this.lastRound();
         }
         else{
             return "unknown";
@@ -73,5 +75,7 @@ export class GameCommand implements ICommand{
         let temp = this.data as {"segmentId": number};
         return this.player + " claimed segment " + temp.segmentId;
     }
-    
+    lastRound(){
+        return this.player +" finished their last turn. This is now the last round.";
+    }    
 }

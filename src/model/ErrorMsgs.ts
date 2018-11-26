@@ -24,5 +24,6 @@ export enum ErrorMsgs {
     CANNOT_DRAW_RAINBOW = "You cannot draw a rainbow card right now",
     CANNOT_DRAW_ROUTE_CARDS = "You cannot draw route cards because you already drew a bus card this turn. Draw another bus to continue.",
     CANNOT_CLAIM_SEGMENT = "You cannot claim a segment because you already drew a bus card this turn. Draw another bus to continue.",
+    NOT_ENOUGH_BUS_PIECES = "You do not have enough bus pieces to claim that segment.",
     ALREADY_OWN_PAIR = "You cannot claim this segment because you already own its pair"
 }

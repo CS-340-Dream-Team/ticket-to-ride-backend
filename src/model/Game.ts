@@ -22,6 +22,8 @@ export class Game {
   id: number;
   numPlayers: number;
   started: boolean;
+  lastRound: boolean;
+  turnsLeft: number;
   ended: boolean;
   chat: Chat;
   routeDeck: RouteDeck;
@@ -37,6 +39,8 @@ export class Game {
     this.id = Game._id++;
     this.numPlayers = 1;
     this.started = false;
+    this.lastRound = false;
+    this.turnsLeft = -1;
     this.ended = false;
     this.chat = new Chat();
     this.addPlayer(host);
@@ -164,6 +168,7 @@ export class Game {
       player.color=0;
       player.busPieces=45;
       player.routeCardBuffer=[];
+      player.segments=[];
     });
   }
   
@@ -192,6 +197,11 @@ export class Game {
     });
   }
 
+  startLastRound(): void {
+    this.lastRound = true;
+    this.turnsLeft = this.playersJoined.length - 1;
+  }
+
   giveCardToPlayer(index: number, playerName: string) {
     let card = this.spread.drawCard(index);
       this.playersJoined.forEach(player => {
@@ -201,6 +211,7 @@ export class Game {
       });
     return card;
   }
+  
   drawTen(playerName: string): BusCard[] {
     let stack:BusCard[]=[];
     this.playersJoined.forEach(player=>{
