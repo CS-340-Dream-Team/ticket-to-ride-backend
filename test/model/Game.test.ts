@@ -27,26 +27,26 @@ test("adds host twice to not allow duplicate players", () => {
     expect(game.addPlayer(host)).toBe(false);
 })
 
-test("adds host and 4 players to fill playersJoined list", () => {
-    let host = new Player("host", PlayerColor.Blue);
-    let game = new Game(host, "gameName");
-    let player2 = new Player("player2", PlayerColor.Blue);
-    let player3 = new Player("player3", PlayerColor.Blue);
-    let player4 = new Player("player4", PlayerColor.Blue);
-    let player5 = new Player("player5", PlayerColor.Blue);
-    let player6 = new Player("player6", PlayerColor.Blue);
-    if (game.playersJoined.length == 1) {
-        expect(game.playersJoined.length).toBe(1);
-        expect(game.addPlayer(player2)).toBe(true);
-    }
-    expect(game.playersJoined.length).toBe(2);
-    expect(game.addPlayer(player3)).toBe(true);
-    expect(game.playersJoined.length).toBe(3);
-    expect(game.addPlayer(player4)).toBe(true);
-    expect(game.playersJoined.length).toBe(4);
-    expect(game.addPlayer(player5)).toBe(true);
-    expect(game.playersJoined.length).toBe(5);
-})
+// test("adds host and 4 players to fill playersJoined list", () => {
+//     let host = new Player("host", PlayerColor.Blue);
+//     let game = new Game(host, "gameName");
+//     let player2 = new Player("player2", PlayerColor.Blue);
+//     let player3 = new Player("player3", PlayerColor.Blue);
+//     let player4 = new Player("player4", PlayerColor.Blue);
+//     let player5 = new Player("player5", PlayerColor.Blue);
+//     let player6 = new Player("player6", PlayerColor.Blue);
+//     if (game.playersJoined.length == 1) {
+//         expect(game.playersJoined.length).toBe(1);
+//         expect(game.addPlayer(player2)).toBe(true);
+//     }
+//     expect(game.playersJoined.length).toBe(2);
+//     expect(game.addPlayer(player3)).toBe(true);
+//     expect(game.playersJoined.length).toBe(3);
+//     expect(game.addPlayer(player4)).toBe(true);
+//     expect(game.playersJoined.length).toBe(4);
+//     expect(game.addPlayer(player5)).toBe(true);
+//     expect(game.playersJoined.length).toBe(5);
+// })
 
 test("Calculates longest route correctly", () => {
     let host = new Player("host", PlayerColor.Blue);
@@ -86,25 +86,25 @@ test("Calculates longest route correctly", () => {
         new Segment(14, d, h, 4, 0, BusColor.wild),
         new Segment(15, j, h, 4, 0, BusColor.wild)
     ];
-    segments[0].owner = player3.name;
-    segments[1].owner = player2.name;
-    segments[2].owner = player3.name;
-    segments[3].owner = host.name;
-    segments[4].owner = player3.name;
-    segments[5].owner = player2.name;
-    segments[6].owner = player3.name;
-    segments[7].owner = player2.name;
-    segments[8].owner = player2.name;
-    segments[9].owner = player3.name;
-    segments[10].owner = player3.name;
-    segments[11].owner = player3.name;
-    segments[12].owner = player2.name;
-    segments[13].owner = player3.name;
-    segments[14].owner = player2.name;
+    segments[0].owner = player3;
+    segments[1].owner = player2;
+    segments[2].owner = player3;
+    segments[3].owner = host;
+    segments[4].owner = player3;
+    segments[5].owner = player2;
+    segments[6].owner = player3;
+    segments[7].owner = player2;
+    segments[8].owner = player2;
+    segments[9].owner = player3;
+    segments[10].owner = player3;
+    segments[11].owner = player3;
+    segments[12].owner = player2;
+    segments[13].owner = player3;
+    segments[14].owner = player2;
 
-    let hostSegments = segments.filter(segment => segment.owner == host.name);
-    let player2Segments = segments.filter(segment => segment.owner == player2.name);
-    let player3Segments = segments.filter(segment => segment.owner == player3.name);
+    let hostSegments = segments.filter(segment => segment.owner == host);
+    let player2Segments = segments.filter(segment => segment.owner == player2);
+    let player3Segments = segments.filter(segment => segment.owner == player3);
 
     expect(game.longestPathForSegment(d, i, 4, [segments[7]], player2Segments)).toBe(16);
     expect(game.longestPathForSegment(c, i, 4, [segments[5]], player2Segments)).toBe(20);

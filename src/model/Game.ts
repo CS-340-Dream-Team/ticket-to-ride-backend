@@ -10,6 +10,8 @@ import { GameOverStat } from "./IGameOverStat";
 import { Segment } from "./Segment";
 import { BusCard } from "./BusCard";
 import { getMaxListeners } from "cluster";
+import loadJSON from "../utils/jsonLoader";
+const segments_json = loadJSON('src/data/segments.json');
 
 export class Game {
 
@@ -26,6 +28,7 @@ export class Game {
   spread: DrawSpread;
   gameMap: GameMap;
   turn: number;
+  segments: Segment[] = [];
 
   constructor(host: Player, name: string) {
     this.playersJoined = [new Player("Betty the Bot", PlayerColor.None)];
@@ -41,6 +44,22 @@ export class Game {
     this.spread = new DrawSpread();
     this.gameMap = new GameMap();
     this.turn = -1;
+    for (let i = 0; i < segments_json.length; i++) {
+      let s = segments_json[i];
+      this.segments.push(new Segment(s['id'], s['start'], s['end'], s['length'], s['pair'], s['color']));
+    }
+  }
+
+  segmentAlreadyClaimed(segmentId: number): boolean {
+    return this.segments[segmentId-1].owner !== null;
+  }
+
+  markSegmentClaimed(segmentId: number, player: Player): void {
+      this.segments[segmentId-1].claim(player);
+  }
+
+  getSegmentById(segmentId: number) {
+      return this.segments[segmentId-1];
   }
 
   addPlayer(player: Player): boolean {
@@ -62,7 +81,7 @@ export class Game {
     for (const player of this.players) {
       let lengths = [0];
       const playerSegments: Segment[] = segments.filter(
-        segment => segment.owner === player.name
+        segment => segment.owner === player
       );
       for (const segment of playerSegments) {
         lengths.push(this.longestPathForSegment(segment.start, segment.end, segment.length, [segment], playerSegments));
@@ -108,7 +127,7 @@ export class Game {
       let { pointsGained, pointsLost, name } = player;
       const color: string = PlayerColor[player.color];
       const playerSegments: Segment[] = segments.filter(
-        segment => segment.owner === player.name
+        segment => segment.owner === player
       );
       pointsGained += playerSegments.reduce(
         (sum, segment) => sum + segment.pointValue,

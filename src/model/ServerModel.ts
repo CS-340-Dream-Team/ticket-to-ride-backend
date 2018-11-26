@@ -7,8 +7,6 @@ import { CommandManager } from "../commands/CommandManager";
 import { Message } from "./Message";
 import { GameState } from "./GameState";
 import hat from "hat";
-import { BusDeck } from "./BusDeck";
-import { DrawSpread } from "./DrawSpread";
 import { GameCommand } from "../commands/GameCommand";
 import { RouteCard } from "./RouteCard";
 import { ICommand } from "../commands/ICommand";
@@ -17,8 +15,14 @@ import { ChatCodes } from "../commands/ChatCodes";
 import { BusColor } from "./BusColor";
 import { Segment } from "./Segment";
 import { GameOverStat } from "./IGameOverStat";
-import { PlayerState } from "./PlayerState";
-import { Chat } from "./Chat";
+const pointMapping : { [key:number]:number; } = {
+  1: 1,
+  2: 2,
+  3: 4,
+  4: 7,
+  5: 10,
+  6: 15
+};
 
 export class ServerModel {
   private static _instance: ServerModel;
@@ -261,6 +265,42 @@ export class ServerModel {
     return [];
   }
 
+  /**
+   * Claims a segment for the given player
+   * @param bearerToken Auth token from client request
+   */
+  public claimSegment(bearerToken: string, segmentId: number, cards: BusCard[]): Command[] {
+      const game = this.getGameByToken(bearerToken)
+      const user = this.getUserByToken(bearerToken)
+      const player = user.player;
+
+      if (game === undefined) throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
+      if (this.commandManager.inDrawingCardState(game.id)) throw new Error(ErrorMsgs.CANNOT_CLAIM_SEGMENT);
+      if (game.segmentAlreadyClaimed(segmentId)) throw new Error(ErrorMsgs.SEGMENT_ALREADY_CLAIMED);
+      if (!player.hasCards(cards)) throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS);
+      const segment = game.getSegmentById(segmentId);
+      let pairId = segment.pair;
+      if (pairId) {
+        let pair = game.getSegmentById(pairId);
+        if (pair.owner && pair.owner.name === player.name) {
+          throw new Error(ErrorMsgs.ALREADY_OWN_PAIR);
+        }
+      }
+
+      player.segments.push(segmentId);
+      player.removeCards(cards);
+      cards.forEach(card => {
+          game.spread.busDeck.discardCard(card);
+      });
+      let points = pointMapping[segment.length];
+      player.points += points;
+      game.markSegmentClaimed(segmentId, player);
+      const command = this.commandManager.addCommand(game.id, "claimSegment", { segmentId: segmentId, player: player.name}, {}, player.name);
+      let newPlayer = this.incrementGameTurn(game);
+      let incrementCommand = this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.name);
+      return [command, incrementCommand];
+  }
+
   private getGameByToken(bearerToken: string | undefined): Game | undefined {
     let user = this.getUserByToken(bearerToken);
     let returnGame = null;
@@ -463,7 +503,8 @@ export class ServerModel {
       spread: game.spread.spread,
       turn: turn,
       history: history,
-      id: id
+      id: id,
+      segments: game.segments
     });
   }
 

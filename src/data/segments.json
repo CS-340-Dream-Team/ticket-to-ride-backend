@@ -144,7 +144,7 @@
        "length": 4,
        "owner": null,
        "pair": null,
-       "color": "pink"
+       "color": "purple"
     },
     {
        "id": 8,
@@ -186,7 +186,7 @@
        "length": 2,
        "owner": null,
        "pair": 8,
-       "color": "pink"
+       "color": "purple"
     },
     {
        "id": 10,
@@ -207,7 +207,7 @@
        "length": 3,
        "owner": null,
        "pair": 11,
-       "color": "pink"
+       "color": "purple"
     },
     {
        "id": 11,
@@ -270,7 +270,7 @@
        "length": 3,
        "owner": null,
        "pair": null,
-       "color": "pink"
+       "color": "purple"
     },
     {
        "id": 14,
@@ -585,7 +585,7 @@
        "length": 3,
        "owner": null,
        "pair": 27,
-       "color": "pink"
+       "color": "purple"
     },
     {
        "id": 29,
@@ -1068,7 +1068,7 @@
        "length": 2,
        "owner": null,
        "pair": null,
-       "color": "pink"
+       "color": "purple"
     },
     {
        "id": 52,
@@ -1509,7 +1509,7 @@
        "length": 2,
        "owner": null,
        "pair": null,
-       "color": "pink"
+       "color": "purple"
     },
     {
        "id": 73,

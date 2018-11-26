@@ -37,6 +37,8 @@ export class GameCommand implements ICommand{
             return this.discardRoutes();
         } else if(this.type ==="incrementTurn"){
             return this.incrementTurn();
+        } else if(this.type === "claimSegment") {
+            return this.claimSegment();
         }
         else{
             return "unknown";
@@ -65,6 +67,11 @@ export class GameCommand implements ICommand{
     incrementTurn() {
         let temp = this.data as {"playerTurnName": string};
         return "It is now " + temp.playerTurnName + "\'s turn.";
+    }
+
+    claimSegment() {
+        let temp = this.data as {"segmentId": number};
+        return this.player + " claimed segment " + temp.segmentId;
     }
     
 }

@@ -1,13 +1,14 @@
 import { BusColor } from "./BusColor";
 import { Location } from "./Location";
-import PointValues from "../data/segmentPointValues.json";
+import { Player } from "./Player";
+const PointValues: number[] = [1, 2, 6, 7, 10, 15];
 
 export class Segment {
   id: number;
   start: Location;
   end: Location;
   length: number;
-  owner: string;
+  owner: Player | null;
   pair: number;
   color: BusColor;
   constructor(
@@ -24,9 +25,9 @@ export class Segment {
     this.length = length;
     this.pair = pair;
     this.color = color;
-    this.owner = "";
+    this.owner = null;
   }
-  claim(newOwner: string): void {
+  claim(newOwner: Player): void {
     this.owner = newOwner;
   }
 

@@ -19,7 +19,10 @@ export enum ErrorMsgs {
     PLAYER_NOT_IN_A_GAME = "Player is not in a game.",
     NOT_ENOUGH_CARDS = "Not enough cards.",
     INVALID_COMMAND = "Invalid command received",
+    SEGMENT_ALREADY_CLAIMED="Segment already claimed",
     INVALID_BUS_CARD_INDEX = "Invalid bus card index requested",
     CANNOT_DRAW_RAINBOW = "You cannot draw a rainbow card right now",
-    CANNOT_DRAW_ROUTE_CARDS = "You cannot draw route cards because you already drew a bus card this turn. Draw another bus to continue."
+    CANNOT_DRAW_ROUTE_CARDS = "You cannot draw route cards because you already drew a bus card this turn. Draw another bus to continue.",
+    CANNOT_CLAIM_SEGMENT = "You cannot claim a segment because you already drew a bus card this turn. Draw another bus to continue.",
+    ALREADY_OWN_PAIR = "You cannot claim this segment because you already own its pair"
 }
