@@ -316,7 +316,6 @@ export class ServerModel {
       let newPlayer = this.incrementGameTurn(game);
       let turnCommand = this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.name);
       let returnCommands = [claimCommand, turnCommand];
-      console.log(player.busPieces)
       if (player.busPieces <= 2 && game.lastRound===false) {
         game.startLastRound();
         returnCommands.push(this.commandManager.addCommand(game.id, "lastRound", {"lastPlayer": player.name}, {}, player.name));  
@@ -394,6 +393,9 @@ export class ServerModel {
           playerName
         );
       case ChatCodes.DRAW_BUS:
+        if (!USING_BETTY) {
+          return new Command('', {});
+        }
         let card = game.giveCardToPlayer(5, 'Betty the Bot');
         let turnOver = this.commandManager.inDrawingCardState(game.id);
         this.commandManager.addCommand(game.id, 'drawBusCard', {}, {'cardColor': card.color}, 'Betty the Bot');
@@ -419,6 +421,9 @@ export class ServerModel {
           playerName
         );
       case ChatCodes.DRAW_ROUTES:
+        if (!USING_BETTY) {
+          return new Command('', {});
+        }
         let hand = game.drawRoutes();
         let player = game.players.filter(gamePlayer => gamePlayer.name === 'Betty the Bot')[0];
         player.routeCardBuffer = hand;
@@ -513,8 +518,6 @@ export class ServerModel {
     let commands: ICommand[] = [];
     try {
       let commandId = parseInt(prevId);
-      console.log(prevId);
-      console.log(commandId);
       commands.push(
         ...this.commandManager.getGameplayAfter(
           game.id,
@@ -637,3 +640,5 @@ export class ServerModel {
     return false;
   }
 }
+
+export const USING_BETTY = false;

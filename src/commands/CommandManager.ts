@@ -22,7 +22,7 @@ export class CommandManager {
     }
 
     addCommand(gameId: number, commandType: string, publicData: Object, privateData:Object, player:string): GameCommand {
-        let commandID=this.gameCommandQueues[gameId].length
+        let commandID=this.gameCommandQueues[gameId].length + 1
         let command = new GameCommand(commandType, publicData, privateData, player, commandID);
         this.gameCommandQueues[gameId].push(command);
 

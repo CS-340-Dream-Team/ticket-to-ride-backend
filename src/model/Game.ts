@@ -11,6 +11,7 @@ import { Segment } from "./Segment";
 import { BusCard } from "./BusCard";
 import { getMaxListeners } from "cluster";
 import loadJSON from "../utils/jsonLoader";
+import { USING_BETTY } from "./ServerModel";
 const segments_json = loadJSON('src/data/segments.json');
 
 export class Game {
@@ -33,11 +34,15 @@ export class Game {
   segments: Segment[] = [];
 
   constructor(host: Player, name: string) {
-    this.playersJoined = [new Player("Betty the Bot", PlayerColor.None)];
+    if (USING_BETTY) {
+      this.playersJoined = [new Player("Betty the Bot", PlayerColor.None)];
+    } else {
+      this.playersJoined = [];
+    }
     this.host = host;
     this.name = name;
     this.id = Game._id++;
-    this.numPlayers = 1;
+    this.numPlayers = USING_BETTY ? 1 : 0;
     this.started = false;
     this.lastRound = false;
     this.turnsLeft = -1;
