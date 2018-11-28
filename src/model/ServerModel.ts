@@ -312,7 +312,7 @@ export class ServerModel {
       let points = pointMapping[segment.length];
       player.points += points;
       game.markSegmentClaimed(segmentId, player);
-      const claimCommand = this.commandManager.addCommand(game.id, "claimSegment", { segmentId: segmentId, player: player.name }, {}, player.name);
+      const claimCommand = this.commandManager.addCommand(game.id, "claimSegment", { segmentId: segmentId }, { cards: cards }, player.name);
       let newPlayer = this.incrementGameTurn(game);
       let turnCommand = this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.name);
       let returnCommands = [claimCommand, turnCommand];
