@@ -30,7 +30,7 @@ export class GamePlayHandler extends BaseHandler{
                 //Draw 3 route cards
                 else if(req.url==="/play/routes"){
                     let command=this.model.drawRoutes(req.headers.authorization);
-                    res.status(200).send({command:command})
+                    res.status(200).send({command:[command]})
                 }
                 // Get full game data (used for refresh)
                 else if(req.url==="/play") {
