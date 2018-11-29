@@ -292,13 +292,15 @@ export class ServerModel {
       if (game.segmentAlreadyClaimed(segmentId)) throw new Error(ErrorMsgs.SEGMENT_ALREADY_CLAIMED);
       if (!player.hasCards(cards)) throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS);
       if (user.player.busPieces<cards.length) throw new Error(ErrorMsgs.NOT_ENOUGH_BUS_PIECES);
-     
       const segment = game.getSegmentById(segmentId);
       let pairId = segment.pair;
       if (pairId) {
         let pair = game.getSegmentById(pairId);
         if (pair.owner && pair.owner.name === player.name) {
           throw new Error(ErrorMsgs.ALREADY_OWN_PAIR);
+        }
+        if(game.playersJoined.length<=3 && pair.owner){
+          throw new Error(ErrorMsgs.DOUBLE_SEGMENT_LIMIT);
         }
       }
 
