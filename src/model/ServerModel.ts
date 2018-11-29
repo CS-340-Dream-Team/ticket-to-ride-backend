@@ -18,6 +18,7 @@ import { BusCard } from './BusCard';
 import { PlayerState } from "./PlayerState";
 import { Chat } from "./Chat";
 import loadJSON from '../utils/jsonLoader';
+import { MapDataManager } from "./MapDataManager";
 const pointMapping : { [key:number]:number; } = {
   1: 1,
   2: 2,
@@ -549,6 +550,8 @@ export class ServerModel {
       history = [];
       id = -1;
     }
+    const manager = MapDataManager.getInstance();
+    const locations = manager.locations;
 
     return new Command("updateGame", {
       clientPlayer: player,
@@ -559,7 +562,8 @@ export class ServerModel {
       turn: turn,
       history: history,
       id: id,
-      segments: game.segments
+      segments: game.segments,
+      locations: locations
     });
   }
 
