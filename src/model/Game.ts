@@ -134,7 +134,9 @@ export class Game {
     let longestRoutePlayers = this.calcLongestRoute(this.segments);
     for (const player of this.players) {
       let isLongest: boolean = longestRoutePlayers.filter(name => name === player.name).length > 0;
-      let { pointsGained, pointsLost, name } = player;
+      let pointsGained = player.pointsGained;
+      let pointsLost = player.pointsLost;
+      let name = player.name;
       const color: string = PlayerColor[player.color];
       if (longestRoutePlayers.includes(player.name)) {
         pointsGained += 10;

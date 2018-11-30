@@ -255,9 +255,6 @@ export class ServerModel {
         let newPlayer = this.incrementGameTurn(game);
         this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.name);
     }
-    if (game.ended) {
-      this.getGameOverCommand(game, player.name);
-    }
     return command;
   }
 
@@ -492,8 +489,7 @@ export class ServerModel {
       let newPlayer = this.incrementGameTurn(game);
       let incrementCommand = this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.username);
       if (game.ended) {
-        let gameOverCommand = this.getGameOverCommand(game, player.username);
-        return [drawCommand, newSpreadCommand, incrementCommand, gameOverCommand];
+        return [drawCommand, newSpreadCommand, incrementCommand];
       }
       return [drawCommand, newSpreadCommand, incrementCommand];
     }

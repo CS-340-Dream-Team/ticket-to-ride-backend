@@ -1,7 +1,7 @@
 import { BusColor } from "./BusColor";
 import { Location } from "./Location";
 import { Player } from "./Player";
-const PointValues: number[] = [1, 2, 6, 7, 10, 15];
+const PointValues: number[] = [1, 2, 4, 7, 10, 15];
 
 export class Segment {
   id: number;
@@ -11,14 +11,17 @@ export class Segment {
   owner: Player | null;
   pair: number;
   color: BusColor;
+  points: number;
+
   constructor(
     id: number,
     start: Location,
     end: Location,
     length: number,
     pair: number,
-    color: BusColor
+    color: BusColor,
   ) {
+
     this.id = id;
     this.start = start;
     this.end = end;
@@ -26,12 +29,14 @@ export class Segment {
     this.pair = pair;
     this.color = color;
     this.owner = null;
+    this.points = this.pointValue();
   }
+
   claim(newOwner: Player): void {
     this.owner = newOwner;
   }
 
-  get pointValue(): number {
+  private pointValue(): number {
     return PointValues[this.length - 1];
   }
 }

@@ -36,7 +36,7 @@ export class Player {
         total += r.points;
     }
     for (const s of this.segments) {
-        total += s.pointValue;
+        total += s.points;
     }
     return total;
   }
