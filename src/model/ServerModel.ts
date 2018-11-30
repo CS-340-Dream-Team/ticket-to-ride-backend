@@ -647,4 +647,4 @@ export class ServerModel {
   }
 }
 
-export const USING_BETTY = false;
+export const USING_BETTY: boolean = !!process.env.USING_BETTY;
