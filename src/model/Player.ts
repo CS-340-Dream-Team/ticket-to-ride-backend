@@ -2,6 +2,8 @@ import { PlayerColor } from "./PlayerColor";
 import { BusCard } from "./BusCard";
 import { RouteCard } from "./RouteCard";
 import { BusColor } from './BusColor';
+import { Segment } from "./Segment";
+import SegmentGraph from "../utils/SegmentGraph";
 
 const numStartingBusPieces = 45;
 
@@ -9,10 +11,11 @@ export class Player {
   name: string;
   color: PlayerColor;
   points: number;
-  segments: number[];
+  segments: Segment[];
   busPieces: number;
   busCards: BusCard[];
   routeCards: RouteCard[];
+  routesCompleted: RouteCard[];
   routeCardBuffer: RouteCard[];
 
   constructor(name: string, color: PlayerColor) {
@@ -23,6 +26,7 @@ export class Player {
     this.busPieces = numStartingBusPieces;
     this.busCards = [];
     this.routeCards = [];
+    this.routesCompleted = [];
     this.routeCardBuffer = [];
   }
 
@@ -85,5 +89,17 @@ export class Player {
         for (const card of cards) {
             this.removeSingleCardOfColor(card.color);
         }
+    }
+
+    public addSegment(segment: Segment) {
+        this.segments.push(segment);
+        const graph = new SegmentGraph(this.segments);
+        this.routesCompleted = this.routeCards.filter(route => {
+            return graph.isRouteComplete(route);
+        });
+    }
+
+    public getRoutesCompleted(): RouteCard[] {
+        return this.routesCompleted;        
     }
 }
