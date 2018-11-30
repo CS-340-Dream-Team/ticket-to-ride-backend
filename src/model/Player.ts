@@ -92,7 +92,7 @@ export class Player {
     }
 
     public addSegment(segment: Segment) {
-        this.segments.push(segment);
+        this.segments.push(JSON.parse(JSON.stringify(segment)));
         const graph = new SegmentGraph(this.segments);
         this.routesCompleted = this.routeCards.filter(route => {
             return graph.isRouteComplete(route);
