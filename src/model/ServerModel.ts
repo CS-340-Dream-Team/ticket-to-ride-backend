@@ -305,8 +305,7 @@ export class ServerModel {
         }
       }
 
-      player.segments.push(segmentId);
-      player.removeCards(cards);
+      player.addSegment(segment);
 
       player.busPieces-=cards.length;
       cards.forEach(card => {
@@ -319,6 +318,14 @@ export class ServerModel {
       let newPlayer = this.incrementGameTurn(game);
       let turnCommand = this.commandManager.addCommand(game.id, 'incrementTurn', {playerTurnName: newPlayer}, {}, player.name);
       let returnCommands = [claimCommand, turnCommand];
+
+      // TODO update player points as well
+      const routesCompleted = player.getRoutesCompleted();
+      if (routesCompleted.length) {
+        returnCommands.push(this.commandManager.addCommand(game.id, 'routesCompleted', {}, {completedRoutes: routesCompleted}, player.name));
+      }
+
+      player.removeCards(cards);
       if (player.busPieces <= 2 && game.lastRound===false) {
         game.startLastRound();
         returnCommands.push(this.commandManager.addCommand(game.id, "lastRound", {"lastPlayer": player.name}, {}, player.name));  

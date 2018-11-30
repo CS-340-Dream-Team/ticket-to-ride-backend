@@ -9,6 +9,7 @@ export class PlayerState{
     busPieces:number
     busCards:number|BusCard[]
     routeCards:number|RouteCard[]
+    routesCompleted: RouteCard[];
     constructor(player:Player){
         this.name=player.name
         this.points=player.points;
@@ -16,5 +17,6 @@ export class PlayerState{
         this.busCards=player.busCards.length;
         this.busPieces=player.busPieces;
         this.routeCards=player.routeCards.length;
+        this.routesCompleted=player.routesCompleted;
     }
 }
