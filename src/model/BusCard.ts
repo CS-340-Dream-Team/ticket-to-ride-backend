@@ -5,11 +5,4 @@ export class BusCard implements ICard{
     constructor(color:BusColor){
         this.color=color
     }
-    isWild(){
-        if(this.color===BusColor.wild)
-            return true;
-        else
-            return false;
-
-    }
 }

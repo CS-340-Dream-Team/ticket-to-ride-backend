@@ -22,7 +22,7 @@ export class DrawSpread{
     private hasThreeWilds():boolean{
         let count=0;
         this.spread.forEach(card => {
-            if(card.isWild()){
+            if(card.color===BusColor.wild){
                 count++;
             }
         });
@@ -63,6 +63,9 @@ export class DrawSpread{
             if (this.busDeck.deckEmpty() && this.busDeck.discardEmpty()) {
                 this.spread.splice(index, 1);
             } else {
+                if (this.busDeck.deckEmpty()) {
+                    this.busDeck.shuffleDiscardIntoDeck();
+                }
                 this.spread[index] = this.busDeck.drawCard(true);
                 this.checkForThreeWilds();
             }
