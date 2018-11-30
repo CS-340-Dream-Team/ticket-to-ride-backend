@@ -287,7 +287,7 @@ export class ServerModel {
       const game = this.getGameByToken(bearerToken)
       const user = this.getUserByToken(bearerToken)
       const player = user.player;
-
+      
       if (game === undefined) throw new Error(ErrorMsgs.GAME_DOES_NOT_EXIST);
       if (this.commandManager.inDrawingCardState(game.id)) throw new Error(ErrorMsgs.CANNOT_CLAIM_SEGMENT);
       if (game.segmentAlreadyClaimed(segmentId)) throw new Error(ErrorMsgs.SEGMENT_ALREADY_CLAIMED);
@@ -506,6 +506,7 @@ export class ServerModel {
 
   private incrementGameTurn(game: Game): string {
     game.turn += 1;
+    game.turn = game.turn % game.playersJoined.length;
     if (game.lastRound) {
       game.turnsLeft -= 1;
       if (game.turnsLeft <= 0) {
@@ -514,7 +515,6 @@ export class ServerModel {
         game.endGame();      
       }
     }
-    game.turn = game.turn % game.playersJoined.length;
     return game.playersJoined[game.turn].name;
   }
 

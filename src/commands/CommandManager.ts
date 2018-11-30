@@ -22,6 +22,9 @@ export class CommandManager {
     }
 
     addCommand(gameId: number, commandType: string, publicData: Object, privateData:Object, player:string): GameCommand {
+        if (commandType === 'incrementTurn' && this.gameCommandQueues[gameId].filter(command => command.type === 'endGame').length !== 0) {
+            return this.gameCommandQueues[gameId].filter(command => command.type === 'endGame')[0];
+        }
         let commandID=this.gameCommandQueues[gameId].length + 1
         let command = new GameCommand(commandType, publicData, privateData, player, commandID);
         this.gameCommandQueues[gameId].push(command);
