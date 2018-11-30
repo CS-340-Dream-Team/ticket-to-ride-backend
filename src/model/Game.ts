@@ -129,19 +129,13 @@ export class Game {
     return Math.max(...lengths);
   }
 
-  calculateScores(segments: Segment[]): GameOverStat[] {
+  calculateScores(): GameOverStat[] {
     const stats: GameOverStat[] = [];
-    let longestRoutePlayers = this.calcLongestRoute(segments);
+    let longestRoutePlayers = this.calcLongestRoute(this.segments);
     for (const player of this.players) {
+      let isLongest: boolean = longestRoutePlayers.filter(name => name === player.name).length > 0;
       let { pointsGained, pointsLost, name } = player;
       const color: string = PlayerColor[player.color];
-      const playerSegments: Segment[] = segments.filter(
-        segment => segment.owner === player
-      );
-      pointsGained += playerSegments.reduce(
-        (sum, segment) => sum + segment.pointValue,
-        0
-      );
       if (longestRoutePlayers.includes(player.name)) {
         pointsGained += 10;
       }
@@ -151,6 +145,7 @@ export class Game {
         color,
         pointsGained,
         pointsLost,
+        longestRoute: isLongest,
         totalPoints,
         winner: false
       });

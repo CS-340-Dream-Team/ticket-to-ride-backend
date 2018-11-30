@@ -31,15 +31,25 @@ export class Player {
   }
 
   get pointsGained(): number {
-    return this.routeCards
-      .filter(route => route.complete)
-      .reduce((sum, route) => sum + route.points, 0);
+    let total: number = 0;
+    for (const r of this.routesCompleted) {
+        total += r.points;
+    }
+    for (const s of this.segments) {
+        total += s.pointValue;
+    }
+    return total;
   }
 
   get pointsLost(): number {
-    return this.routeCards
-      .filter(route => !route.complete)
-      .reduce((sum, route) => sum + route.points, 0);
+    let total: number = 0;
+    for (const r of this.routeCards) {
+        const isComplete = this.routesCompleted.find(c => c.name === r.name) !== undefined;
+        if (!isComplete) {
+            total += r.points;
+        }
+    }
+    return total;
   }
 
   private getCardCounts(cards: BusCard[]): Map<string, number> {

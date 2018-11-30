@@ -3,6 +3,7 @@ export interface GameOverStat {
   color: string;
   pointsGained: number;
   pointsLost: number;
+  longestRoute: boolean;
   totalPoints: number;
   winner: boolean;
 }

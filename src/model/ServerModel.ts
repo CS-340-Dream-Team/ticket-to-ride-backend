@@ -178,9 +178,7 @@ export class ServerModel {
   }
 
   getGameOverCommand(game: Game, username: string) {
-    const stats: GameOverStat[] = game.calculateScores(
-      [] /** Pass him all the segments */
-    );
+    const stats: GameOverStat[] = game.calculateScores();
     return this.commandManager.addCommand(game.id, "endGame", { stats }, {}, username);
   }
 
@@ -419,9 +417,7 @@ export class ServerModel {
         let newSpreadData = {spread: game.spread.getSpread(), deckSize: game.spread.getBusDeckCount()};
         return this.commandManager.addCommand(game.id, 'updateSpread', newSpreadData, {}, 'Betty the Bot');
       case ChatCodes.END_GAME:
-        const stats: GameOverStat[] = game.calculateScores(
-          [] /** Pass him all the segments */
-        );
+        const stats: GameOverStat[] = game.calculateScores();
         game.endGame();
         return this.commandManager.addCommand(
           game.id,

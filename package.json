@@ -30,6 +30,7 @@
     "@types/jest": "^23.3.2",
     "@types/node": "^10.9.4",
     "jest": "^23.6.0",
+    "nodemon": "^1.18.7",
     "ts-jest": "^23.10.1",
     "typescript": "^3.0.1"
   },
