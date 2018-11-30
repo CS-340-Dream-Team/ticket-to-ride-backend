@@ -32,7 +32,11 @@ export class BusDeck extends Deck{
         if(this.deckEmpty() && fromSpread) {
             this.shuffleDiscardIntoDeck();
         } else if(this.deckEmpty() && !fromSpread) {
-            throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS)
+            if (this.discardEmpty()) {
+                throw new Error(ErrorMsgs.NOT_ENOUGH_CARDS)
+            } else {
+                this.shuffleDiscardIntoDeck();
+            }
         }
         return this.cards.pop() as BusCard;
     }
