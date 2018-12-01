@@ -1,11 +1,9 @@
 import { Message } from "./Message";
 
-export class Chat{
-    
-    messages: Message[];
+export class Chat {
+	messages: Message[];
 
-    constructor(){
-        this.messages = [];
-    }
-
+	constructor() {
+		this.messages = [];
+	}
 }

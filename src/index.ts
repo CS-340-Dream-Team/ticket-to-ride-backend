@@ -1,5 +1,5 @@
 import { ServerCommunicator } from "./handlers/ServerCommunicator";
 
 (function main() {
-    let serverCommunicator = new ServerCommunicator();
+	let serverCommunicator = new ServerCommunicator();
 })();

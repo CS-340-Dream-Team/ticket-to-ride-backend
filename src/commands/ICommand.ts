@@ -1,5 +1,4 @@
-export interface ICommand{
-    type:string;
-    data:Object;
-
+export interface ICommand {
+	type: string;
+	data: Object;
 }

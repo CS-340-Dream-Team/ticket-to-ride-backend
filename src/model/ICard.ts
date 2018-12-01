@@ -1,3 +1,1 @@
-export interface ICard {
-    
-}
+export interface ICard {}

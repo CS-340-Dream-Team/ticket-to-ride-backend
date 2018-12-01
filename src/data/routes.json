@@ -1,506 +1,506 @@
- [
-    {
-       "name": "Gains 'n' Grades",
-       "points": 4,
-       "start": {
-          "name": "The Testing Center",
-          "latLong": {
-             "lat": 40.245433,
-             "long": -111.652399
-          }
-       },
-       "end": {
-          "name": "Vasa",
-          "latLong": {
-             "lat": 40.240334,
-             "long": -111.642054
-          }
-       }
-    },
-    {
-       "name": "America's Passtime",
-       "points": 5,
-       "start": {
-          "name": "J-Dawgs",
-          "latLong": {
-             "lat": 40.245286,
-             "long": -111.646318
-          }
-       },
-       "end": {
-          "name": "Baseball Stadium",
-          "latLong": {
-             "lat": 40.254821,
-             "long": -111.651125
-          }
-       }
-    },
-    {
-       "name": "Comfort Food",
-       "points": 6,
-       "start": {
-          "name": "DMV",
-          "latLong": {
-             "lat": 40.233169,
-             "long": -111.656048
-          }
-       },
-       "end": {
-          "name": "Chip Cookie",
-          "latLong": {
-             "lat": 40.24028,
-             "long": -111.661463
-          }
-       }
-    },
-    {
-       "name": "Houses of Prayer",
-       "points": 7,
-       "start": {
-          "name": "The Apple Chapel",
-          "latLong": {
-             "lat": 40.24732,
-             "long": -111.636243
-          }
-       },
-       "end": {
-          "name": "The Testing Center",
-          "latLong": {
-             "lat": 40.245433,
-             "long": -111.652399
-          }
-       }
-    },
-    {
-       "name": "So Many Diamonds",
-       "points": 7,
-       "start": {
-          "name": "Baseball Stadium",
-          "latLong": {
-             "lat": 40.254821,
-             "long": -111.651125
-          }
-       },
-       "end": {
-          "name": "Wilson Diamonds",
-          "latLong": {
-             "lat": 40.26376,
-             "long": -111.666684
-          }
-       }
-    },
-    {
-       "name": "Date Night",
-       "points": 8,
-       "start": {
-          "name": "Waffle Love",
-          "latLong": {
-             "lat": 40.258426,
-             "long": -111.674803
-          }
-       },
-       "end": {
-          "name": "Wyview",
-          "latLong": {
-             "lat": 40.261354,
-             "long": -111.659173
-          }
-       }
-    },
-    {
-       "name": "Babysitter",
-       "points": 9,
-       "start": {
-          "name": "Provo Peaks Elementary School",
-          "latLong": {
-             "lat": 40.234407,
-             "long": -111.647263
-          }
-       },
-       "end": {
-          "name": "Pioneer Park",
-          "latLong": {
-             "lat": 40.233067,
-             "long": -111.668455
-          }
-       }
-    },
-    {
-       "name": "DTR",
-       "points": 9,
-       "start": {
-          "name": "Squaw Peak",
-          "latLong": {
-             "lat": 40.301397,
-             "long": -111.62542
-          }
-       },
-       "end": {
-          "name": "Provo Temple",
-          "latLong": {
-             "lat": 40.263665,
-             "long": -111.639844
-          }
-       }
-    },
-    {
-       "name": "Asended to Heaven",
-       "points": 9,
-       "start": {
-          "name": "City Center Temple",
-          "latLong": {
-             "lat": 40.232688,
-             "long": -111.659303
-          }
-       },
-       "end": {
-          "name": "Waffle Love",
-          "latLong": {
-             "lat": 40.258426,
-             "long": -111.674803
-          }
-       }
-    },
-    {
-       "name": "Rito' Crawl",
-       "points": 9,
-       "start": {
-          "name": "Rancheritos #1",
-          "latLong": {
-             "lat": 40.255273,
-             "long": -111.6709
-          }
-       },
-       "end": {
-          "name": "Rancheritos #2",
-          "latLong": {
-             "lat": 40.250417,
-             "long": -111.657712
-          }
-       }
-    },
-    {
-       "name": "School Spirit",
-       "points": 10,
-       "start": {
-          "name": "The Y Trail Head",
-          "latLong": {
-             "lat": 40.245143,
-             "long": -111.627166
-          }
-       },
-       "end": {
-          "name": "The Wilk",
-          "latLong": {
-             "lat": 40.248543,
-             "long": -111.647104
-          }
-       }
-    },
-    {
-       "name": "Work it Off",
-       "points": 10,
-       "start": {
-          "name": "Little Caesar's",
-          "latLong": {
-             "lat": 40.239529,
-             "long": -111.642796
-          }
-       },
-       "end": {
-          "name": "Provo Rec Center",
-          "latLong": {
-             "lat": 40.241701,
-             "long": -111.664284
-          }
-       }
-    },
-    {
-       "name": "Stand Ye in Holy Places",
-       "points": 11,
-       "start": {
-          "name": "University Mall",
-          "latLong": {
-             "lat": 40.274804,
-             "long": -111.681413
-          }
-       },
-       "end": {
-          "name": "Provo Temple",
-          "latLong": {
-             "lat": 40.263665,
-             "long": -111.639844
-          }
-       }
-    },
-    {
-       "name": "Give 'em the Good Stuff",
-       "points": 11,
-       "start": {
-          "name": "Waffle Love",
-          "latLong": {
-             "lat": 40.258426,
-             "long": -111.674803
-          }
-       },
-       "end": {
-          "name": "Duck Pond",
-          "latLong": {
-             "lat": 40.244553,
-             "long": -111.65126
-          }
-       }
-    },
-    {
-       "name": "Refreshed",
-       "points": 11,
-       "start": {
-          "name": "Swig",
-          "latLong": {
-             "lat": 40.254286,
-             "long": -111.656429
-          }
-       },
-       "end": {
-          "name": "The Apple Chapel",
-          "latLong": {
-             "lat": 40.24732,
-             "long": -111.636243
-          }
-       }
-    },
-    {
-       "name": "An interesting title",
-       "points": 11,
-       "start": {
-          "name": "Smith's",
-          "latLong": {
-             "lat": 40.238777,
-             "long": -111.661374
-          }
-       },
-       "end": {
-          "name": "Peaks Ice Arena",
-          "latLong": {
-             "lat": 40.235058,
-             "long": -111.638106
-          }
-       }
-    },
-    {
-       "name": "Cultured",
-       "points": 11,
-       "start": {
-          "name": "LaVell Edwards Stadium",
-          "latLong": {
-             "lat": 40.257536,
-             "long": -111.654664
-          }
-       },
-       "end": {
-          "name": "The Velour",
-          "latLong": {
-             "lat": 40.235612,
-             "long": -111.658968
-          }
-       }
-    },
-    {
-       "name": "Swoll mates",
-       "points": 12,
-       "start": {
-          "name": "Vasa",
-          "latLong": {
-             "lat": 40.240334,
-             "long": -111.642054
-          }
-       },
-       "end": {
-          "name": "Wilson Diamonds",
-          "latLong": {
-             "lat": 40.26376,
-             "long": -111.666684
-          }
-       }
-    },
-    {
-       "name": "Picnic",
-       "points": 14,
-       "start": {
-          "name": "Smith's",
-          "latLong": {
-             "lat": 40.238777,
-             "long": -111.661374
-          }
-       },
-       "end": {
-          "name": "Kiwanis Park",
-          "latLong": {
-             "lat": 40.246957,
-             "long": -111.639696
-          }
-       }
-    },
-    {
-       "name": "High on the Mountaintop",
-       "points": 14,
-       "start": {
-          "name": "Squaw Peak",
-          "latLong": {
-             "lat": 40.301397,
-             "long": -111.62542
-          }
-       },
-       "end": {
-          "name": "The Y Trail Head",
-          "latLong": {
-             "lat": 40.245143,
-             "long": -111.627166
-          }
-       }
-    },
-    {
-       "name": "Wall to Wall",
-       "points": 15,
-       "start": {
-          "name": "The Quarry",
-          "latLong": {
-             "lat": 40.266937,
-             "long": -111.67005
-          }
-       },
-       "end": {
-          "name": "The Wilk",
-          "latLong": {
-             "lat": 40.248543,
-             "long": -111.647104
-          }
-       }
-    },
-    {
-       "name": "Epic Rito' Crawl",
-       "points": 15,
-       "start": {
-          "name": "Rancheritos #2",
-          "latLong": {
-             "lat": 40.250417,
-             "long": -111.657712
-          }
-       },
-       "end": {
-          "name": "Rancheritos #3",
-          "latLong": {
-             "lat": 40.221128,
-             "long": -111.659283
-          }
-       }
-    },
-    {
-       "name": "Field Day",
-       "points": 17,
-       "start": {
-          "name": "Pioneer Park",
-          "latLong": {
-             "lat": 40.233067,
-             "long": -111.668455
-          }
-       },
-       "end": {
-          "name": "Kiwanis Park",
-          "latLong": {
-             "lat": 40.246957,
-             "long": -111.639696
-          }
-       }
-    },
-    {
-       "name": "Temple 2 Temple",
-       "points": 16,
-       "start": {
-          "name": "City Center Temple",
-          "latLong": {
-             "lat": 40.232688,
-             "long": -111.659303
-          }
-       },
-       "end": {
-          "name": "Provo Temple",
-          "latLong": {
-             "lat": 40.263665,
-             "long": -111.639844
-          }
-       }
-    },
-    {
-       "name": "This is the Place",
-       "points": 18,
-       "start": {
-          "name": "Pioneer Park",
-          "latLong": {
-             "lat": 40.233067,
-             "long": -111.668455
-          }
-       },
-       "end": {
-          "name": "The Y Trail Head",
-          "latLong": {
-             "lat": 40.245143,
-             "long": -111.627166
-          }
-       }
-    },
-    {
-       "name": "Prodigal Son",
-       "points": 20,
-       "start": {
-          "name": "The Wilk",
-          "latLong": {
-             "lat": 40.248543,
-             "long": -111.647104
-          }
-       },
-       "end": {
-          "name": "UVU",
-          "latLong": {
-             "lat": 40.278773,
-             "long": -111.715047
-          }
-       }
-    },
-    {
-       "name": "Wait 30 Minutes",
-       "points": 19,
-       "start": {
-          "name": "Rancheritos #1",
-          "latLong": {
-             "lat": 40.255273,
-             "long": -111.6709
-          }
-       },
-       "end": {
-          "name": "Seven Peaks",
-          "latLong": {
-             "lat": 40.235018,
-             "long": -111.638132
-          }
-       }
-    },
-    {
-       "name": "The High Ground",
-       "points": 23,
-       "start": {
-          "name": "Utah Lake",
-          "latLong": {
-             "lat": 40.238467,
-             "long": -111.738912
-          }
-       },
-       "end": {
-          "name": "Squaw Peak",
-          "latLong": {
-             "lat": 40.301397,
-             "long": -111.62542
-          }
-       }
-    }
- ]
+[
+	{
+		"name": "Gains 'n' Grades",
+		"points": 4,
+		"start": {
+			"name": "The Testing Center",
+			"latLong": {
+				"lat": 40.245433,
+				"long": -111.652399
+			}
+		},
+		"end": {
+			"name": "Vasa",
+			"latLong": {
+				"lat": 40.240334,
+				"long": -111.642054
+			}
+		}
+	},
+	{
+		"name": "America's Passtime",
+		"points": 5,
+		"start": {
+			"name": "J-Dawgs",
+			"latLong": {
+				"lat": 40.245286,
+				"long": -111.646318
+			}
+		},
+		"end": {
+			"name": "Baseball Stadium",
+			"latLong": {
+				"lat": 40.254821,
+				"long": -111.651125
+			}
+		}
+	},
+	{
+		"name": "Comfort Food",
+		"points": 6,
+		"start": {
+			"name": "DMV",
+			"latLong": {
+				"lat": 40.233169,
+				"long": -111.656048
+			}
+		},
+		"end": {
+			"name": "Chip Cookie",
+			"latLong": {
+				"lat": 40.24028,
+				"long": -111.661463
+			}
+		}
+	},
+	{
+		"name": "Houses of Prayer",
+		"points": 7,
+		"start": {
+			"name": "The Apple Chapel",
+			"latLong": {
+				"lat": 40.24732,
+				"long": -111.636243
+			}
+		},
+		"end": {
+			"name": "The Testing Center",
+			"latLong": {
+				"lat": 40.245433,
+				"long": -111.652399
+			}
+		}
+	},
+	{
+		"name": "So Many Diamonds",
+		"points": 7,
+		"start": {
+			"name": "Baseball Stadium",
+			"latLong": {
+				"lat": 40.254821,
+				"long": -111.651125
+			}
+		},
+		"end": {
+			"name": "Wilson Diamonds",
+			"latLong": {
+				"lat": 40.26376,
+				"long": -111.666684
+			}
+		}
+	},
+	{
+		"name": "Date Night",
+		"points": 8,
+		"start": {
+			"name": "Waffle Love",
+			"latLong": {
+				"lat": 40.258426,
+				"long": -111.674803
+			}
+		},
+		"end": {
+			"name": "Wyview",
+			"latLong": {
+				"lat": 40.261354,
+				"long": -111.659173
+			}
+		}
+	},
+	{
+		"name": "Babysitter",
+		"points": 9,
+		"start": {
+			"name": "Provo Peaks Elementary School",
+			"latLong": {
+				"lat": 40.234407,
+				"long": -111.647263
+			}
+		},
+		"end": {
+			"name": "Pioneer Park",
+			"latLong": {
+				"lat": 40.233067,
+				"long": -111.668455
+			}
+		}
+	},
+	{
+		"name": "DTR",
+		"points": 9,
+		"start": {
+			"name": "Squaw Peak",
+			"latLong": {
+				"lat": 40.301397,
+				"long": -111.62542
+			}
+		},
+		"end": {
+			"name": "Provo Temple",
+			"latLong": {
+				"lat": 40.263665,
+				"long": -111.639844
+			}
+		}
+	},
+	{
+		"name": "Asended to Heaven",
+		"points": 9,
+		"start": {
+			"name": "City Center Temple",
+			"latLong": {
+				"lat": 40.232688,
+				"long": -111.659303
+			}
+		},
+		"end": {
+			"name": "Waffle Love",
+			"latLong": {
+				"lat": 40.258426,
+				"long": -111.674803
+			}
+		}
+	},
+	{
+		"name": "Rito' Crawl",
+		"points": 9,
+		"start": {
+			"name": "Rancheritos #1",
+			"latLong": {
+				"lat": 40.255273,
+				"long": -111.6709
+			}
+		},
+		"end": {
+			"name": "Rancheritos #2",
+			"latLong": {
+				"lat": 40.250417,
+				"long": -111.657712
+			}
+		}
+	},
+	{
+		"name": "School Spirit",
+		"points": 10,
+		"start": {
+			"name": "The Y Trail Head",
+			"latLong": {
+				"lat": 40.245143,
+				"long": -111.627166
+			}
+		},
+		"end": {
+			"name": "The Wilk",
+			"latLong": {
+				"lat": 40.248543,
+				"long": -111.647104
+			}
+		}
+	},
+	{
+		"name": "Work it Off",
+		"points": 10,
+		"start": {
+			"name": "Little Caesar's",
+			"latLong": {
+				"lat": 40.239529,
+				"long": -111.642796
+			}
+		},
+		"end": {
+			"name": "Provo Rec Center",
+			"latLong": {
+				"lat": 40.241701,
+				"long": -111.664284
+			}
+		}
+	},
+	{
+		"name": "Stand Ye in Holy Places",
+		"points": 11,
+		"start": {
+			"name": "University Mall",
+			"latLong": {
+				"lat": 40.274804,
+				"long": -111.681413
+			}
+		},
+		"end": {
+			"name": "Provo Temple",
+			"latLong": {
+				"lat": 40.263665,
+				"long": -111.639844
+			}
+		}
+	},
+	{
+		"name": "Give 'em the Good Stuff",
+		"points": 11,
+		"start": {
+			"name": "Waffle Love",
+			"latLong": {
+				"lat": 40.258426,
+				"long": -111.674803
+			}
+		},
+		"end": {
+			"name": "Duck Pond",
+			"latLong": {
+				"lat": 40.244553,
+				"long": -111.65126
+			}
+		}
+	},
+	{
+		"name": "Refreshed",
+		"points": 11,
+		"start": {
+			"name": "Swig",
+			"latLong": {
+				"lat": 40.254286,
+				"long": -111.656429
+			}
+		},
+		"end": {
+			"name": "The Apple Chapel",
+			"latLong": {
+				"lat": 40.24732,
+				"long": -111.636243
+			}
+		}
+	},
+	{
+		"name": "An interesting title",
+		"points": 11,
+		"start": {
+			"name": "Smith's",
+			"latLong": {
+				"lat": 40.238777,
+				"long": -111.661374
+			}
+		},
+		"end": {
+			"name": "Peaks Ice Arena",
+			"latLong": {
+				"lat": 40.235058,
+				"long": -111.638106
+			}
+		}
+	},
+	{
+		"name": "Cultured",
+		"points": 11,
+		"start": {
+			"name": "LaVell Edwards Stadium",
+			"latLong": {
+				"lat": 40.257536,
+				"long": -111.654664
+			}
+		},
+		"end": {
+			"name": "The Velour",
+			"latLong": {
+				"lat": 40.235612,
+				"long": -111.658968
+			}
+		}
+	},
+	{
+		"name": "Swoll mates",
+		"points": 12,
+		"start": {
+			"name": "Vasa",
+			"latLong": {
+				"lat": 40.240334,
+				"long": -111.642054
+			}
+		},
+		"end": {
+			"name": "Wilson Diamonds",
+			"latLong": {
+				"lat": 40.26376,
+				"long": -111.666684
+			}
+		}
+	},
+	{
+		"name": "Picnic",
+		"points": 14,
+		"start": {
+			"name": "Smith's",
+			"latLong": {
+				"lat": 40.238777,
+				"long": -111.661374
+			}
+		},
+		"end": {
+			"name": "Kiwanis Park",
+			"latLong": {
+				"lat": 40.246957,
+				"long": -111.639696
+			}
+		}
+	},
+	{
+		"name": "High on the Mountaintop",
+		"points": 14,
+		"start": {
+			"name": "Squaw Peak",
+			"latLong": {
+				"lat": 40.301397,
+				"long": -111.62542
+			}
+		},
+		"end": {
+			"name": "The Y Trail Head",
+			"latLong": {
+				"lat": 40.245143,
+				"long": -111.627166
+			}
+		}
+	},
+	{
+		"name": "Wall to Wall",
+		"points": 15,
+		"start": {
+			"name": "The Quarry",
+			"latLong": {
+				"lat": 40.266937,
+				"long": -111.67005
+			}
+		},
+		"end": {
+			"name": "The Wilk",
+			"latLong": {
+				"lat": 40.248543,
+				"long": -111.647104
+			}
+		}
+	},
+	{
+		"name": "Epic Rito' Crawl",
+		"points": 15,
+		"start": {
+			"name": "Rancheritos #2",
+			"latLong": {
+				"lat": 40.250417,
+				"long": -111.657712
+			}
+		},
+		"end": {
+			"name": "Rancheritos #3",
+			"latLong": {
+				"lat": 40.221128,
+				"long": -111.659283
+			}
+		}
+	},
+	{
+		"name": "Field Day",
+		"points": 17,
+		"start": {
+			"name": "Pioneer Park",
+			"latLong": {
+				"lat": 40.233067,
+				"long": -111.668455
+			}
+		},
+		"end": {
+			"name": "Kiwanis Park",
+			"latLong": {
+				"lat": 40.246957,
+				"long": -111.639696
+			}
+		}
+	},
+	{
+		"name": "Temple 2 Temple",
+		"points": 16,
+		"start": {
+			"name": "City Center Temple",
+			"latLong": {
+				"lat": 40.232688,
+				"long": -111.659303
+			}
+		},
+		"end": {
+			"name": "Provo Temple",
+			"latLong": {
+				"lat": 40.263665,
+				"long": -111.639844
+			}
+		}
+	},
+	{
+		"name": "This is the Place",
+		"points": 18,
+		"start": {
+			"name": "Pioneer Park",
+			"latLong": {
+				"lat": 40.233067,
+				"long": -111.668455
+			}
+		},
+		"end": {
+			"name": "The Y Trail Head",
+			"latLong": {
+				"lat": 40.245143,
+				"long": -111.627166
+			}
+		}
+	},
+	{
+		"name": "Prodigal Son",
+		"points": 20,
+		"start": {
+			"name": "The Wilk",
+			"latLong": {
+				"lat": 40.248543,
+				"long": -111.647104
+			}
+		},
+		"end": {
+			"name": "UVU",
+			"latLong": {
+				"lat": 40.278773,
+				"long": -111.715047
+			}
+		}
+	},
+	{
+		"name": "Wait 30 Minutes",
+		"points": 19,
+		"start": {
+			"name": "Rancheritos #1",
+			"latLong": {
+				"lat": 40.255273,
+				"long": -111.6709
+			}
+		},
+		"end": {
+			"name": "Seven Peaks",
+			"latLong": {
+				"lat": 40.235018,
+				"long": -111.638132
+			}
+		}
+	},
+	{
+		"name": "The High Ground",
+		"points": 23,
+		"start": {
+			"name": "Utah Lake",
+			"latLong": {
+				"lat": 40.238467,
+				"long": -111.738912
+			}
+		},
+		"end": {
+			"name": "Squaw Peak",
+			"latLong": {
+				"lat": 40.301397,
+				"long": -111.62542
+			}
+		}
+	}
+]
