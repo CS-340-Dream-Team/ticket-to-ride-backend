@@ -22,8 +22,7 @@ export class ServerCommunicator {
 	private chatHandler: ChatHandler = new ChatHandler();
 	private gameplayHandler: GamePlayHandler = new GamePlayHandler();
 
-	constructor() {
-		const port = 4040;
+	constructor(port: number = 4040) {
 		this.app = express();
 		this.app.listen(port, function() {
 			console.log("Express server listening on port " + port);

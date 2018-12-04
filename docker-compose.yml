@@ -1,0 +1,43 @@
+version: "3"
+services:
+  ttr-frontend:
+    build:
+      # This must be the path to your frontend directory
+      context: ../ticket-to-ride-frontend
+    container_name: ttr-frontend
+    ports:
+      - "4200:80"
+    restart: unless-stopped
+  ttr-backend:
+    build: .
+    container_name: ttr-backend
+    depends_on:
+      - db
+      - nosql-db
+    ports:
+      - 4040:4040
+    restart: unless-stopped
+  db:
+    image: mariadb:10.3
+    container_name: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=super-secret-password
+      - MYSQL_DATABASE=test_db
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+  nosql-db:
+    image: mongo:3.2-jessie
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: super-secret-password
+    volumes:
+      - nosql-db-data:/data/db
+volumes:
+  db_data:
+  nosql-db-data:
