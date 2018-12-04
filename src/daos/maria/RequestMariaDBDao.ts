@@ -1,7 +1,7 @@
-import { IRequestDao } from "./IRequestDao";
-import { Request } from "../model/Request";
+import { IRequestDao } from "../IRequestDao";
+import { Request } from "../../model/Request";
 
-export class RequestMongoDBDao implements IRequestDao {
+export class RequestMariaDBDao implements IRequestDao {
 	//TODO: add DB connection
 
 	constructor() {}
