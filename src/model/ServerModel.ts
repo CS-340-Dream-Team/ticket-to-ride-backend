@@ -19,6 +19,8 @@ import { PlayerState } from "./PlayerState";
 import { Chat } from "./Chat";
 import loadJSON from "../utils/jsonLoader";
 import { MapDataManager } from "./MapDataManager";
+import { PluginManager } from "../plugin-management/PluginManager";
+import { IPersistenceProviderPlugin } from "../plugin-management/IPersistenceProviderPlugin";
 const pointMapping: { [key: number]: number } = {
 	1: 1,
 	2: 2,
@@ -36,6 +38,8 @@ export class ServerModel {
 	private loggedInUsers: UserRegistration[];
 	private allUsers: UserRegistration[];
 	private unstartedGameLimit: number;
+	private pluginManager: PluginManager;
+	private persistenceProvider: IPersistenceProviderPlugin;
 
 	private constructor() {
 		if (ServerModel._instance) {
@@ -44,6 +48,9 @@ export class ServerModel {
 
 		ServerModel._instance = this;
 		this.commandManager = new CommandManager();
+		this.pluginManager = new PluginManager();
+		this.persistenceProvider = this.pluginManager.getProvider();
+		this.persistenceProvider.openConnection();
 		this.unstartedGames = [];
 		this.startedGames = {};
 		this.loggedInUsers = [];

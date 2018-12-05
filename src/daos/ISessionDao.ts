@@ -1,4 +1,4 @@
-export interface ISessionDao{
-    saveSession():void
-    getSession():JSON
+export interface ISessionDao {
+	saveSession(): void;
+	getSession(): JSON;
 }

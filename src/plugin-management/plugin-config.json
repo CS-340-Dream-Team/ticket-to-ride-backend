@@ -1,0 +1,7 @@
+[
+	{
+		"name": "DummyPlugin",
+		"source": "plugins/dummy-plugin/DummyPlugin",
+		"className": "DummyPlugin"
+	}
+]
