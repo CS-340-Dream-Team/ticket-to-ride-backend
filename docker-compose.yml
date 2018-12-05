@@ -8,6 +8,8 @@ services:
     ports:
       - "4200:80"
     restart: unless-stopped
+    volumes:
+      - yarn-cache:/usr/local/share/.cache/yarn/v4
   ttr-backend:
     build: .
     container_name: ttr-backend
@@ -17,6 +19,8 @@ services:
     ports:
       - 4040:4040
     restart: unless-stopped
+    volumes:
+      - yarn-cache:/usr/local/share/.cache/yarn/v4
   db:
     image: mariadb:10.3
     container_name: db
@@ -41,3 +45,4 @@ services:
 volumes:
   db_data:
   nosql-db-data:
+  yarn-cache:
