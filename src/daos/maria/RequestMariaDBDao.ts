@@ -51,7 +51,7 @@ export class RequestMariaDBDao implements IRequestDao {
 			});
 	}
 
-	removeRequestById(requestId: number): Promise<Request> {
+	removeRequestById(requestId: number): Promise<null> {
 		return mariadb
 			.createConnection({
 				// Open a new connection
@@ -71,7 +71,7 @@ export class RequestMariaDBDao implements IRequestDao {
 			});
 	}
 
-	getRequestsByGameId(gameId: number): Request[] {
+	getRequestsByGameId(gameId: number): Promise<Request[]> {
 		return mariadb
 			.createConnection({
 				// Open a new connection

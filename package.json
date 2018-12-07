@@ -39,11 +39,13 @@
   },
   "dependencies": {
     "@types/hat": "^0.0.0",
+    "@types/mongodb": "^3.1.17",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "hat": "^0.0.3",
-    "mariadb": "^2.0.1-beta"
+    "mariadb": "^2.0.1-beta",
+    "mongodb": "^3.1.10"
   },
   "husky": {
     "hooks": {

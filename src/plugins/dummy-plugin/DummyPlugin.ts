@@ -3,6 +3,7 @@ import { IGameDao } from "../../daos/IGameDao";
 import { IUserDao } from "../../daos/IUserDao";
 import { ISessionDao } from "../../daos/ISessionDao";
 import { IRequestDao } from "../../daos/IRequestDao";
+import { Request } from "../../model/Request";
 
 export class DummyPlugin implements IPersistenceProviderPlugin {
 	gameDao: IGameDao = {
@@ -27,9 +28,17 @@ export class DummyPlugin implements IPersistenceProviderPlugin {
 	};
 
 	requestDao: IRequestDao = {
-		saveRequest() {},
-		getRequestsByGameId(gameID: number) {
-			return [];
+		saveRequest(req: Request): Promise<boolean> {
+			return Promise.resolve(true);
+		},
+		getRequestsByGameId(gameId: number): Promise<Request[]> {
+			return Promise.resolve([]);
+		},
+		getRequestById(requestId: number): Promise<Request> {
+			return Promise.resolve({} as Request);
+		},
+		removeRequestById(requestId: number): Promise<null> {
+			return Promise.resolve(null);
 		},
 	};
 
