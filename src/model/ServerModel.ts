@@ -1,26 +1,25 @@
-import { Game } from "./Game";
-import { Player } from "./Player";
-import { UserRegistration } from "./UserRegistration";
-import { Command } from "../commands/Command";
-import { ErrorMsgs } from "./ErrorMsgs";
-import { CommandManager } from "../commands/CommandManager";
-import { Message } from "./Message";
-import { GameState } from "./GameState";
 import hat from "hat";
-import { GameCommand } from "../commands/GameCommand";
-import { RouteCard } from "./RouteCard";
-import { ICommand } from "../commands/ICommand";
 import { ChatCodes } from "../commands/ChatCodes";
-import { BusColor } from "./BusColor";
-import { Segment } from "./Segment";
-import { GameOverStat } from "./IGameOverStat";
-import { BusCard } from "./BusCard";
-import { PlayerState } from "./PlayerState";
-import { Chat } from "./Chat";
-import loadJSON from "../utils/jsonLoader";
-import { MapDataManager } from "./MapDataManager";
-import { PluginManager } from "../plugin-management/PluginManager";
+import { Command } from "../commands/Command";
+import { CommandManager } from "../commands/CommandManager";
+import { GameCommand } from "../commands/GameCommand";
+import { ICommand } from "../commands/ICommand";
+import { ISessionDao } from "../daos/ISessionDao";
+import { IUserDao } from "../daos/IUserDao";
 import { IPersistenceProviderPlugin } from "../plugin-management/IPersistenceProviderPlugin";
+import { PluginManager } from "../plugin-management/PluginManager";
+import { BusCard } from "./BusCard";
+import { BusColor } from "./BusColor";
+import { ErrorMsgs } from "./ErrorMsgs";
+import { Game } from "./Game";
+import { GameState } from "./GameState";
+import { GameOverStat } from "./IGameOverStat";
+import { MapDataManager } from "./MapDataManager";
+import { Message } from "./Message";
+import { Player } from "./Player";
+import { RouteCard } from "./RouteCard";
+import { Segment } from "./Segment";
+import { UserRegistration } from "./UserRegistration";
 const pointMapping: { [key: number]: number } = {
 	1: 1,
 	2: 2,
@@ -40,6 +39,8 @@ export class ServerModel {
 	private unstartedGameLimit: number;
 	private pluginManager: PluginManager;
 	private persistenceProvider: IPersistenceProviderPlugin;
+	private userDao: IUserDao;
+	private sessionDao: ISessionDao;
 
 	private constructor() {
 		if (ServerModel._instance) {
@@ -56,6 +57,9 @@ export class ServerModel {
 		this.loggedInUsers = [];
 		this.allUsers = [];
 		this.unstartedGameLimit = 6;
+		this.userDao = this.persistenceProvider.getUserDao();
+		this.sessionDao = this.persistenceProvider.getSessionDao();
+		this.loadUserData();
 	}
 
 	public static getInstance(): ServerModel {
@@ -77,6 +81,7 @@ export class ServerModel {
 		this.loggedInUsers.push(user);
 		let token = hat();
 		user.tokens.push(token);
+		this.sessionDao.saveSession({username: username, token: token});
 		return token;
 	}
 
@@ -92,10 +97,28 @@ export class ServerModel {
 		user = new UserRegistration(username, password, token);
 		this.allUsers.push(user);
 		this.loggedInUsers.push(user);
-		let id = hat();
 		user.tokens.push(token);
 
+		this.userDao.saveUser({username: username, password: password});
+		this.sessionDao.saveSession({username: username, token: token});
 		return token;
+	}
+
+	loadUserData() {
+		let userDtos = this.userDao.getAllUsers();
+		let sessionDtos = this.sessionDao.getAllSessions();
+		userDtos.forEach(userDto => {
+			let userSessions = sessionDtos.filter(sessionDto => sessionDto.username === userDto.username);
+			if (userSessions.length === 0) {
+				return;
+			}
+			let newUser = new UserRegistration(userDto.username, userDto.password, userSessions[0].token);
+			userSessions.splice(0, 1);
+			userSessions.forEach(userSession => {
+				newUser.tokens.push(userSession.token);
+			});
+			this.allUsers.push(newUser);
+		});
 	}
 
 	deleteGame(id: number): Command {

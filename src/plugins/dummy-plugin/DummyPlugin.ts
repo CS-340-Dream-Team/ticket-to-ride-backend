@@ -15,15 +15,18 @@ export class DummyPlugin implements IPersistenceProviderPlugin {
 
 	userDao: IUserDao = {
 		saveUser() {},
-		getUser() {
-			return JSON;
+		getUser(id: number) {
+			return {username: 'Betty the Bot', password: 'Super Secr3t'};
 		},
+		getAllUsers() {
+			return []
+		}
 	};
 
 	sessionDao: ISessionDao = {
 		saveSession() {},
-		getSession() {
-			return JSON;
+		getAllSessions() {
+			return [];
 		},
 	};
 

@@ -16,3 +16,13 @@ export class UserRegistration implements IUserRegistration {
 		this.player = new Player(username, PlayerColor.None);
 	}
 }
+
+export interface UserDto {
+	username: string;
+	password: string;
+}
+
+export interface SessionDto {
+	username: string;
+	token: string;
+}

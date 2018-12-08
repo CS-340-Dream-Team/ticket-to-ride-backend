@@ -1,4 +1,6 @@
+import { SessionDto } from "../model/UserRegistration";
+
 export interface ISessionDao {
-	saveSession(): void;
-	getSession(): JSON;
+	saveSession(session: SessionDto): void;
+	getAllSessions(): SessionDto[];
 }

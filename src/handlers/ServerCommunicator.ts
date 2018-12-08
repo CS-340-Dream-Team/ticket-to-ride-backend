@@ -1,18 +1,12 @@
-import express from "express";
 import * as bodyParser from "body-parser";
 import cors from "cors";
-import { Request, Response } from "express";
-import { RegisterHandler } from "./RegisterHandler";
-import { LoginHandler } from "./LoginHandler";
-import { GamesHandler } from "./GamesHandler";
+import express, { Request, Response } from "express";
 import { ChatHandler } from "./ChatHandler";
-import { Player } from "../model/Player";
 import { GamePlayHandler } from "./GamePlayHandler";
+import { GamesHandler } from "./GamesHandler";
+import { LoginHandler } from "./LoginHandler";
 import { MapHandler } from "./MapHandler";
-import { Command } from "../commands/Command";
-import { DrawSpread } from "../model/DrawSpread";
-import { RouteCard } from "../model/RouteCard";
-import { BusCard } from "../model/BusCard";
+import { RegisterHandler } from "./RegisterHandler";
 
 export class ServerCommunicator {
 	private mapHandler: MapHandler = new MapHandler();
