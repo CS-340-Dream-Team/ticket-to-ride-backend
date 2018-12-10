@@ -38,10 +38,11 @@ export class GameMariaDBDao implements IGameDao {
 				port: 3306,
 			})
 			.then((conn: any) => {
-				conn
+				return conn
 					.query(`SELECT game_state FROM Games where game_id = ${gameId}`)
-					.then((game: Game) => {
-						return game;
+					.then((game: Object[]) => {
+                        let saved_game = game[0] as {'game_state': Game};
+						return saved_game.game_state as Game;
 					})
 					.then(conn.destroy()); // Close the connection
 			});
