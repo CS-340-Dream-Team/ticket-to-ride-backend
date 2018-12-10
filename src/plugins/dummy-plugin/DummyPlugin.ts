@@ -26,42 +26,6 @@ export class DummyPlugin implements IPersistenceProviderPlugin {
 		this.sessionDao=this.factory.createSessionDao();
 		this.requestDao=this.factory.createRequestDao();
 	}
-	// gameDao: IGameDao = {
-	// 	saveGame() {return Promise.resolve(true)},
-
-	// };
-
-	// userDao: IUserDao = {
-	// 	saveUser() {},
-	// 	getUser(id: number) {
-	// 		return {username: 'Betty the Bot', password: 'Super Secr3t'};
-	// 	},
-	// 	getAllUsers() {
-	// 		return []
-	// 	}
-	// };
-
-	// sessionDao: ISessionDao = {
-	// 	saveSession() {},
-	// 	getAllSessions() {
-	// 		return [];
-	// 	},
-	// };
-
-	// requestDao: IRequestDao = {
-	// 	saveRequest(req: Request): Promise<boolean> {
-	// 		return Promise.resolve(true);
-	// 	},
-	// 	getRequestsByGameId(gameId: number): Promise<Request[]> {
-	// 		return Promise.resolve([]);
-	// 	},
-	// 	getRequestById(requestId: number): Promise<Request> {
-	// 		return Promise.resolve({} as Request);
-	// 	},
-	// 	removeRequestById(requestId: number): Promise<null> {
-	// 		return Promise.resolve(null);
-	// 	},
-	// };
 
 	getGameDao(): IGameDao {
 		return this.gameDao;
