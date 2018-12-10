@@ -5,7 +5,7 @@ import { PlayerColor } from "../../src/model/PlayerColor";
 
 // test("game is inserted into database", () => {
 // 	let gameDao = new GameMongoDBDao();
-//     let player=new Player("Betty",PlayerColor.Blue);
+//  let player=new Player("Betty",PlayerColor.Blue);
 // 	let game = new Game(player,"test_game")
 // 	return gameDao
 // 		.saveGame(game)

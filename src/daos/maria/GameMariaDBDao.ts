@@ -47,7 +47,7 @@ export class GameMariaDBDao implements IGameDao {
 			});
 	}
 
-    removeGameById(gameId: number): Promise<null> {
+	removeGameById(gameId: number): Promise<null> {
 		return mariadb
 			.createConnection({
 				// Open a new connection
@@ -66,5 +66,4 @@ export class GameMariaDBDao implements IGameDao {
 					.then(conn.destroy()); // Close the connection
 			});
 	}
-
 }
