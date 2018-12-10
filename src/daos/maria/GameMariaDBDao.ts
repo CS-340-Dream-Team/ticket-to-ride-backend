@@ -20,7 +20,7 @@ export class GameMariaDBDao implements IGameDao {
 					.query(
 						`INSERT INTO Games values (
 							${game.id},
-							"${game.name}"
+							"${game}"
 						)`
 					)
 					.then(conn.destroy()); // Close the connection
@@ -39,7 +39,7 @@ export class GameMariaDBDao implements IGameDao {
 			})
 			.then((conn: any) => {
 				conn
-					.query(`SELECT * FROM Games where game_id = ${gameId}`)
+					.query(`SELECT game_state FROM Games where game_id = ${gameId}`)
 					.then((game: Game) => {
 						return game;
 					})

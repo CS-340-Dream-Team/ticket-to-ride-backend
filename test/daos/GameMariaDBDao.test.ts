@@ -3,10 +3,10 @@ import { Game } from "../../src/model/Game";
 import { PlayerColor } from "../../src/model/PlayerColor";
 import { Player } from "../../src/model/Player";
 
-// test("request is inserted into database", () => {
+// test("game is inserted into database", () => {
 // 	let gameDao = new GameMariaDBDao();
 // 	let player=new Player("Betty",PlayerColor.Blue);
-//  	let game = new Game(player,"test_game")
+// 	let game = new Game(player,"test_game")
 // 	return gameDao
 // 		.saveGame(game)
 //         .then(_ => {
@@ -19,6 +19,19 @@ import { Player } from "../../src/model/Player";
 // 			console.log(err.message);
 // 		});
 // });
+
+test("game is now in database", () => {
+	let gameDao = new GameMariaDBDao();
+	return gameDao
+		.getGameById(0).then( saved_game => {
+			console.log(saved_game);
+			expect(saved_game.name).toBe("test_game");
+			gameDao.removeGameById(0);
+		})
+		.catch(err => {
+			console.log(err.message);
+		});
+});
 
 test("placeholder", () => {
 	expect(1).toBe(1);
