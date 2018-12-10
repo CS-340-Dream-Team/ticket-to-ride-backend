@@ -16,7 +16,7 @@ export class RequestMariaDBDao implements IRequestDao {
 				port: 3306,
 			})
 			.then((conn: any) => {
-				conn
+				return conn
 					.query(
 						`INSERT INTO Requests values (
 							${req.id},
@@ -42,7 +42,7 @@ export class RequestMariaDBDao implements IRequestDao {
 				port: 3306,
 			})
 			.then((conn: any) => {
-				conn
+				return conn
 					.query(`SELECT * FROM Requests where request_id = ${requestId}`)
 					.then((request: Request) => {
 						return request;
@@ -62,7 +62,7 @@ export class RequestMariaDBDao implements IRequestDao {
 				port: 3306,
 			})
 			.then((conn: any) => {
-				conn
+				return conn
 					.query(`DELETE FROM Requests where request_id = ${requestId}`)
 					.then((request: Request) => {
 						return request;
@@ -82,7 +82,7 @@ export class RequestMariaDBDao implements IRequestDao {
 				port: 3306,
 			})
 			.then((conn: any) => {
-				conn
+				return conn
 					.query(`SELECT * FROM Requests where game_id = ${gameId}`)
 					.then((request: Request) => {
 						return request;
