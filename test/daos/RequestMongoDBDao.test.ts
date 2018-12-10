@@ -10,9 +10,7 @@ test("request is inserted into database", () => {
 	return requestDao
 		.saveRequest(req)
 		.then(_ => {
-			console.log('here')
 			return requestDao.getRequestById(req.id).then(saved_request => {
-				console.log(saved_request);
 				expect(saved_request.authToken).toBe(token);
 				return requestDao.removeRequestById(req.id);
 			});

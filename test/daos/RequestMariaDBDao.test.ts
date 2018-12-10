@@ -9,12 +9,12 @@ test("request is inserted into database", () => {
 	let req = new Request("/chat/new/0", "POST", JSON.parse(body), token, gameId);
 	return requestDao
 		.saveRequest(req)
-        .then(_ => {
-            return requestDao.getRequestById(req.id).then( saved_request => {
-                expect(saved_request.authToken).toBe(token);
-                return requestDao.removeRequestById(req.id);
-            });
-        })
+		.then(_ => {
+			return requestDao.getRequestById(req.id).then(saved_request => {
+				expect(saved_request.authToken).toBe(token);
+				return requestDao.removeRequestById(req.id);
+			});
+		})
 		.catch(err => {
 			console.log(err.message);
 		});
