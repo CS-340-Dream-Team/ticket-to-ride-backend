@@ -25,7 +25,7 @@ export class GameMariaDBDao implements IGameDao {
 							${JSON.stringify(JSON.stringify(game))}
 						)`
 					)
-					.then(conn.destroy()); // Close the connection
+					.then(conn.destroy());
 			});
 	}
 
