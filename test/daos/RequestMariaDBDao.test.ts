@@ -9,12 +9,12 @@ import { Request } from "../../src/model/Request";
 // 	let req = new Request("/chat/new/0", "POST", JSON.parse(body), token, gameId);
 // 	return requestDao
 // 		.saveRequest(req)
-//         .then(_ => {
-//             requestDao.getRequestById(req.id).then( saved_request => {
-//                 expect(saved_request.authToken).toBe(token);
-//                 requestDao.removeRequestById(req.id);
-//             });
-//         })
+// 		.then(_ => {
+// 			return requestDao.getRequestsByGameId(gameId).then(saved_requests => {
+// 				expect(saved_requests.length).toBeGreaterThan(-1);
+// 				return requestDao.removeRequestsByGameId(gameId);
+// 			});
+// 		})
 // 		.catch(err => {
 // 			console.log(err.message);
 // 		});

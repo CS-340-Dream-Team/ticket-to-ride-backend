@@ -19,7 +19,8 @@ import { Message } from "./Message";
 import { Player } from "./Player";
 import { RouteCard } from "./RouteCard";
 import { Segment } from "./Segment";
-import { UserRegistration } from "./UserRegistration";
+import { UserRegistration, SessionDto, UserDto } from "./UserRegistration";
+import { ERANGE } from "constants";
 const pointMapping: { [key: number]: number } = {
 	1: 1,
 	2: 2,
@@ -51,7 +52,6 @@ export class ServerModel {
 		this.commandManager = new CommandManager();
 		this.pluginManager = new PluginManager();
 		this.persistenceProvider = this.pluginManager.getProvider();
-		this.persistenceProvider.openConnection();
 		this.unstartedGames = [];
 		this.startedGames = {};
 		this.loggedInUsers = [];
@@ -105,8 +105,14 @@ export class ServerModel {
 	}
 
 	loadUserData() {
-		let userDtos = this.userDao.getAllUsers();
-		let sessionDtos = this.sessionDao.getAllSessions();
+		var userDtos: UserDto[] = [];
+		this.userDao.getAllUsers().then(users => {
+			userDtos = users;
+		});
+		var sessionDtos: SessionDto[] = [];
+		this.sessionDao.getAllSessions().then(sessions => {
+			sessionDtos = sessions;
+		});
 		userDtos.forEach(userDto => {
 			let userSessions = sessionDtos.filter(sessionDto => sessionDto.username === userDto.username);
 			if (userSessions.length === 0) {

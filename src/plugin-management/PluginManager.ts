@@ -6,6 +6,9 @@ export class PluginManager {
 	constructor() {
 		let fileSystem = require("fs");
 		let pluginName = process.argv[2];
+		if (!pluginName) {
+			throw new Error("No Persistence Provider Plugin Specified");
+		}
 		let pluginJSON = fileSystem.readFileSync("src/plugin-management/plugin-config.json");
 		let availablePlugins = JSON.parse(pluginJSON) as PluginRegistration[];
 		let desiredPlugin = availablePlugins

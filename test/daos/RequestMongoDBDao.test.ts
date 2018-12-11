@@ -1,5 +1,6 @@
 import { RequestMongoDBDao } from "../../src/daos/mongo/RequestMongoDBDao";
 import { Request } from "../../src/model/Request";
+import { request } from "https";
 
 // test("request is inserted into database", () => {
 // 	let requestDao = new RequestMongoDBDao();
@@ -10,10 +11,25 @@ import { Request } from "../../src/model/Request";
 // 	return requestDao
 // 		.saveRequest(req)
 // 		.then(_ => {
-// 			requestDao.getRequestById(req.id).then(saved_request => {
-// 				expect(saved_request.authToken).toBe(token);
-// 				requestDao.removeRequestById(req.id);
+// 			return requestDao.getRequestsByGameId(gameId).then(saved_requests => {
+// 				expect(saved_requests.length).toBeGreaterThan(-1);
+// 				return requestDao.removeRequestsByGameId(gameId);
 // 			});
+// 		})
+// 		.catch(err => {
+// 			console.log(err.message);
+// 		});
+// });
+
+// test("request is deleted from database", () => {
+// 	let requestDao = new RequestMongoDBDao();
+// 	let gameId = 0;
+// 	return requestDao
+// 		.removeRequestsByGameId(gameId)
+// 		.then(_ => {
+// 			return requestDao.getRequestsByGameId(gameId).then(saved_requests => {
+// 				expect(saved_requests.length).toBe(0);
+// 			})
 // 		})
 // 		.catch(err => {
 // 			console.log(err.message);

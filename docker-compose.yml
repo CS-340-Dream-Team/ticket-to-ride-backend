@@ -10,17 +10,17 @@ services:
     restart: unless-stopped
     volumes:
       - yarn-cache:/usr/local/share/.cache/yarn/v4
-  ttr-backend:
-    build: .
-    container_name: ttr-backend
-    depends_on:
-      - db
-      - nosql-db
-    ports:
-      - 4040:4040
-    restart: unless-stopped
-    volumes:
-      - yarn-cache:/usr/local/share/.cache/yarn/v4
+  # ttr-backend:
+  #   build: .
+  #   container_name: ttr-backend
+  #   depends_on:
+  #     - db
+  #     - nosql-db
+  #   ports:
+  #     - 4040:4040
+  #   restart: unless-stopped
+  #   volumes:
+  #     - yarn-cache:/usr/local/share/.cache/yarn/v4
   db:
     image: mariadb:10.3
     container_name: db
@@ -29,7 +29,7 @@ services:
       - MYSQL_DATABASE=test_db
     restart: unless-stopped
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
   nosql-db:

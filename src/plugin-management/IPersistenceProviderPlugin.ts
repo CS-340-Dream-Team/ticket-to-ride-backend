@@ -8,6 +8,4 @@ export interface IPersistenceProviderPlugin {
 	getUserDao(): IUserDao;
 	getSessionDao(): ISessionDao;
 	getRequestDao(): IRequestDao;
-	openConnection(): void;
-	closeConnection(): void;
 }

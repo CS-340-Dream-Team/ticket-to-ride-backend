@@ -8,5 +8,15 @@ import { ServerCommunicator } from "./handlers/ServerCommunicator";
 	} else {
 		port = Number.parseInt(portStr);
 	}
-	let serverCommunicator = new ServerCommunicator(port);
+	try {
+		let serverCommunicator = new ServerCommunicator(port);
+	} catch (e) {
+		if ((e.message = "No Persistence Provider Plugin Specified")) {
+			console.warn("No Plugin Specified");
+			console.warn("Usage: yarn start [pluginName]");
+		} else {
+			console.log(e);
+		}
+		return;
+	}
 })();

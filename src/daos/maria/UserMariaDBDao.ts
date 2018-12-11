@@ -1,12 +1,10 @@
-import { IGameDao } from "../IGameDao";
-import { Game } from "../../model/Game";
-import { Segment } from "../../model/Segment";
+import { IUserDao } from "../IUserDao";
+import { UserDto } from "../../model/UserRegistration";
 const mariadb = require("mariadb");
-
-export class GameMariaDBDao implements IGameDao {
+export class UserMariaDBDao implements IUserDao {
 	constructor() {}
 
-	saveGame(game: Game): Promise<boolean> {
+	saveUser(user: UserDto): Promise<boolean> {
 		return mariadb
 			.createConnection({
 				// Open a new connection
@@ -17,19 +15,18 @@ export class GameMariaDBDao implements IGameDao {
 				port: 3306,
 			})
 			.then((conn: any) => {
-				game.segments = [] as Segment[];
 				return conn
 					.query(
-						`INSERT INTO Games values (
-							${game.id},
-							${JSON.stringify(JSON.stringify(game))}
+						`INSERT INTO Users (username, password) values (
+							"${user.username}",
+							"${user.password}"
 						)`
 					)
-					.then(conn.destroy());
+					.then(conn.destroy()); // Close the connection
 			});
 	}
 
-	getGameById(gameId: number): Promise<Game> {
+	getUserByName(userName: string): Promise<UserDto> {
 		return mariadb
 			.createConnection({
 				// Open a new connection
@@ -41,16 +38,15 @@ export class GameMariaDBDao implements IGameDao {
 			})
 			.then((conn: any) => {
 				return conn
-					.query(`SELECT game_state FROM Games where game_id = ${gameId}`)
-					.then((game: Object[]) => {
-						let saved_game = game[0] as { game_state: string };
-						return JSON.parse(saved_game.game_state) as Game;
+					.query(`SELECT username, password FROM Users where username = "${userName}"`)
+					.then((user: Object[]) => {
+						return user[0] as UserDto;
 					})
 					.then(conn.destroy()); // Close the connection
 			});
 	}
 
-	getAllGames(): Promise<Game[]> {
+	getAllUsers(): Promise<UserDto[]> {
 		return mariadb
 			.createConnection({
 				// Open a new connection
@@ -62,20 +58,19 @@ export class GameMariaDBDao implements IGameDao {
 			})
 			.then((conn: any) => {
 				return conn
-					.query(`SELECT game_state FROM Games`)
-					.then((games: Object[]) => {
-						let ret_saved_games: Game[] = [];
-						for (let game of games) {
-							let saved_game = game as { game_state: string };
-							ret_saved_games.push(JSON.parse(saved_game.game_state) as Game);
+					.query(`SELECT username, password FROM Users`)
+					.then((users: Object[]) => {
+						let ret_users: UserDto[] = [];
+						for (let user of users) {
+							ret_users.push(user as UserDto);
 						}
-						return ret_saved_games;
+						return ret_users;
 					})
 					.then(conn.destroy()); // Close the connection
 			});
 	}
 
-	removeGameById(gameId: number): Promise<null> {
+	removeUserByName(userName: string): Promise<null> {
 		return mariadb
 			.createConnection({
 				// Open a new connection
@@ -87,9 +82,9 @@ export class GameMariaDBDao implements IGameDao {
 			})
 			.then((conn: any) => {
 				return conn
-					.query(`DELETE FROM Games where game_id = ${gameId}`)
-					.then((game: Game) => {
-						return game;
+					.query(`DELETE FROM Users where username = "${userName}"`)
+					.then((user: null) => {
+						return user;
 					})
 					.then(conn.destroy()); // Close the connection
 			});

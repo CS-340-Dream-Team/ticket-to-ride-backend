@@ -1,7 +1,12 @@
 [
 	{
-		"name": "DummyPlugin",
-		"source": "plugins/dummy-plugin/DummyPlugin",
-		"className": "DummyPlugin"
+		"name": "MariaDB",
+		"source": "plugins/mariaDBPlugin/MariaDBPlugin",
+		"className": "MariaDBPlugin"
+	},
+	{
+		"name": "MongoDB",
+		"source": "plugins/mongoDBPlugin/MongoDBPlugin",
+		"className": "MongoDBPlugin"
 	}
 ]
