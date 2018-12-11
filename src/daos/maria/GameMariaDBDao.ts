@@ -1,5 +1,6 @@
 import { IGameDao } from "../IGameDao";
 import { Game } from "../../model/Game";
+import { Segment } from "../../model/Segment";
 const mariadb = require("mariadb");
 
 export class GameMariaDBDao implements IGameDao {
@@ -16,11 +17,12 @@ export class GameMariaDBDao implements IGameDao {
 				port: 3306,
 			})
 			.then((conn: any) => {
+				game.segments = [] as Segment[];
 				return conn
 					.query(
 						`INSERT INTO Games values (
 							${game.id},
-							"${game}"
+							${JSON.stringify(JSON.stringify(game))}
 						)`
 					)
 					.then(conn.destroy()); // Close the connection
@@ -41,8 +43,8 @@ export class GameMariaDBDao implements IGameDao {
 				return conn
 					.query(`SELECT game_state FROM Games where game_id = ${gameId}`)
 					.then((game: Object[]) => {
-						let saved_game = game[0] as { game_state: Game };
-						return saved_game.game_state as Game;
+						let saved_game = game[0] as { game_state: string };
+						return JSON.parse(saved_game.game_state) as Game;
 					})
 					.then(conn.destroy()); // Close the connection
 			});

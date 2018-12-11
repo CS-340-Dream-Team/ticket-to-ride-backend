@@ -1,5 +1,6 @@
 import { IRequestDao } from "../IRequestDao";
 import { Request } from "../../model/Request";
+import { json } from "body-parser";
 const mariadb = require("mariadb");
 
 export class RequestMariaDBDao implements IRequestDao {
@@ -44,8 +45,8 @@ export class RequestMariaDBDao implements IRequestDao {
 			.then((conn: any) => {
 				return conn
 					.query(`SELECT * FROM Requests where request_id = ${requestId}`)
-					.then((request: Request) => {
-						return request;
+					.then((request: Object[]) => {
+						return request[0] as Request;
 					})
 					.then(conn.destroy()); // Close the connection
 			});
