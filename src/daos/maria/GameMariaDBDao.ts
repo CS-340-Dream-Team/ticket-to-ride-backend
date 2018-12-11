@@ -19,12 +19,10 @@ export class GameMariaDBDao implements IGameDao {
 			.then((conn: any) => {
 				game.segments = [] as Segment[];
 				return conn
-					.query(
-						`INSERT INTO Games values (
+					.query(`INSERT INTO Games values (
 							${game.id},
 							${JSON.stringify(JSON.stringify(game))}
-						)`
-					)
+						)`)
 					.then(conn.destroy());
 			});
 	}
