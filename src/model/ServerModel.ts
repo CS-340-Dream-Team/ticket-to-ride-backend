@@ -229,7 +229,9 @@ export class ServerModel {
 			return Promise.reject();
 		}
 
-		return this.gameDao.saveGame(game);
+		return this.gameDao.removeGameById(gameId).then(_ => {
+			return this.gameDao.saveGame(game);
+		});
 	}
 
 	getGameOverCommand(game: Game, username: string) {
