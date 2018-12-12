@@ -129,7 +129,6 @@ export class ServerModel {
 					});
 					this.allUsers.push(newUser);
 				});
-				console.log("loaded users:", this.allUsers);
 			});
 		});
 	}
@@ -223,12 +222,11 @@ export class ServerModel {
 		return new Command("startGame", {});
 	}
 
-	public saveGameWithId(gameId: number) {
-		const game = this.getGameById(gameId);
+	public saveGameWithId(gameId: number, authToken: string) {
+		const game = this.getGameByToken(authToken);
 		if (!game) {
 			return Promise.reject();
 		}
-
 		return this.gameDao.removeGameById(gameId).then(_ => {
 			return this.gameDao.saveGame(game);
 		});

@@ -63,13 +63,13 @@ export class RequestLogger {
 
     private async saveRequestToDB(req: DBRequest) {
         await this.requestDao.saveRequest(req);
-        await this.saveNewGameInstanceIfNRequests(req.gameId, this.getNumDeltas());
+        await this.saveNewGameInstanceIfNRequests(req.gameId, req.authToken, this.getNumDeltas());
     }
 
-    private async saveNewGameInstanceIfNRequests(gameId: number, N: number) {
+    private async saveNewGameInstanceIfNRequests(gameId: number, authToken: string, N: number) {
         const requestsForGame = await this.requestDao.getRequestsByGameId(gameId);
         if (requestsForGame.length > N) {
-            await ServerModel.getInstance().saveGameWithId(gameId);
+            await ServerModel.getInstance().saveGameWithId(gameId, authToken);
             await this.requestDao.removeRequestsByGameId(gameId);
         }
     }
