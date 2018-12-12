@@ -63,7 +63,7 @@ export class RequestLogger {
 
     private async saveRequestToDB(req: DBRequest) {
         await this.requestDao.saveRequest(req);
-        await this.saveNewGameInstanceIfNRequests(req.gameId, 10);
+        await this.saveNewGameInstanceIfNRequests(req.gameId, this.getNumDeltas());
     }
 
     private async saveNewGameInstanceIfNRequests(gameId: number, N: number) {
@@ -73,4 +73,12 @@ export class RequestLogger {
             await this.requestDao.removeRequestsByGameId(gameId);
         }
     }
+
+    private getNumDeltas(): number {
+		let numDeltas = +process.argv[3];
+		if (!numDeltas || numDeltas <= 0) {
+			throw new Error("No Command Delta Number Specified Or Number Invalid");
+		}
+		return numDeltas;
+	}
 }

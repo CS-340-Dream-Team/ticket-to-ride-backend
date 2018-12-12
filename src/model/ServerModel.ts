@@ -47,7 +47,6 @@ export class ServerModel {
 	private userDao: IUserDao;
 	private sessionDao: ISessionDao;
 	private gameDao: IGameDao;
-	private numDeltas: number;
 
 	private constructor() {
 		if (ServerModel._instance) {
@@ -57,7 +56,6 @@ export class ServerModel {
 		ServerModel._instance = this;
 		this.commandManager = new CommandManager();
 		this.pluginManager = new PluginManager();
-		this.numDeltas = this.getNumDeltas();
 		this.persistenceProvider = this.pluginManager.getProvider();
 		this.unstartedGames = [];
 		this.startedGames = {};
@@ -766,14 +764,6 @@ export class ServerModel {
 			}
 		}
 		return false;
-	}
-
-	private getNumDeltas(): number {
-		let numDeltas = +process.argv[3];
-		if (!numDeltas || numDeltas <= 0) {
-			throw new Error("No Command Delta Number Specified Or Number Invalid");
-		}
-		return numDeltas;
 	}
 }
 
