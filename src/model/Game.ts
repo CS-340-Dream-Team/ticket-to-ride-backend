@@ -18,7 +18,6 @@ export class Game {
 	playersJoined: Player[];
 	host: Player;
 	name: string;
-	static _id: number = 0;
 	id: number;
 	numPlayers: number;
 	started: boolean;
@@ -32,7 +31,7 @@ export class Game {
 	turn: number;
 	segments: Segment[] = [];
 
-	constructor(host: Player, name: string) {
+	constructor(host: Player, name: string, id: number) {
 		if (USING_BETTY) {
 			this.playersJoined = [new Player("Betty the Bot", PlayerColor.None)];
 		} else {
@@ -40,7 +39,7 @@ export class Game {
 		}
 		this.host = host;
 		this.name = name;
-		this.id = Game._id++;
+		this.id = id;
 		this.numPlayers = USING_BETTY ? 1 : 0;
 		this.started = false;
 		this.lastRound = false;

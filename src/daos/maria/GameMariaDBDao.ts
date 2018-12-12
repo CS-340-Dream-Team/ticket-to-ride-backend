@@ -17,7 +17,6 @@ export class GameMariaDBDao implements IGameDao {
 				port: 3306,
 			})
 			.then((conn: any) => {
-				game.segments = [] as Segment[];
 				return conn
 					.query(
 						`INSERT INTO Games values (

@@ -20,7 +20,7 @@ import { Player } from "./Player";
 import { RouteCard } from "./RouteCard";
 import { Segment } from "./Segment";
 import { UserRegistration, SessionDto, UserDto } from "./UserRegistration";
-import { ERANGE } from "constants";
+import { IGameDao } from "../daos/IGameDao";
 const pointMapping: { [key: number]: number } = {
 	1: 1,
 	2: 2,
@@ -42,6 +42,7 @@ export class ServerModel {
 	private persistenceProvider: IPersistenceProviderPlugin;
 	private userDao: IUserDao;
 	private sessionDao: ISessionDao;
+	private gameDao: IGameDao;
 	private numDeltas: number;
 
 	private constructor() {
@@ -61,7 +62,9 @@ export class ServerModel {
 		this.unstartedGameLimit = 6;
 		this.userDao = this.persistenceProvider.getUserDao();
 		this.sessionDao = this.persistenceProvider.getSessionDao();
+		this.gameDao = this.persistenceProvider.getGameDao();
 		this.loadUserData();
+		this.loadGames();
 	}
 
 	public static getInstance(): ServerModel {
@@ -83,7 +86,7 @@ export class ServerModel {
 		this.loggedInUsers.push(user);
 		let token = hat();
 		user.tokens.push(token);
-		this.sessionDao.saveSession({username: username, token: token});
+		this.sessionDao.saveSession({ username: username, token: token });
 		return token;
 	}
 
@@ -101,8 +104,8 @@ export class ServerModel {
 		this.loggedInUsers.push(user);
 		user.tokens.push(token);
 
-		this.userDao.saveUser({username: username, password: password} as UserDto);
-		this.sessionDao.saveSession({username: username, token: token} as SessionDto);
+		this.userDao.saveUser({ username: username, password: password });
+		this.sessionDao.saveSession({ username: username, token: token });
 		return token;
 	}
 
@@ -126,6 +129,19 @@ export class ServerModel {
 				newUser.tokens.push(userSession.token);
 			});
 			this.allUsers.push(newUser);
+		});
+	}
+
+	loadGames() {
+		this.gameDao.getAllGames().then(games => {
+			games.forEach(game => {
+				if (game.started) {
+					this.startedGames[game.id] = game;
+					this.commandManager.addGame();
+				} else {
+					this.unstartedGames.push(game);
+				}
+			});
 		});
 	}
 
@@ -169,7 +185,8 @@ export class ServerModel {
 		if (this.isPlayerInAGame(hostUser.player)) {
 			throw new Error(ErrorMsgs.PLAYER_ALREADY_IN_GAME_CANNOT_CREATE);
 		}
-		this.unstartedGames.push(new Game(hostUser.player, gameName));
+		let newGameId = this.unstartedGames.length + Object.keys(this.startedGames).length;
+		this.unstartedGames.push(new Game(hostUser.player, gameName, newGameId));
 		return new Command("updateGameList", { gameList: this.unstartedGames });
 	}
 
@@ -212,6 +229,7 @@ export class ServerModel {
 				}
 			}
 		});
+		this.gameDao.saveGame(game);
 		return new Command("startGame", {});
 	}
 

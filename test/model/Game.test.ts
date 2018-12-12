@@ -8,7 +8,7 @@ import { BusColor } from "../../src/model/BusColor";
 
 test("adds host and 5 players to game to not allow 6th player", () => {
 	let host = new Player("host", PlayerColor.Blue);
-	let game = new Game(host, "gameName");
+	let game = new Game(host, "gameName", 0);
 	let player2 = new Player("player2", PlayerColor.Blue);
 	let player3 = new Player("player3", PlayerColor.Blue);
 	let player4 = new Player("player4", PlayerColor.Blue);
@@ -23,7 +23,7 @@ test("adds host and 5 players to game to not allow 6th player", () => {
 
 test("adds host twice to not allow duplicate players", () => {
 	let host = new Player("host", PlayerColor.Blue);
-	let game = new Game(host, "gameName");
+	let game = new Game(host, "gameName", 0);
 	expect(game.addPlayer(host)).toBe(false);
 });
 
@@ -50,7 +50,7 @@ test("adds host twice to not allow duplicate players", () => {
 
 test("Calculates longest route correctly", () => {
 	let host = new Player("host", PlayerColor.Blue);
-	let game = new Game(host, "gameName");
+	let game = new Game(host, "gameName", 0);
 	let player2 = new Player("player2", PlayerColor.Blue);
 	let player3 = new Player("player3", PlayerColor.Blue);
 	let player4 = new Player("player4", PlayerColor.Blue);
