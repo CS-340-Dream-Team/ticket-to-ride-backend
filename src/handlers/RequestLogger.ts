@@ -61,7 +61,16 @@ export class RequestLogger {
         }
     }
 
-    private saveRequestToDB(req: DBRequest) {
-        this.requestDao.saveRequest(req);
+    private async saveRequestToDB(req: DBRequest) {
+        await this.requestDao.saveRequest(req);
+        await this.saveNewGameInstanceIfNRequests(req.gameId, 10);
+    }
+
+    private async saveNewGameInstanceIfNRequests(gameId: number, N: number) {
+        const requestsForGame = await this.requestDao.getRequestsByGameId(gameId);
+        if (requestsForGame.length > 10) { // TODO replace with N
+            await ServerModel.getInstance().saveGameWithId(gameId);
+            await this.requestDao.removeRequestsByGameId(gameId);
+        }
     }
 }

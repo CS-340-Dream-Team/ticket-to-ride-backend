@@ -223,6 +223,15 @@ export class ServerModel {
 		return new Command("startGame", {});
 	}
 
+	public saveGameWithId(gameId: number) {
+		const game = this.getGameById(gameId);
+		if (!game) {
+			return Promise.reject();
+		}
+
+		return this.gameDao.saveGame(game);
+	}
+
 	getGameOverCommand(game: Game, username: string) {
 		const stats: GameOverStat[] = game.calculateScores();
 		return this.commandManager.addCommand(game.id, "endGame", { stats }, {}, username);
