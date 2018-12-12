@@ -4,8 +4,6 @@ import { Command } from "../commands/Command";
 import { CommandManager } from "../commands/CommandManager";
 import { GameCommand } from "../commands/GameCommand";
 import { ICommand } from "../commands/ICommand";
-import { ISessionDao } from "../daos/ISessionDao";
-import { IUserDao } from "../daos/IUserDao";
 import { IPersistenceProviderPlugin } from "../plugin-management/IPersistenceProviderPlugin";
 import { PluginManager } from "../plugin-management/PluginManager";
 import { BusCard } from "./BusCard";
@@ -21,6 +19,12 @@ import { RouteCard } from "./RouteCard";
 import { Segment } from "./Segment";
 import { UserRegistration, SessionDto, UserDto } from "./UserRegistration";
 import { ERANGE } from "constants";
+
+import { RequestLogger } from "../handlers/RequestLogger";
+import { IGameDao } from "../daos/IGameDao";
+import { ISessionDao } from "../daos/ISessionDao";
+import { IUserDao } from "../daos/IUserDao";
+
 const pointMapping: { [key: number]: number } = {
 	1: 1,
 	2: 2,
@@ -42,6 +46,7 @@ export class ServerModel {
 	private persistenceProvider: IPersistenceProviderPlugin;
 	private userDao: IUserDao;
 	private sessionDao: ISessionDao;
+	private gameDao: IGameDao;
 
 	private constructor() {
 		if (ServerModel._instance) {
@@ -59,6 +64,7 @@ export class ServerModel {
 		this.unstartedGameLimit = 6;
 		this.userDao = this.persistenceProvider.getUserDao();
 		this.sessionDao = this.persistenceProvider.getSessionDao();
+		this.gameDao = this.persistenceProvider.getGameDao();
 		this.loadUserData();
 	}
 
@@ -210,6 +216,9 @@ export class ServerModel {
 				}
 			}
 		});
+
+		this.gameDao.saveGame(game);
+		RequestLogger.instance.startLoggingForGame(game);
 		return new Command("startGame", {});
 	}
 
@@ -396,7 +405,7 @@ export class ServerModel {
 		return returnCommands;
 	}
 
-	private getGameByToken(bearerToken: string | undefined): Game | undefined {
+	public getGameByToken(bearerToken: string | undefined): Game | undefined {
 		let user = this.getUserByToken(bearerToken);
 		let returnGame = null;
 		Object.values(this.startedGames).forEach(game => {

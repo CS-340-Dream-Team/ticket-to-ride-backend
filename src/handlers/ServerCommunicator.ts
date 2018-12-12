@@ -7,6 +7,7 @@ import { GamesHandler } from "./GamesHandler";
 import { LoginHandler } from "./LoginHandler";
 import { MapHandler } from "./MapHandler";
 import { RegisterHandler } from "./RegisterHandler";
+import { RequestLogger } from "./RequestLogger";
 
 export class ServerCommunicator {
 	private mapHandler: MapHandler = new MapHandler();
@@ -23,6 +24,10 @@ export class ServerCommunicator {
 		});
 		this.config();
 		this.routes();
+		// if (game blob exists) { TODO
+			// Fast forward game
+			//
+		// }
 	}
 
 	public app: express.Application;
@@ -35,6 +40,10 @@ export class ServerCommunicator {
 		this.app.use(bodyParser.urlencoded({ extended: false }));
 		this.app.use(function(req, res, next) {
 			res.header("Content-Type", "application/json");
+			next();
+		});
+		this.app.use(function(req, res, next) {
+			RequestLogger.instance.saveRequest(req);
 			next();
 		});
 	}
