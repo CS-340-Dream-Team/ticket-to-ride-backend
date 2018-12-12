@@ -68,7 +68,7 @@ export class RequestLogger {
 
     private async saveNewGameInstanceIfNRequests(gameId: number, N: number) {
         const requestsForGame = await this.requestDao.getRequestsByGameId(gameId);
-        if (requestsForGame.length > this.getNumDeltas()) { // TODO replace with N
+        if (requestsForGame.length > N) {
             await ServerModel.getInstance().saveGameWithId(gameId);
             await this.requestDao.removeRequestsByGameId(gameId);
         }
