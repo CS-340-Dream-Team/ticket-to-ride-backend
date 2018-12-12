@@ -112,24 +112,25 @@ export class ServerModel {
 
 	loadUserData() {
 		var userDtos: UserDto[] = [];
+		var sessionDtos: SessionDto[] = [];
 		this.userDao.getAllUsers().then(users => {
 			userDtos = users;
-		});
-		var sessionDtos: SessionDto[] = [];
-		this.sessionDao.getAllSessions().then(sessions => {
-			sessionDtos = sessions;
-		});
-		userDtos.forEach(userDto => {
-			let userSessions = sessionDtos.filter(sessionDto => sessionDto.username === userDto.username);
-			if (userSessions.length === 0) {
-				return;
-			}
-			let newUser = new UserRegistration(userDto.username, userDto.password, userSessions[0].token);
-			userSessions.splice(0, 1);
-			userSessions.forEach(userSession => {
-				newUser.tokens.push(userSession.token);
+			this.sessionDao.getAllSessions().then(sessions => {
+				sessionDtos = sessions;
+				userDtos.forEach(userDto => {
+					let userSessions = sessionDtos.filter(sessionDto => sessionDto.username === userDto.username);
+					if (userSessions.length === 0) {
+						return;
+					}
+					let newUser = new UserRegistration(userDto.username, userDto.password, userSessions[0].token);
+					userSessions.splice(0, 1);
+					userSessions.forEach(userSession => {
+						newUser.tokens.push(userSession.token);
+					});
+					this.allUsers.push(newUser);
+				});
+				console.log("loaded users:", this.allUsers);
 			});
-			this.allUsers.push(newUser);
 		});
 	}
 
