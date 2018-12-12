@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import { ServerCommunicator } from "./handlers/ServerCommunicator";
 
 (function main() {
