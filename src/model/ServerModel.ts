@@ -42,6 +42,7 @@ export class ServerModel {
 	private persistenceProvider: IPersistenceProviderPlugin;
 	private userDao: IUserDao;
 	private sessionDao: ISessionDao;
+	private numDeltas: number;
 
 	private constructor() {
 		if (ServerModel._instance) {
@@ -51,6 +52,7 @@ export class ServerModel {
 		ServerModel._instance = this;
 		this.commandManager = new CommandManager();
 		this.pluginManager = new PluginManager();
+		this.numDeltas = this.getNumDeltas();
 		this.persistenceProvider = this.pluginManager.getProvider();
 		this.unstartedGames = [];
 		this.startedGames = {};
@@ -99,8 +101,8 @@ export class ServerModel {
 		this.loggedInUsers.push(user);
 		user.tokens.push(token);
 
-		this.userDao.saveUser({username: username, password: password});
-		this.sessionDao.saveSession({username: username, token: token});
+		this.userDao.saveUser({username: username, password: password} as UserDto);
+		this.sessionDao.saveSession({username: username, token: token} as SessionDto);
 		return token;
 	}
 
@@ -743,6 +745,14 @@ export class ServerModel {
 			}
 		}
 		return false;
+	}
+
+	private getNumDeltas(): number {
+		let numDeltas = +process.argv[3];
+		if (!numDeltas || numDeltas <= 0) {
+			throw new Error("No Command Delta Number Specified Or Number Invalid");
+		}
+		return numDeltas;
 	}
 }
 
