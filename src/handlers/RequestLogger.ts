@@ -1,7 +1,7 @@
 import { Request as ExpressRequest } from "express";
 import { Request as DBRequest } from "../model/Request";
 import { Game } from '../model/Game';
-import { ServerModel } from '../model/ServerModel';
+import {ServerModel} from '../model/ServerModel';
 import { IRequestDao } from "../daos/IRequestDao";
 import { PluginManager } from "../plugin-management/PluginManager";
 
@@ -29,21 +29,17 @@ export class RequestLogger {
         this.logging.push(game.id);
     }
 
-    private isPollingRequest(req: ExpressRequest) {
+    private isPollingRequest(req: DBRequest) {
         return req.method === 'GET' && req.url.startsWith('/play/') ||
             req.method === 'GET' && req.url.startsWith('/chat/');
     }
 
     private shouldSaveToDB(req: DBRequest) {
         const loggingForThisGame = this.logging.indexOf(req.gameId) !== -1;
-        return loggingForThisGame;
+        return loggingForThisGame && this.isPollingRequest(req);
     }
 
     public saveRequest(req: ExpressRequest) {
-        if (this.isPollingRequest(req)) {
-            return;
-        }
-
         const authHeader = req.headers.authorization;
         if (!authHeader) {
             // login screen
