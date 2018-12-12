@@ -36,7 +36,7 @@ export class RequestLogger {
 
     private shouldSaveToDB(req: DBRequest) {
         const loggingForThisGame = this.logging.indexOf(req.gameId) !== -1;
-        return loggingForThisGame && this.isPollingRequest(req);
+        return loggingForThisGame && !this.isPollingRequest(req);
     }
 
     public saveRequest(req: ExpressRequest) {
@@ -68,7 +68,7 @@ export class RequestLogger {
 
     private async saveNewGameInstanceIfNRequests(gameId: number, N: number) {
         const requestsForGame = await this.requestDao.getRequestsByGameId(gameId);
-        if (requestsForGame.length > 10) { // TODO replace with N
+        if (requestsForGame.length > this.getNumDeltas()) { // TODO replace with N
             await ServerModel.getInstance().saveGameWithId(gameId);
             await this.requestDao.removeRequestsByGameId(gameId);
         }
