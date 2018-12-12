@@ -2,7 +2,9 @@ import { IUserDao } from "../IUserDao";
 import { UserDto } from "../../model/UserRegistration";
 const mariadb = require("mariadb");
 export class UserMariaDBDao implements IUserDao {
-	constructor() {}
+	constructor() {
+		this.createTable();
+	}
 
 	saveUser(user: UserDto): Promise<boolean> {
 		return mariadb
@@ -23,7 +25,8 @@ export class UserMariaDBDao implements IUserDao {
 						)`
 					)
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
 	}
 
 	getUserByName(userName: string): Promise<UserDto> {
@@ -43,7 +46,8 @@ export class UserMariaDBDao implements IUserDao {
 						return user[0] as UserDto;
 					})
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
 	}
 
 	getAllUsers(): Promise<UserDto[]> {
@@ -67,7 +71,8 @@ export class UserMariaDBDao implements IUserDao {
 						return ret_users;
 					})
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
 	}
 
 	removeUserByName(userName: string): Promise<null> {
@@ -87,6 +92,24 @@ export class UserMariaDBDao implements IUserDao {
 						return user;
 					})
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
+	}
+
+	private createTable(): Promise<null> {
+		return mariadb
+			.createConnection({
+				// Open a new connection
+				user: "root",
+				database: "test_db",
+				host: "localhost",
+				password: "super-secret-password",
+				port: 3306,
+			})
+			.then((conn: any) =>
+				conn.query(
+					"CREATE TABLE IF NOT EXISTS Users(user_id INT NOT NULL AUTO_INCREMENT UNIQUE, username VARCHAR(100) NOT NULL, password VARCHAR(100) NOT NULL, PRIMARY KEY(user_id));"
+				).then(() => conn.destroy())
+			).catch((err: Error) => console.error(err));
 	}
 }

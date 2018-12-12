@@ -4,7 +4,9 @@ import { json } from "body-parser";
 const mariadb = require("mariadb");
 
 export class RequestMariaDBDao implements IRequestDao {
-	constructor() {}
+	constructor() {
+		this.createTable();
+	}
 
 	saveRequest(req: Request): Promise<boolean> {
 		return mariadb
@@ -28,7 +30,8 @@ export class RequestMariaDBDao implements IRequestDao {
 						)`
 					)
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
 	}
 
 	getRequestsByGameId(gameId: number): Promise<Request[]> {
@@ -54,7 +57,8 @@ export class RequestMariaDBDao implements IRequestDao {
 						return ret_requests;
 					})
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
 	}
 
 	removeRequestsByGameId(gameId: number): Promise<null> {
@@ -74,6 +78,24 @@ export class RequestMariaDBDao implements IRequestDao {
 						return request;
 					})
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
+	}
+
+	private createTable(): Promise<null> {
+		return mariadb
+			.createConnection({
+				// Open a new connection
+				user: "root",
+				database: "test_db",
+				host: "localhost",
+				password: "super-secret-password",
+				port: 3306,
+			})
+			.then((conn: any) =>
+				conn.query(
+					"CREATE TABLE IF NOT EXISTS Requests(request_id INT NOT NULL AUTO_INCREMENT UNIQUE, url TEXT NOT NULL, method varchar(10),	 body JSON, authToken VARCHAR(100) NOT NULL, gameId INT NOT NULL);"
+				).then(() => conn.destroy())
+		).catch((err: Error) => console.error(err));
 	}
 }

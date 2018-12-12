@@ -4,7 +4,9 @@ import { Segment } from "../../model/Segment";
 const mariadb = require("mariadb");
 
 export class GameMariaDBDao implements IGameDao {
-	constructor() {}
+	constructor() {
+		this.createTable();
+	}
 
 	saveGame(game: Game): Promise<boolean> {
 		return mariadb
@@ -25,7 +27,8 @@ export class GameMariaDBDao implements IGameDao {
 						)`
 					)
 					.then(conn.destroy());
-			});
+			})
+      .catch((err: Error) => console.error(err));
 	}
 
 	getGameById(gameId: number): Promise<Game> {
@@ -46,7 +49,8 @@ export class GameMariaDBDao implements IGameDao {
 						return JSON.parse(saved_game.game_state) as Game;
 					})
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
 	}
 
 	getAllGames(): Promise<Game[]> {
@@ -71,7 +75,8 @@ export class GameMariaDBDao implements IGameDao {
 						return ret_saved_games;
 					})
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
 	}
 
 	removeGameById(gameId: number): Promise<null> {
@@ -91,6 +96,24 @@ export class GameMariaDBDao implements IGameDao {
 						return game;
 					})
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
+	}
+
+	private createTable(): Promise<null> {
+		return mariadb
+			.createConnection({
+				// Open a new connection
+				user: "root",
+				database: "test_db",
+				host: "localhost",
+				password: "super-secret-password",
+				port: 3306,
+			})
+			.then((conn: any) =>
+				conn.query(
+					"CREATE TABLE IF NOT EXISTS Games(game_id INT NOT NULL UNIQUE, game_state	JSON NOT NULL, PRIMARY KEY(game_id));"
+				).then(() => conn.destroy())
+			).catch((err: Error) => console.error(err));
 	}
 }
