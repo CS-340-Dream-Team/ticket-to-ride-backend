@@ -47,7 +47,10 @@ export class RequestFaker {
         fakeRequest = this.addParamsIfPresent(fakeRequest);
 		// // router.get("/map", (req: Request, res: Response) => {
 		// // 	this.mapHandler.handle(req, res);
-		// // });
+        // // });
+
+        const body = JSON.parse(fakeRequest.body);
+        fakeRequest.body = body;
 
         if (req.url.startsWith('/map')) this.mapHandler.handle(fakeRequest, fakeResponse);
 
