@@ -30,16 +30,18 @@ export class RequestLogger {
 		this.logging.push(game.id);
 	}
 
-	private isPollingRequest(req: DBRequest) {
+	private shouldLogRequest(req: DBRequest) {
 		return (
-			(req.method === "GET" && req.url.startsWith("/play/")) ||
-			(req.method === "GET" && req.url.startsWith("/chat/"))
+			!(req.method === "GET" && req.url.startsWith("/play/")) &&
+			!(req.method === "GET" && req.url.startsWith("/chat/")) && 
+			!(req.url.startsWith("/games")) &&
+			!(req.method === "GET" && req.url.startsWith("/map"))
 		);
 	}
 
 	private shouldSaveToDB(req: DBRequest) {
 		const loggingForThisGame = this.logging.indexOf(req.gameId) !== -1;
-		return loggingForThisGame && !this.isPollingRequest(req);
+		return loggingForThisGame && this.shouldLogRequest(req);
 	}
 
 	public saveRequest(req: ExpressRequest) {
