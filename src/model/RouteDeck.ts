@@ -7,12 +7,14 @@ import loadJSON from "../utils/jsonLoader";
 //import from "../data/routes.json";
 export class RouteDeck extends Deck {
 	cards: RouteCard[];
-	constructor() {
+	constructor(cards:RouteCard[]=[],fromDB:boolean=false) {
 		super();
-		this.cards = [];
+		this.cards = cards
 		//load cards from json
+		if(!fromDB){
 		this.loadCards();
 		this.shuffle();
+		}
 	}
 	loadCards() {
 		try {

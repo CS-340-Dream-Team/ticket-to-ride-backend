@@ -18,16 +18,17 @@ export class Player {
 	routesCompleted: RouteCard[];
 	routeCardBuffer: RouteCard[];
 
-	constructor(name: string, color: PlayerColor) {
+	constructor(name: string, color: PlayerColor, points:number=0, segments:Segment[]=[], busPieces:number=numStartingBusPieces,
+		busCards:BusCard[]=[], routeCards:RouteCard[]=[],routesCompleted:RouteCard[]=[],routeCardBuffer:RouteCard[]=[]) {
 		this.name = name;
 		this.color = color;
-		this.points = 0;
-		this.segments = [];
-		this.busPieces = numStartingBusPieces;
-		this.busCards = [];
-		this.routeCards = [];
-		this.routesCompleted = [];
-		this.routeCardBuffer = [];
+		this.points = points;
+		this.segments = segments;
+		this.busPieces = busPieces;
+		this.busCards = busCards;
+		this.routeCards = routeCards;
+		this.routesCompleted = routesCompleted;
+		this.routeCardBuffer = routeCardBuffer;
 	}
 
 	get pointsGained(): number {

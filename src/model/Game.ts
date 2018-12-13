@@ -60,8 +60,9 @@ export class Game {
 	}
 
 	setEverything(gameDTO: Game) {
-		this.playersJoined = gameDTO.playersJoined;
-		this.host = gameDTO.host;
+
+		this.playersJoined = this.getReInitPlayers(gameDTO.playersJoined);
+		this.host = this.playersJoined[0];//Might not work
 		this.name = gameDTO.name;
 		this.id = gameDTO.id;
 		this.numPlayers = gameDTO.numPlayers;
@@ -70,15 +71,29 @@ export class Game {
 		this.turnsLeft = gameDTO.turnsLeft;
 		this.ended = gameDTO.ended;
 		this.chat = gameDTO.chat;
-		this.routeDeck = gameDTO.routeDeck;
-		this.spread = gameDTO.spread;
+		this.routeDeck = new RouteDeck(gameDTO.routeDeck.cards);
+		this.spread = new DrawSpread(gameDTO.spread.busDeck, gameDTO.spread.spread, true);
 		this.gameMap = gameDTO.gameMap;
 		this.turn = gameDTO.turn;
-		this.segments = gameDTO.segments;
-		this.spread = new DrawSpread(gameDTO.spread.busDeck, gameDTO.spread.spread, true);
+		this.segments = this.getReInitSegments(gameDTO.segments);
 		//busdeck
 	}
-
+	getReInitPlayers(players:Player[]):Player[]{
+		let newPlayers:Player[]=[];
+		players.forEach(player => {
+			let newPlayer=new Player(player.name,player.color,player.points,player.segments,player.busPieces,
+									player.busCards,player.routeCards,player.routesCompleted,player.routeCardBuffer)
+			newPlayers.push(newPlayer)
+		});
+		return newPlayers;
+	}
+	getReInitSegments(segments:Segment[]):Segment[]{
+		let newSegments:Segment[]=[];
+		segments.forEach(segment => {
+			newSegments.push(new Segment(segment.id,segment.start,segment.end,segment.length,segment.pair,segment.color,segment.owner))
+		});
+		return newSegments
+	}
 	segmentAlreadyClaimed(segmentId: number): boolean {
 		return this.segments[segmentId - 1].owner !== null;
 	}

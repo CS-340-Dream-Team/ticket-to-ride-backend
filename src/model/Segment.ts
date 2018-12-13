@@ -19,7 +19,8 @@ export class Segment {
 		end: Location,
 		length: number,
 		pair: number,
-		color: BusColor
+		color: BusColor,
+		owner:Player|null=null
 	) {
 		this.id = id;
 		this.start = start;
@@ -27,7 +28,7 @@ export class Segment {
 		this.length = length;
 		this.pair = pair;
 		this.color = color;
-		this.owner = null;
+		this.owner = owner;
 		this.points = this.pointValue();
 	}
 
