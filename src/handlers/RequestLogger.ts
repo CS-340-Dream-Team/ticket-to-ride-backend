@@ -4,6 +4,7 @@ import { Game } from "../model/Game";
 import { ServerModel } from "../model/ServerModel";
 import { IRequestDao } from "../daos/IRequestDao";
 import { PluginManager } from "../plugin-management/PluginManager";
+import { RequestFaker } from "./RequestFaker";
 
 export class RequestLogger {
 	private static _instance: RequestLogger;
@@ -17,6 +18,7 @@ export class RequestLogger {
 
 	private logging: number[] = [];
 	private requestDao: IRequestDao;
+	private faker = new RequestFaker();
 
 	private constructor() {
 		const pluginManager = new PluginManager();
@@ -63,6 +65,19 @@ export class RequestLogger {
 			if (this.shouldSaveToDB(reqToSave)) {
 				this.saveRequestToDB(reqToSave);
 			}
+		}
+	}
+
+	public async loadAndRunRequestsForGameWithId(gameId: number) {
+		const requests = await this.requestDao.getRequestsByGameId(gameId);
+		if (!requests) {
+			return;
+		}
+
+		console.log('Running ' + requests.length + ' requests for game with id' + gameId);
+
+		for (const request of requests) {
+			this.faker.fakeRequest(request);
 		}
 	}
 

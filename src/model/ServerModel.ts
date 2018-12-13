@@ -150,6 +150,10 @@ export class ServerModel {
 					this.unstartedGames.push(game);
 				}
 			});
+
+			for (const id in this.startedGames) {
+				RequestLogger.instance.loadAndRunRequestsForGameWithId(+id);
+			}
 		});
 	}
 
