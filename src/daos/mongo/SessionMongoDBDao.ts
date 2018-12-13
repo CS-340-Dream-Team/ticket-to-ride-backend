@@ -52,4 +52,14 @@ export class SessionMongoDBDao implements ISessionDao {
 			})
 			.then(() => null);
 	}
+
+	clearSessions(): Promise<null> {
+		return this.client
+		.connect()
+		.then((client: MongoClient) => {
+			const db: Db = client.db(this.dbName);
+			return db.collection("sessions").deleteMany({});
+		})
+		.then(() => null);
+	}
 }

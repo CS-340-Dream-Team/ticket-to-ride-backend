@@ -68,8 +68,29 @@ export class SessionMariaDBDao implements ISessionDao {
 			.then((conn: any) => {
 				return conn
 					.query(`DELETE FROM Sessions where username = "${userName}"`)
-					.then((user: SessionDto) => {
-						return user;
+					.then((session: SessionDto) => {
+						return session;
+					})
+					.then(conn.destroy()); // Close the connection
+			})
+      .catch((err: Error) => console.error(err));
+	}
+
+	clearSessions(): Promise<null> {
+		return mariadb
+			.createConnection({
+				// Open a new connection
+				user: "root",
+				database: "test_db",
+				host: "localhost",
+				password: "super-secret-password",
+				port: 3306,
+			})
+			.then((conn: any) => {
+				return conn
+					.query(`DELETE FROM Sessions`)
+					.then((session: null) => {
+						return session;
 					})
 					.then(conn.destroy()); // Close the connection
 			})

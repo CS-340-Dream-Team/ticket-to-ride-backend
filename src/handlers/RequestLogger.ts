@@ -74,7 +74,7 @@ export class RequestLogger {
 			return;
 		}
 
-		console.log('Running ' + requests.length + ' requests for game with id' + gameId);
+		console.log('Running ' + requests.length + ' requests for game with id ' + gameId);
 
 		for (const request of requests) {
 			this.faker.fakeRequest(request);
@@ -88,6 +88,7 @@ export class RequestLogger {
 
 	private async saveNewGameInstanceIfNRequests(gameId: number, authToken: string, N: number) {
 		const requestsForGame = await this.requestDao.getRequestsByGameId(gameId);
+		console.log(requestsForGame);
 		if (requestsForGame.length > N) {
 			await ServerModel.getInstance().saveGameWithId(gameId, authToken);
 			await this.requestDao.removeRequestsByGameId(gameId);

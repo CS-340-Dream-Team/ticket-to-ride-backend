@@ -5,4 +5,5 @@ export interface IGameDao {
 	getGameById(GameId: number): Promise<Game>;
 	getAllGames(): Promise<Game[]>;
 	removeGameById(GameId: number): Promise<null>;
+	clearGames(): Promise<null>;
 }

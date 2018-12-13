@@ -5,4 +5,5 @@ export interface IUserDao {
 	getUserByName(name: string): Promise<UserDto>;
 	getAllUsers(): Promise<UserDto[]>;
 	removeUserByName(name: string): Promise<null>;
+	clearUsers(): Promise<null>;
 }
