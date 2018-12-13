@@ -22,7 +22,7 @@ export class RequestMariaDBDao implements IRequestDao {
 						`INSERT INTO Requests (url, method, body, authToken, gameId) values (
 							"${req.url}",
 							"${req.method}",
-							"${req.body}",
+							${JSON.stringify(JSON.stringify(req.body))},
 							"${req.authToken}",
 							${req.gameId}
 						)`

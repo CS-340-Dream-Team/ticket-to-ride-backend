@@ -30,6 +30,16 @@ import { UserDto } from "../../src/model/UserRegistration";
 // 		});
 // });
 
+// test("user deleted from database", () => {
+// 	let gameDao = new UserMariaDBDao();
+// 	return gameDao
+// 		.removeUserByName("name")
+// 		.then(null)
+// 		.catch(err => {
+// 			console.log(err.message);
+// 		});
+// });
+
 test("placeholder", () => {
 	expect(1).toBe(1);
 });

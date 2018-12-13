@@ -87,7 +87,7 @@ export class ServerModel {
 		this.loggedInUsers.push(user);
 		let token = hat();
 		user.tokens.push(token);
-		this.sessionDao.saveSession({username: username, token: token});
+		this.sessionDao.saveSession({ username: username, token: token });
 		return token;
 	}
 
@@ -105,8 +105,8 @@ export class ServerModel {
 		this.loggedInUsers.push(user);
 		user.tokens.push(token);
 
-		this.userDao.saveUser({username: username, password: password});
-		this.sessionDao.saveSession({username: username, token: token});
+		this.userDao.saveUser({ username: username, password: password } as UserDto);
+		this.sessionDao.saveSession({ username: username, token: token } as SessionDto);
 		return token;
 	}
 
@@ -118,18 +118,23 @@ export class ServerModel {
 			this.sessionDao.getAllSessions().then(sessions => {
 				sessionDtos = sessions;
 				userDtos.forEach(userDto => {
-					let userSessions = sessionDtos.filter(sessionDto => sessionDto.username === userDto.username);
+					let userSessions = sessionDtos.filter(
+						sessionDto => sessionDto.username === userDto.username
+					);
 					if (userSessions.length === 0) {
 						return;
 					}
-					let newUser = new UserRegistration(userDto.username, userDto.password, userSessions[0].token);
+					let newUser = new UserRegistration(
+						userDto.username,
+						userDto.password,
+						userSessions[0].token
+					);
 					userSessions.splice(0, 1);
 					userSessions.forEach(userSession => {
 						newUser.tokens.push(userSession.token);
 					});
 					this.allUsers.push(newUser);
 				});
-				console.log("loaded users:", this.allUsers);
 			});
 		});
 	}
@@ -154,9 +159,7 @@ export class ServerModel {
 			throw new Error(ErrorMsgs.PLAYER_ALREADY_IN_GAME);
 		}
 		gameToJoin.addPlayer(user.player);
-		return new Command("updatePlayerList", {
-			playerList: gameToJoin.playersJoined,
-		});
+		return new Command("updatePlayerList", { playerList: gameToJoin.playersJoined });
 	}
 
 	createGame(bearerToken: string | undefined, gameName: string): Command {
@@ -221,6 +224,16 @@ export class ServerModel {
 		this.gameDao.saveGame(game);
 		RequestLogger.instance.startLoggingForGame(game);
 		return new Command("startGame", {});
+	}
+
+	public saveGameWithId(gameId: number, authToken: string) {
+		const game = this.getGameByToken(authToken);
+		if (!game) {
+			return Promise.reject();
+		}
+		return this.gameDao.removeGameById(gameId).then(_ => {
+			return this.gameDao.saveGame(game);
+		});
 	}
 
 	getGameOverCommand(game: Game, username: string) {

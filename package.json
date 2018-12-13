@@ -40,6 +40,7 @@
   "dependencies": {
     "@types/hat": "^0.0.0",
     "@types/mongodb": "^3.1.17",
+    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
