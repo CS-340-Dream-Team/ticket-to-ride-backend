@@ -71,8 +71,9 @@ export class ServerModel {
 		if (process.argv.includes('-wipe')) {
 			this.wipeDatabase();
 		}
-		this.loadUserData();
-		this.loadGames();
+		this.loadUserData().then(_ => {
+			this.loadGames();
+		});
 	}
 
 	public static getInstance(): ServerModel {
@@ -120,9 +121,9 @@ export class ServerModel {
 	loadUserData() {
 		var userDtos: UserDto[] = [];
 		var sessionDtos: SessionDto[] = [];
-		this.userDao.getAllUsers().then(users => {
+		return this.userDao.getAllUsers().then(users => {
 			userDtos = users;
-			this.sessionDao.getAllSessions().then(sessions => {
+			return this.sessionDao.getAllSessions().then(sessions => {
 				sessionDtos = sessions;
 				userDtos.forEach(userDto => {
 					let userSessions = sessionDtos.filter(
@@ -152,13 +153,19 @@ export class ServerModel {
 	}
 
 	loadGames() {
-		this.gameDao.getAllGames().then(games => {
+		return this.gameDao.getAllGames().then(games => {
 			games.forEach(game => {
 				let newGame = new Game(game.host, game.name, game.id);
 				newGame.setEverything(game);
 				game = newGame;
 				if (game.started) {
 					this.startedGames[game.id] = game;
+					game.playersJoined.forEach(player => {
+						const user = this.getUserByUsername(player.name);
+						if (user) {
+							user.player = player;
+						}
+					});
 					this.commandManager.addGame();
 				} else {
 					this.unstartedGames.push(game);
