@@ -88,7 +88,7 @@ export class RequestLogger {
 
 	private async saveNewGameInstanceIfNRequests(gameId: number, authToken: string, N: number) {
 		const requestsForGame = await this.requestDao.getRequestsByGameId(gameId);
-		console.log(requestsForGame);
+		// console.log(requestsForGame);
 		if (requestsForGame.length > N) {
 			await ServerModel.getInstance().saveGameWithId(gameId, authToken);
 			await this.requestDao.removeRequestsByGameId(gameId);

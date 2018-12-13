@@ -143,7 +143,11 @@ export class ServerModel {
 					this.allUsers.push(newUser);
 					this.loggedInUsers.push(newUser);
 				});
+			}).catch(err => {
+				throw new Error(err.message);
 			});
+		}).catch(err => {
+			throw new Error(err.message);
 		});
 	}
 
@@ -164,6 +168,8 @@ export class ServerModel {
 			for (const id in this.startedGames) {
 				RequestLogger.instance.loadAndRunRequestsForGameWithId(+id);
 			}
+		}).catch(err => {
+			throw new Error(err.message);
 		});
 	}
 
@@ -467,7 +473,7 @@ export class ServerModel {
 
 	addMessage(bearerToken: string | undefined, messageText: string, prevTimestamp: number): Command {
 		let user = this.getUserByToken(bearerToken);
-		let player = user.player;
+		let player = this.getPlayerByName(user.username);
 		let game = this.getGameByPlayer(player);
 		var command;
 		if (Object.values(ChatCodes).includes(messageText)) {
@@ -694,7 +700,7 @@ export class ServerModel {
 		var turn;
 		var history: Command[];
 		var id;
-		if (this.commandManager.isInitialized(game.id, game.playersJoined.length)) {
+		if (this.commandManager.isInitialized(game.id, game.playersJoined.length) || game.turn >= 0) {
 			turn = game.playersJoined[game.turn].name;
 			history = this.commandManager.getGameplayAfter(game.id, -0, player.name);
 			id = this.commandManager.getLastId(game.id);
@@ -740,6 +746,21 @@ export class ServerModel {
 			}
 		}
 		throw new Error(ErrorMsgs.INVALID_AUTHORIZATION);
+	}
+
+	private getPlayerByName(name: string): Player {
+		var player;
+		Object.values(this.startedGames).forEach(game => {
+			for (let joinedPlayer of game.playersJoined) {
+				if (joinedPlayer.name === name) {
+					player = joinedPlayer;
+				}
+			}
+		});
+		if (!player) {
+			throw new Error(ErrorMsgs.PLAYER_NOT_IN_A_GAME);
+		}
+		return player;
 	}
 
 	private getUsernameByToken(bearerToken: string | undefined): string {
