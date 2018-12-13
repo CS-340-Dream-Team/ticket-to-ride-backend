@@ -3,9 +3,11 @@ import { Request, Response } from "express";
 import { ErrorMsgs } from "../model/ErrorMsgs";
 import { Command } from "../commands/Command";
 import { BusCard } from "../model/BusCard";
+import { ServerModel } from "../model/ServerModel";
 export class GamePlayHandler extends BaseHandler {
-	constructor() {
+	constructor(serverModel: ServerModel) {
 		super();
+		this.model = serverModel;
 	}
 
 	handle(req: Request, res: Response): void {

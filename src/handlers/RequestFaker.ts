@@ -1,5 +1,6 @@
 import { Request as DBRequest } from "../model/Request";
 import { Request, Response } from "express";
+import { ServerModel } from '../model/ServerModel';
 
 import { LoginHandler } from "./LoginHandler";
 import { RegisterHandler } from "./RegisterHandler";
@@ -9,12 +10,12 @@ import { ChatHandler } from "./ChatHandler";
 import { GamePlayHandler } from "./GamePlayHandler";
 
 export class RequestFaker {
-    private loginHandler = new LoginHandler();
-    private registerHandler = new RegisterHandler();
-    private mapHandler = new MapHandler();
-    private gamesHandler = new GamesHandler();
-    private chatHandler = new ChatHandler();
-    private gamePlayHandler = new GamePlayHandler();
+    private loginHandler = new LoginHandler(ServerModel.getInstance());
+    private registerHandler = new RegisterHandler(ServerModel.getInstance());
+    private mapHandler = new MapHandler(ServerModel.getInstance());
+    private gamesHandler = new GamesHandler(ServerModel.getInstance());
+    private chatHandler = new ChatHandler(ServerModel.getInstance());
+    private gamePlayHandler = new GamePlayHandler(ServerModel.getInstance());
 
     constructor() {
 
@@ -33,35 +34,35 @@ export class RequestFaker {
 		// 	this.registerHandler.handle(req, res);
         // });
 
-        if (req.method.startsWith('/register')) this.registerHandler.handle(fakeRequest, fakeResponse);
+        // if (req.method.startsWith('/register')) this.registerHandler.handle(fakeRequest, fakeResponse);
 
-		// router.get("/map", (req: Request, res: Response) => {
-		// 	this.mapHandler.handle(req, res);
-		// });
+		// // router.get("/map", (req: Request, res: Response) => {
+		// // 	this.mapHandler.handle(req, res);
+		// // });
 
-        if (req.method.startsWith('/map')) this.mapHandler.handle(fakeRequest, fakeResponse);
+        // if (req.method.startsWith('/map')) this.mapHandler.handle(fakeRequest, fakeResponse);
 
-		// router.post("/games", (req: Request, res: Response) => {
-		// 	this.gamesHandler.handle(req, res);
-        // });
+		// // router.post("/games", (req: Request, res: Response) => {
+		// // 	this.gamesHandler.handle(req, res);
+        // // });
 
-        if (req.method.startsWith('/games')) this.gamesHandler.handle(fakeRequest, fakeResponse);
+        // if (req.method.startsWith('/games')) this.gamesHandler.handle(fakeRequest, fakeResponse);
 
-		// router.post("/chat/new/:timestamp", (req: Request, res: Response) => {
-        // 	this.chatHandler.handle(req, res);
-        // });
+		// // router.post("/chat/new/:timestamp", (req: Request, res: Response) => {
+        // // 	this.chatHandler.handle(req, res);
+        // // });
 
-        // router.get("/chat/:timestamp", (req: Request, res: Response) => {
-        // 	this.chatHandler.handle(req, res);
-        // });
+        // // router.get("/chat/:timestamp", (req: Request, res: Response) => {
+        // // 	this.chatHandler.handle(req, res);
+        // // });
 
-        if (req.method.startsWith('/chat')) this.chatHandler.handle(fakeRequest, fakeResponse);
+        // if (req.method.startsWith('/chat')) this.chatHandler.handle(fakeRequest, fakeResponse);
 
-		// router.post("/play/segment", (req: Request, res: Response) => {
-		// 	this.gameplayHandler.handle(req, res);
-		// });
+		// // router.post("/play/segment", (req: Request, res: Response) => {
+		// // 	this.gameplayHandler.handle(req, res);
+		// // });
 
-        if (req.method.startsWith('/play')) this.gamePlayHandler.handle(fakeRequest, fakeResponse);
+        // if (req.method.startsWith('/play')) this.gamePlayHandler.handle(fakeRequest, fakeResponse);
     }
 }
 

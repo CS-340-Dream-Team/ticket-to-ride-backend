@@ -2,10 +2,12 @@ import { BaseHandler } from "./BaseHandler";
 import { Request, Response } from "express";
 import { ErrorMsgs } from "../model/ErrorMsgs";
 import { MapDataManager } from "../model/MapDataManager";
+import { ServerModel } from "../model/ServerModel";
 
 export class MapHandler extends BaseHandler {
-	constructor() {
+	constructor(serverModel: ServerModel) {
 		super();
+		this.model = serverModel;
 	}
 
 	handle(req: Request, res: Response): void {

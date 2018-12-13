@@ -8,14 +8,15 @@ import { LoginHandler } from "./LoginHandler";
 import { MapHandler } from "./MapHandler";
 import { RegisterHandler } from "./RegisterHandler";
 import { RequestLogger } from "./RequestLogger";
+import { ServerModel } from "../model/ServerModel";
 
 export class ServerCommunicator {
-	private mapHandler: MapHandler = new MapHandler();
-	private registerHandler: RegisterHandler = new RegisterHandler();
-	private loginHandler: LoginHandler = new LoginHandler();
-	private gamesHandler: GamesHandler = new GamesHandler();
-	private chatHandler: ChatHandler = new ChatHandler();
-	private gameplayHandler: GamePlayHandler = new GamePlayHandler();
+	private mapHandler: MapHandler = new MapHandler(ServerModel.getInstance());
+	private registerHandler: RegisterHandler = new RegisterHandler(ServerModel.getInstance());
+	private loginHandler: LoginHandler = new LoginHandler(ServerModel.getInstance());
+	private gamesHandler: GamesHandler = new GamesHandler(ServerModel.getInstance());
+	private chatHandler: ChatHandler = new ChatHandler(ServerModel.getInstance());
+	private gameplayHandler: GamePlayHandler = new GamePlayHandler(ServerModel.getInstance());
 
 	constructor(port: number = 4040) {
 		this.app = express();

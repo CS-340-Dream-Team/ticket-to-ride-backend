@@ -1,10 +1,12 @@
 import { BaseHandler } from "./BaseHandler";
 import { Request, Response } from "express";
 import { ErrorMsgs } from "../model/ErrorMsgs";
+import { ServerModel } from "../model/ServerModel";
 
 export class ChatHandler extends BaseHandler {
-	constructor() {
+	constructor(serverModel: ServerModel) {
 		super();
+		this.model = serverModel;
 	}
 
 	handle(req: Request, res: Response): void {
