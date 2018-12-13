@@ -96,6 +96,27 @@ export class UserMariaDBDao implements IUserDao {
       .catch((err: Error) => console.error(err));
 	}
 
+	clearUsers(): Promise<null> {
+		return mariadb
+			.createConnection({
+				// Open a new connection
+				user: "root",
+				database: "test_db",
+				host: "localhost",
+				password: "super-secret-password",
+				port: 3306,
+			})
+			.then((conn: any) => {
+				return conn
+					.query(`DELETE FROM Users`)
+					.then((user: null) => {
+						return user;
+					})
+					.then(conn.destroy()); // Close the connection
+			})
+      .catch((err: Error) => console.error(err));
+	}
+
 	private createTable(): Promise<null> {
 		return mariadb
 			.createConnection({

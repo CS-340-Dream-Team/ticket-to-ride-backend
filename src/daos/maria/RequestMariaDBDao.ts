@@ -82,6 +82,27 @@ export class RequestMariaDBDao implements IRequestDao {
       .catch((err: Error) => console.error(err));
 	}
 
+	clearRequests(): Promise<null> {
+		return mariadb
+			.createConnection({
+				// Open a new connection
+				user: "root",
+				database: "test_db",
+				host: "localhost",
+				password: "super-secret-password",
+				port: 3306,
+			})
+			.then((conn: any) => {
+				return conn
+					.query(`DELETE FROM Requests`)
+					.then((request: null) => {
+						return request;
+					})
+					.then(conn.destroy()); // Close the connection
+			})
+      .catch((err: Error) => console.error(err));
+	}
+
 	private createTable(): Promise<null> {
 		return mariadb
 			.createConnection({

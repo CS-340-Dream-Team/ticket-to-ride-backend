@@ -4,4 +4,5 @@ export interface ISessionDao {
 	saveSession(session: SessionDto): Promise<Boolean>;
 	getAllSessions(): Promise<SessionDto[]>;
 	removeSessionsByUser(name: string): Promise<null>;
+	clearSessions(): Promise<null>;
 }
