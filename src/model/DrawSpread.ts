@@ -9,11 +9,14 @@ export class DrawSpread {
 	busDeck: BusDeck;
 
 	constructor(busDeck: BusDeck = new BusDeck(), spread: BusCard[] = busDeck.cards.slice(0, 5), fromDB = false) {
-		this.busDeck = busDeck;
-		this.spread = spread;
-		if (!fromDB) {
+		if(fromDB){
+			this.busDeck=new BusDeck(busDeck.cards,busDeck.discard,true)
+		}
+		else{
+			this.busDeck = busDeck;
 			this.busDeck.cards.splice(0, 5);
 		}
+		this.spread = spread;
 		this.checkForThreeWilds();
 	}
 

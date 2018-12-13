@@ -76,6 +76,7 @@ export class Game {
 		this.turn = gameDTO.turn;
 		this.segments = gameDTO.segments;
 		this.spread = new DrawSpread(gameDTO.spread.busDeck, gameDTO.spread.spread, true);
+		//busdeck
 	}
 
 	segmentAlreadyClaimed(segmentId: number): boolean {
