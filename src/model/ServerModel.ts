@@ -24,6 +24,7 @@ import { RequestLogger } from "../handlers/RequestLogger";
 import { IGameDao } from "../daos/IGameDao";
 import { ISessionDao } from "../daos/ISessionDao";
 import { IUserDao } from "../daos/IUserDao";
+import { DrawSpread } from "./DrawSpread";
 
 const pointMapping: { [key: number]: number } = {
 	1: 1,
@@ -145,6 +146,7 @@ export class ServerModel {
 		this.gameDao.getAllGames().then(games => {
 			games.forEach(game => {
 				if (game.started) {
+					game.spread = new DrawSpread(game.spread.busDeck, game.spread.spread, true);
 					this.startedGames[game.id] = game;
 					this.commandManager.addGame();
 				} else {
