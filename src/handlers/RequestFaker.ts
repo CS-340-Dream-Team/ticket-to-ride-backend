@@ -23,6 +23,7 @@ export class RequestFaker {
 
     public fakeRequest(req: DBRequest) {
         const fakeRequest = <Request><unknown>req;
+        fakeRequest.headers = {authorization: req.authToken};
         const fakeResponse = <Response> new FakeResponse();
         // router.post("/login", (req: Request, res: Response) => {
         // 	this.loginHandler.handle(req, res);
@@ -34,19 +35,19 @@ export class RequestFaker {
 		// 	this.registerHandler.handle(req, res);
         // });
 
-        // if (req.method.startsWith('/register')) this.registerHandler.handle(fakeRequest, fakeResponse);
+        if (req.method.startsWith('/register')) this.registerHandler.handle(fakeRequest, fakeResponse);
 
 		// // router.get("/map", (req: Request, res: Response) => {
 		// // 	this.mapHandler.handle(req, res);
 		// // });
 
-        // if (req.method.startsWith('/map')) this.mapHandler.handle(fakeRequest, fakeResponse);
+        if (req.method.startsWith('/map')) this.mapHandler.handle(fakeRequest, fakeResponse);
 
 		// // router.post("/games", (req: Request, res: Response) => {
 		// // 	this.gamesHandler.handle(req, res);
         // // });
 
-        // if (req.method.startsWith('/games')) this.gamesHandler.handle(fakeRequest, fakeResponse);
+        if (req.method.startsWith('/games')) this.gamesHandler.handle(fakeRequest, fakeResponse);
 
 		// // router.post("/chat/new/:timestamp", (req: Request, res: Response) => {
         // // 	this.chatHandler.handle(req, res);
@@ -56,13 +57,13 @@ export class RequestFaker {
         // // 	this.chatHandler.handle(req, res);
         // // });
 
-        // if (req.method.startsWith('/chat')) this.chatHandler.handle(fakeRequest, fakeResponse);
+        if (req.method.startsWith('/chat')) this.chatHandler.handle(fakeRequest, fakeResponse);
 
 		// // router.post("/play/segment", (req: Request, res: Response) => {
 		// // 	this.gameplayHandler.handle(req, res);
 		// // });
 
-        // if (req.method.startsWith('/play')) this.gamePlayHandler.handle(fakeRequest, fakeResponse);
+        if (req.method.startsWith('/play')) this.gamePlayHandler.handle(fakeRequest, fakeResponse);
     }
 }
 
