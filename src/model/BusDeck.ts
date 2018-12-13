@@ -6,25 +6,26 @@ import { Deck } from "./Deck";
 export class BusDeck extends Deck {
 	cards: BusCard[];
 	discard: BusCard[];
-	constructor() {
+	constructor(cards:BusCard[]=[],discard:BusCard[]=[],fromDB=false) {
 		super();
-		this.cards = [];
-		this.discard = [];
-
-		for (let numCards = 0; numCards < 12; numCards++) {
-			this.cards.push(new BusCard(BusColor.black));
-			this.cards.push(new BusCard(BusColor.blue));
-			this.cards.push(new BusCard(BusColor.green));
-			this.cards.push(new BusCard(BusColor.orange));
-			this.cards.push(new BusCard(BusColor.purple));
-			this.cards.push(new BusCard(BusColor.red));
-			this.cards.push(new BusCard(BusColor.white));
+		this.cards = cards;
+		this.discard = discard;
+		if(!fromDB){
+			for (let numCards = 0; numCards < 12; numCards++) {
+				this.cards.push(new BusCard(BusColor.black));
+				this.cards.push(new BusCard(BusColor.blue));
+				this.cards.push(new BusCard(BusColor.green));
+				this.cards.push(new BusCard(BusColor.orange));
+				this.cards.push(new BusCard(BusColor.purple));
+				this.cards.push(new BusCard(BusColor.red));
+				this.cards.push(new BusCard(BusColor.white));
+				this.cards.push(new BusCard(BusColor.wild));
+				this.cards.push(new BusCard(BusColor.yellow));
+			}
 			this.cards.push(new BusCard(BusColor.wild));
-			this.cards.push(new BusCard(BusColor.yellow));
+			this.cards.push(new BusCard(BusColor.wild));
+			this.shuffle();
 		}
-		this.cards.push(new BusCard(BusColor.wild));
-		this.cards.push(new BusCard(BusColor.wild));
-		this.shuffle();
 	}
 
 	drawCard(fromSpread: boolean): BusCard {
