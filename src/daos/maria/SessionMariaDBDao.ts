@@ -3,7 +3,9 @@ import { SessionDto } from "../../model/UserRegistration";
 
 const mariadb = require("mariadb");
 export class SessionMariaDBDao implements ISessionDao {
-	constructor() {}
+	constructor() {
+		this.createTable();
+	}
 
 	saveSession(user: SessionDto): Promise<boolean> {
 		return mariadb
@@ -24,7 +26,8 @@ export class SessionMariaDBDao implements ISessionDao {
 						)`
 					)
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
 	}
 
 	getAllSessions(): Promise<SessionDto[]> {
@@ -48,7 +51,8 @@ export class SessionMariaDBDao implements ISessionDao {
 						return ret_sessions;
 					})
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
 	}
 
 	removeSessionsByUser(userName: string): Promise<null> {
@@ -68,6 +72,24 @@ export class SessionMariaDBDao implements ISessionDao {
 						return user;
 					})
 					.then(conn.destroy()); // Close the connection
-			});
+			})
+      .catch((err: Error) => console.error(err));
+	}
+
+	private createTable(): Promise<null> {
+		return mariadb
+			.createConnection({
+				// Open a new connection
+				user: "root",
+				database: "test_db",
+				host: "localhost",
+				password: "super-secret-password",
+				port: 3306,
+			})
+			.then((conn: any) =>
+				conn.query(
+					"CREATE TABLE IF NOT EXISTS Sessions(username VARCHAR(100) NOT NULL, token VARCHAR(100) NOT NULL UNIQUE, PRIMARY KEY (token));"
+				).then(() => conn.destroy())
+			).catch((err: Error) => console.error(err));
 	}
 }

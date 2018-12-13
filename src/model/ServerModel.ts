@@ -56,6 +56,7 @@ export class ServerModel {
 		ServerModel._instance = this;
 		this.commandManager = new CommandManager();
 		this.pluginManager = new PluginManager();
+		this.numDeltas = this.getNumDeltas();
 		this.persistenceProvider = this.pluginManager.getProvider();
 		this.unstartedGames = [];
 		this.startedGames = {};
@@ -66,6 +67,7 @@ export class ServerModel {
 		this.sessionDao = this.persistenceProvider.getSessionDao();
 		this.gameDao = this.persistenceProvider.getGameDao();
 		this.loadUserData();
+		this.loadGames();
 	}
 
 	public static getInstance(): ServerModel {
@@ -105,8 +107,8 @@ export class ServerModel {
 		this.loggedInUsers.push(user);
 		user.tokens.push(token);
 
-		this.userDao.saveUser({ username: username, password: password } as UserDto);
-		this.sessionDao.saveSession({ username: username, token: token } as SessionDto);
+		this.userDao.saveUser({ username: username, password: password });
+		this.sessionDao.saveSession({ username: username, token: token });
 		return token;
 	}
 
@@ -135,6 +137,19 @@ export class ServerModel {
 					});
 					this.allUsers.push(newUser);
 				});
+			});
+		});
+	}
+
+	loadGames() {
+		this.gameDao.getAllGames().then(games => {
+			games.forEach(game => {
+				if (game.started) {
+					this.startedGames[game.id] = game;
+					this.commandManager.addGame();
+				} else {
+					this.unstartedGames.push(game);
+				}
 			});
 		});
 	}
@@ -177,7 +192,8 @@ export class ServerModel {
 		if (this.isPlayerInAGame(hostUser.player)) {
 			throw new Error(ErrorMsgs.PLAYER_ALREADY_IN_GAME_CANNOT_CREATE);
 		}
-		this.unstartedGames.push(new Game(hostUser.player, gameName));
+		let newGameId = this.unstartedGames.length + Object.keys(this.startedGames).length;
+		this.unstartedGames.push(new Game(hostUser.player, gameName, newGameId));
 		return new Command("updateGameList", { gameList: this.unstartedGames });
 	}
 
@@ -766,6 +782,14 @@ export class ServerModel {
 			}
 		}
 		return false;
+	}
+
+	private getNumDeltas(): number {
+		let numDeltas = +process.argv[3];
+		if (!numDeltas || numDeltas <= 0) {
+			throw new Error("No Command Delta Number Specified Or Number Invalid");
+		}
+		return numDeltas;
 	}
 }
 
