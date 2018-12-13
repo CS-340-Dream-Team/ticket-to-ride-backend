@@ -135,6 +135,7 @@ export class ServerModel {
 						newUser.tokens.push(userSession.token);
 					});
 					this.allUsers.push(newUser);
+					this.loggedInUsers.push(newUser);
 				});
 			});
 		});
@@ -759,7 +760,7 @@ export class ServerModel {
 		var foundGame = null;
 		Object.values(this.startedGames).forEach(game => {
 			for (let joinedPlayer of game.playersJoined) {
-				if (joinedPlayer === player) {
+				if (joinedPlayer.name === player.name) {
 					foundGame = game;
 				}
 			}
