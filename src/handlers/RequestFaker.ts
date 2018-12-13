@@ -2,18 +2,12 @@ import { Request as DBRequest } from "../model/Request";
 import { Request, Response } from "express";
 import { ServerModel } from '../model/ServerModel';
 
-import { LoginHandler } from "./LoginHandler";
-import { RegisterHandler } from "./RegisterHandler";
 import { MapHandler } from "./MapHandler";
-import { GamesHandler } from "./GamesHandler";
 import { ChatHandler } from "./ChatHandler";
 import { GamePlayHandler } from "./GamePlayHandler";
 
 export class RequestFaker {
-    private loginHandler = new LoginHandler(ServerModel.getInstance());
-    private registerHandler = new RegisterHandler(ServerModel.getInstance());
     private mapHandler = new MapHandler(ServerModel.getInstance());
-    private gamesHandler = new GamesHandler(ServerModel.getInstance());
     private chatHandler = new ChatHandler(ServerModel.getInstance());
     private gamePlayHandler = new GamePlayHandler(ServerModel.getInstance());
 
@@ -21,33 +15,41 @@ export class RequestFaker {
 
     }
 
+    private getURLParam(url: string) {
+        const parts = url.split('/');
+        return +parts[parts.length - 1];
+    }
+
+    private addParamsIfPresent(fakeRequest: Request) {
+        if (fakeRequest.url.startsWith('/play/bus/')) {
+            fakeRequest.params = { index: this.getURLParam(fakeRequest.url) }
+        }
+
+        else if (fakeRequest.url.startsWith('/chat/timestamp')) {
+            fakeRequest.params = { timestamp: this.getURLParam(fakeRequest.url) }
+        }
+
+        else if (fakeRequest.url.startsWith('/chat/')) {
+            fakeRequest.params = { timestamp: this.getURLParam(fakeRequest.url) }
+        }
+
+        return fakeRequest;
+    }
+
     public fakeRequest(req: DBRequest) {
-        const fakeRequest = <Request><unknown>req;
+        let fakeRequest = <Request><unknown>req;
         fakeRequest.headers = {authorization: req.authToken};
-        const fakeResponse = <Response> new FakeResponse();
+        const fakeResponse = <Response><unknown> new FakeResponse();
         // router.post("/login", (req: Request, res: Response) => {
         // 	this.loginHandler.handle(req, res);
         // });
 
-        if (req.method.startsWith('/login')) this.loginHandler.handle(fakeRequest, fakeResponse)
-
-		// router.post("/register", (req: Request, res: Response) => {
-		// 	this.registerHandler.handle(req, res);
-        // });
-
-        if (req.method.startsWith('/register')) this.registerHandler.handle(fakeRequest, fakeResponse);
-
+        fakeRequest = this.addParamsIfPresent(fakeRequest);
 		// // router.get("/map", (req: Request, res: Response) => {
 		// // 	this.mapHandler.handle(req, res);
 		// // });
 
-        if (req.method.startsWith('/map')) this.mapHandler.handle(fakeRequest, fakeResponse);
-
-		// // router.post("/games", (req: Request, res: Response) => {
-		// // 	this.gamesHandler.handle(req, res);
-        // // });
-
-        if (req.method.startsWith('/games')) this.gamesHandler.handle(fakeRequest, fakeResponse);
+        if (req.url.startsWith('/map')) this.mapHandler.handle(fakeRequest, fakeResponse);
 
 		// // router.post("/chat/new/:timestamp", (req: Request, res: Response) => {
         // // 	this.chatHandler.handle(req, res);
@@ -57,17 +59,22 @@ export class RequestFaker {
         // // 	this.chatHandler.handle(req, res);
         // // });
 
-        if (req.method.startsWith('/chat')) this.chatHandler.handle(fakeRequest, fakeResponse);
+        else if (req.url.startsWith('/chat')) this.chatHandler.handle(fakeRequest, fakeResponse);
 
 		// // router.post("/play/segment", (req: Request, res: Response) => {
 		// // 	this.gameplayHandler.handle(req, res);
 		// // });
 
-        if (req.method.startsWith('/play')) this.gamePlayHandler.handle(fakeRequest, fakeResponse);
+        else if (req.url.startsWith('/play')) this.gamePlayHandler.handle(fakeRequest, fakeResponse);
+
+        else console.warn(`Request path not recognized... ignoring: ${JSON.stringify(fakeRequest.url)}`);
     }
 }
 
 class FakeResponse {
     send() {}
     json() {}
+    status() {
+        return {send: function() {}}
+    }
 }
