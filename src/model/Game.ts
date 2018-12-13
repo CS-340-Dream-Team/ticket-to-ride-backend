@@ -62,6 +62,9 @@ export class Game {
 	setEverything(gameDTO: Game) {
 
 		this.playersJoined = this.getReInitPlayers(gameDTO.playersJoined);
+		this.host=this.playersJoined.filter(player =>{
+			player.name===gameDTO.host.name
+		})[0];
 		this.host = this.playersJoined[0];//Might not work
 		this.name = gameDTO.name;
 		this.id = gameDTO.id;
