@@ -76,4 +76,13 @@ export class GameMongoDBDao implements IGameDao {
 			})
 			.then(() => null);
 	}
+
+	clearGames(): Promise<null> {
+		return this.client
+			.connect()
+			.then((client:MongoClient)=>{
+				const db: Db = client.db(this.dbName);
+				return db.collection('games').deleteMany({});
+			}).then(() => null)
+	}
 }

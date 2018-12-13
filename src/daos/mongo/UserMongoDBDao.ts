@@ -59,4 +59,14 @@ export class UserMongoDBDao implements IUserDao {
 			})
 			.then(() => null);
 	}
+
+	clearUsers(): Promise<null> {
+		return this.client
+			.connect()
+			.then((client: MongoClient) => {
+				const db: Db = client.db(this.dbName);
+				return db.collection("users").deleteMany({});
+			})
+			.then(() => null);
+	}
 }

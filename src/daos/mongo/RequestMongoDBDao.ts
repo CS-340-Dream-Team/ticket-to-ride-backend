@@ -58,4 +58,14 @@ export class RequestMongoDBDao implements IRequestDao {
 			})
 			.then(() => null);
 	}
+
+	clearRequests(): Promise<null> {
+		return this.client
+			.connect()
+			.then((client: MongoClient) => {
+				const db: Db = client.db(this.dbName);
+				return db.collection("requests").deleteMany({});
+			})
+			.then(() => null);
+	}
 }

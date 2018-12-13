@@ -25,6 +25,7 @@ import { IGameDao } from "../daos/IGameDao";
 import { ISessionDao } from "../daos/ISessionDao";
 import { IUserDao } from "../daos/IUserDao";
 import { DrawSpread } from "./DrawSpread";
+import { IRequestDao } from "../daos/IRequestDao";
 
 const pointMapping: { [key: number]: number } = {
 	1: 1,
@@ -48,12 +49,12 @@ export class ServerModel {
 	private userDao: IUserDao;
 	private sessionDao: ISessionDao;
 	private gameDao: IGameDao;
+	private requestDao: IRequestDao;
 
 	private constructor() {
 		if (ServerModel._instance) {
 			throw new Error("Error: Instantiation failed");
 		}
-
 		ServerModel._instance = this;
 		this.commandManager = new CommandManager();
 		this.pluginManager = new PluginManager();
@@ -66,6 +67,10 @@ export class ServerModel {
 		this.userDao = this.persistenceProvider.getUserDao();
 		this.sessionDao = this.persistenceProvider.getSessionDao();
 		this.gameDao = this.persistenceProvider.getGameDao();
+		this.requestDao = this.persistenceProvider.getRequestDao();
+		if (process.argv.includes('-wipe')) {
+			this.wipeDatabase();
+		}
 		this.loadUserData();
 		this.loadGames();
 	}
@@ -788,6 +793,14 @@ export class ServerModel {
 			}
 		}
 		return false;
+	}
+
+	private wipeDatabase() {
+		this.userDao.clearUsers();
+		this.sessionDao.clearSessions();
+		this.gameDao.clearGames();
+		this.requestDao.clearRequests();
+		console.log("Database wiped.");
 	}
 }
 
