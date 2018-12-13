@@ -150,8 +150,10 @@ export class ServerModel {
 	loadGames() {
 		this.gameDao.getAllGames().then(games => {
 			games.forEach(game => {
+				let newGame = new Game(game.host, game.name, game.id);
+				newGame.setEverything(game);
+				game = newGame;
 				if (game.started) {
-					game.spread = new DrawSpread(game.spread.busDeck, game.spread.spread, true);
 					this.startedGames[game.id] = game;
 					this.commandManager.addGame();
 				} else {

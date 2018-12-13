@@ -59,6 +59,25 @@ export class Game {
 		}
 	}
 
+	setEverything(gameDTO: Game) {
+		this.playersJoined = gameDTO.playersJoined;
+		this.host = gameDTO.host;
+		this.name = gameDTO.name;
+		this.id = gameDTO.id;
+		this.numPlayers = gameDTO.numPlayers;
+		this.started = gameDTO.started;
+		this.lastRound = gameDTO.lastRound;
+		this.turnsLeft = gameDTO.turnsLeft;
+		this.ended = gameDTO.ended;
+		this.chat = gameDTO.chat;
+		this.routeDeck = gameDTO.routeDeck;
+		this.spread = gameDTO.spread;
+		this.gameMap = gameDTO.gameMap;
+		this.turn = gameDTO.turn;
+		this.segments = gameDTO.segments;
+		this.spread = new DrawSpread(gameDTO.spread.busDeck, gameDTO.spread.spread, true);
+	}
+
 	segmentAlreadyClaimed(segmentId: number): boolean {
 		return this.segments[segmentId - 1].owner !== null;
 	}
