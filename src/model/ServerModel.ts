@@ -342,7 +342,7 @@ export class ServerModel {
 			privateData,
 			player.name
 		);
-		if (this.commandManager.isInitialized(game.id, game.numPlayers)) {
+		if (this.commandManager.isInitialized(game.id, game.numPlayers) || game.turn >= 0) {
 			let newPlayer = this.incrementGameTurn(game);
 			this.commandManager.addCommand(
 				game.id,
